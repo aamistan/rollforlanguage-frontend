@@ -1,0 +1,50 @@
+{
+    "name": "frontend",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview",
+      "lint": "eslint . --ext .vue,.js,.ts",
+      "format": "prettier --write .",
+      "test": "vitest"
+    },
+    "dependencies": {
+      "axios": "^1.6.0",
+      "pinia": "^2.1.4",
+      "vue": "^3.4.15",
+      "vue-router": "^4.2.5",
+      "vue-i18n": "^9.10.0"
+    },
+    "devDependencies": {
+      "@vitejs/plugin-vue": "^5.0.2",
+      "@vitejs/plugin-vue-jsx": "^3.0.1",
+      "autoprefixer": "^10.4.15",
+      "eslint": "^8.57.0",
+      "eslint-plugin-vue": "^9.20.0",
+      "@vue/eslint-config-prettier": "^8.0.0",
+      "prettier": "^3.2.5",
+      "postcss": "^8.4.30",
+      "stylelint": "^15.10.3",
+      "tailwindcss": "^3.4.3",
+      "vite": "^5.2.10",
+      "vitest": "^1.2.2",
+      "@vue/test-utils": "^2.4.3",
+      "@vitejs/plugin-vue-inspector": "^3.2.1",
+      "eslint-plugin-tailwindcss": "^3.13.0",
+      "unplugin-auto-import": "^0.17.5",
+      "unplugin-vue-components": "^0.25.5",
+      "class-variance-authority": "^0.7.0",
+      "tailwind-merge": "^2.2.1"
+    },
+    "pnpm": {
+      "peerDependencyRules": {
+        "ignoreMissing": [
+          "@vitejs/plugin-vue",
+          "@vue/compiler-sfc"
+        ]
+      }
+    }
+  }
+  
