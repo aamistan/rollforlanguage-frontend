@@ -24,6 +24,9 @@ importers:
         specifier: ^4.2.5
         version: 4.5.1(vue@3.5.13)
     devDependencies:
+      '@eslint/js':
+        specifier: ^9.25.1
+        version: 9.25.1
       '@vitejs/plugin-vue':
         specifier: ^5.0.2
         version: 5.2.3(vite@5.4.18)(vue@3.5.13)
@@ -43,14 +46,17 @@ importers:
         specifier: ^0.7.0
         version: 0.7.1
       eslint:
-        specifier: ^8.57.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-plugin-tailwindcss:
         specifier: ^3.13.0
         version: 3.18.0(tailwindcss@3.4.17)
       eslint-plugin-vue:
-        specifier: ^9.20.0
+        specifier: ^9.33.0
         version: 9.33.0(eslint@8.57.1)
+      globals:
+        specifier: ^16.0.0
+        version: 16.0.0
       postcss:
         specifier: ^8.4.30
         version: 8.5.3
@@ -383,6 +389,10 @@ packages:
   '@eslint/js@8.57.1':
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@eslint/js@9.25.1':
+    resolution: {integrity: sha512-dEIwmjntEx8u3Uvv+kr3PDeeArL8Hw07H9kyYxCjnM9pBjfEhk6uLXSchxxzgiwtRhhzVzqmUSDFBOi1TuZ7qg==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -1224,6 +1234,10 @@ packages:
   globals@13.24.0:
     resolution: {integrity: sha512-AhO5QUcj8llrbG09iWhPU2B204J1xnPeL8kQmVorSsy+Sjj1sk8gIyh6cUocGmH4L0UuhAJy+hJMRA4mgA4mFQ==}
     engines: {node: '>=8'}
+
+  globals@16.0.0:
+    resolution: {integrity: sha512-iInW14XItCXET01CQFqudPOWP2jYMl7T+QRQT+UNcR/iQncN/F0UNpgd76iFkBPgNQb4+X3LV9tLJYzwh+Gl3A==}
+    engines: {node: '>=18'}
 
   globby@11.1.0:
     resolution: {integrity: sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==}
@@ -2514,6 +2528,8 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
+  '@eslint/js@9.25.1': {}
+
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -3396,6 +3412,8 @@ snapshots:
   globals@13.24.0:
     dependencies:
       type-fest: 0.20.2
+
+  globals@16.0.0: {}
 
   globby@11.1.0:
     dependencies:
