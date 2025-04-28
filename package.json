@@ -31,7 +31,6 @@
       "vite": "^5.2.10",
       "vitest": "^1.2.2",
       "@vue/test-utils": "^2.4.3",
-      "@vitejs/plugin-vue-inspector": "^3.2.1",
       "eslint-plugin-tailwindcss": "^3.13.0",
       "unplugin-auto-import": "^0.17.5",
       "unplugin-vue-components": "^0.25.5",
