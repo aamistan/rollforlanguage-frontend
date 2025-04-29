@@ -296,3 +296,27 @@ Quick summary of all tasks completed to establish the base frontend Landing Page
 - Generated full QA checklist for validation.
 
 ✅ Footer is now fully responsive, accessible, dark mode ready, and multilingual.
+
+# 📋 2. **At-a-Glance Version (for `README-CON.md`)**
+
+---
+
+# 🚀 Frontend Deployment & Domain Setup — At-a-Glance
+
+## ⚡ Completed
+
+- Built clean `vite.config.ts` (TypeScript, AutoImport, Components, i18n)
+- Resolved Node.js type issues and i18n plugin migration
+- Moved i18n translations to `/src/i18n/locales/`
+- Moved i18n setup logic to `/src/plugins/i18n.js`
+- Fixed missing static asset references
+- Connected GitHub repository to Vercel
+- Set Vercel build to `pnpm run build` with output in `dist`
+- Connected real domain using Cloudflare CNAME record
+- Verified deployment live with HTTPS and custom domain
+
+---
+
+✅ Frontend is now **live**, **domain-verified**, and **build-stable**.
+
+---

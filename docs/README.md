@@ -400,3 +400,81 @@ We designed and built the ultimate `Footer.vue` system for the Roll for Language
 ---
 
 ✅ Footer system is now clean, modular, responsive, accessible, and multilingual, ready for further polish or expansion.
+
+🎯 Absolutely — you 100% earned this summary snapshot!  
+Let's carefully document everything cleanly for you — one version for each README style.
+
+---
+
+# 📚 1. **Full Explanation (for `README.md`)**
+
+---
+
+# 🌐 Frontend Hosting Setup and Domain Connection
+
+## ⚡ Overview
+
+This session completed the full connection pipeline for the **Roll for Language** frontend, ensuring clean Vercel deployment, successful Vite build, and live custom domain access.
+
+---
+
+## 🛠️ Vite Configuration Cleanup
+
+- Initialized clean `vite.config.ts` using TypeScript.
+- Added support for:
+  - `@vitejs/plugin-vue`
+  - `@intlify/unplugin-vue-i18n/vite`
+  - `unplugin-auto-import`
+  - `unplugin-vue-components`
+- Recreated `__dirname` manually for ESM compatibility using `fileURLToPath(import.meta.url)` and `dirname`.
+
+---
+
+## 🔥 Build Troubleshooting & Solutions
+
+| Issue | Resolution |
+|:---|:---|
+| `path` and `url` import errors | Installed `@types/node` and added Node types to `tsconfig.json` |
+| `@intlify/vite-plugin-vue-i18n` deprecated | Replaced with `@intlify/unplugin-vue-i18n/vite` |
+| i18n directory scan error (`index.js`) | Moved setup script to `/src/plugins/i18n.js` |
+| Dynamic imports error in i18n setup | Moved translation files into `/src/i18n/locales/` |
+| Missing avatar image | Added placeholder image to `/public/` directory |
+
+---
+
+## 🚀 Vercel Setup
+
+- Connected GitHub repository to Vercel.
+- Configured build settings:
+  - Build Command: `pnpm run build`
+  - Output Directory: `dist`
+- Successfully deployed frontend live to Vercel staging URL.
+
+---
+
+## 🌍 Domain Connection
+
+- Connected custom domain via **Cloudflare CNAME setup**.
+- Verified domain pointing successfully.
+- SSL/TLS certificates automatically managed by Vercel.
+
+---
+
+# ✅ Final Status
+
+| Feature | Status |
+|:---|:---|
+| Clean Vite config | ✅ |
+| Successful build without warnings | ✅ |
+| Live deployment on Vercel | ✅ |
+| Custom domain operational | ✅ |
+
+---
+
+# ✨ Summary
+
+The frontend is now live, properly structured, and ready for further development and expansion —  
+fully in line with the project's development mantra:  
+> *We build not for today, but for tomorrow and beyond.*
+
+---
