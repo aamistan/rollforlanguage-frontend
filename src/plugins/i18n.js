@@ -1,71 +1,30 @@
 import { createI18n } from 'vue-i18n';
 
-// Supported languages
+// Static map of available languages
 const SUPPORTED_LOCALES = ['en', 'de'];
 
-// Utility: get user's preferred locale
 const getUserLocale = () => {
-  const savedLocale = localStorage.getItem('locale');
-  if (savedLocale && SUPPORTED_LOCALES.includes(savedLocale)) {
-    return savedLocale;
-  }
+  const saved = localStorage.getItem('locale');
+  if (saved && SUPPORTED_LOCALES.includes(saved)) return saved;
 
-  const browserLocale = navigator.language.split('-')[0];
-  if (SUPPORTED_LOCALES.includes(browserLocale)) {
-    return browserLocale;
-  }
-
-  return 'en';
+  const browser = navigator.language.split('-')[0];
+  return SUPPORTED_LOCALES.includes(browser) ? browser : 'en';
 };
 
-// Map of dynamic imports (static, known)
-const localeImports = {
-  en: () => import('@/i18n/locales/en.json'),
-  de: () => import('@/i18n/locales/de.json')
-};
+// Static imports — no risky wildcard
+import en from '@/i18n/locales/en.json';
+import de from '@/i18n/locales/de.json';
 
-// Safely load locale messages
-const loadLocaleMessages = async (locale) => {
-  try {
-    const loader = localeImports[locale];
-    if (!loader) throw new Error(`No loader function found for locale: ${locale}`);
-    const module = await loader();
+// Static message map
+const MESSAGES = { en, de };
 
-    const messages = module?.default || module;
-
-    if (typeof messages !== 'object' || messages === null) {
-      throw new Error(`Invalid message format for locale: ${locale}`);
-    }
-
-    return messages;
-  } catch (error) {
-    console.error(`[i18n error] Failed to load messages for locale "${locale}":`, error);
-    return {};
-  }
-};
-
-// Initialize i18n instance
-const createI18nInstance = async () => {
-  const locale = getUserLocale();
-  const messages = await loadLocaleMessages(locale);
-
-  if (Object.keys(messages).length === 0) {
-    console.error(`[i18n critical] No valid messages loaded for locale: ${locale}`);
-    throw new Error('Cannot create i18n instance: messages object invalid.');
-  }
-
-  return createI18n({
-    legacy: false,
-    locale,
-    fallbackLocale: 'en',
-    messages: {
-      [locale]: messages
-    },
-    globalInjection: true,
-    warnHtmlMessage: false,
-    missingWarn: import.meta.env.DEV,
-    fallbackWarn: import.meta.env.DEV
-  });
-};
-
-export { createI18nInstance };
+export const i18n = createI18n({
+  legacy: false,
+  locale: getUserLocale(),
+  fallbackLocale: 'en',
+  messages: MESSAGES,
+  globalInjection: true,
+  warnHtmlMessage: false,
+  missingWarn: import.meta.env.DEV,
+  fallbackWarn: import.meta.env.DEV
+});
