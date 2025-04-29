@@ -10,7 +10,6 @@
     "vscode": {
       "extensions": [
         "vue.volar",
-        "vue.vscode-typescript-vue-plugin",
         "tailwindcss-intellisense.tailwindcss-intellisense",
         "antfu.vite",
         "sdras.vue-vscode-snippets",
