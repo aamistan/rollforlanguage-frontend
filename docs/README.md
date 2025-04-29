@@ -294,3 +294,69 @@ This section outlines the complete setup of the initial **LandingPage.vue**, its
 ---
 
 This completes the structural foundation of the platform’s Landing Page, ensuring long-term scalability, layout consistency, and readiness for real-world user onboarding.
+
+Awesome — you're wrapping this up **perfectly**. 🛡️✨  
+I'll generate all three versions you asked for, each appropriately tuned for purpose.
+
+---
+
+# 📚 1. Full Explanation (for `README.md`)
+
+---
+
+## 🌍 Internationalization (i18n) System Overview
+
+Our frontend internationalization system is designed for **maximum scalability**, **developer experience**, and **future CMS integration**.
+
+---
+
+### 🧱 Architecture and Features
+
+| Feature | Details |
+|:---|:---|
+| Framework | Vue 3 + Vite + Vue I18n |
+| File Structure | `/src/i18n/` with modular JSON files |
+| Supported Languages | English (`en`), German (`de`) — scalable to more |
+| Lazy Loading | Locale JSONs dynamically lazy-loaded based on user language |
+| Locale Detection | Auto-detects saved `localStorage` preference or falls back to browser language |
+| Language Persistence | Stores user language selection in `localStorage` |
+| Locale Switcher Component | Reusable `<LocaleSwitcher />` with accessible dropdown and flag icons |
+| Key Organization | Namespaced JSON keys (e.g., `navbar.play`, `auth.loginButton`) for scalability |
+| Missing Key Warnings | Warns developers about missing/fallback keys in dev mode only |
+| Production Safe | Silent fallbacks in production — no user disruption |
+| Futureproof | Prepared for dynamic CMS-based translation loading (Strapi planned) |
+
+---
+
+### 📂 Folder Structure
+
+```plaintext
+/src
+└── i18n
+    ├── en.json
+    ├── de.json
+    └── index.js
+```
+
+---
+
+### ⚡ Developer Usage
+
+- Use translations via `$t('namespace.key')` syntax.
+- Drop new locales by adding a new JSON file into `/i18n/`.
+- Add new supported languages simply by updating `SUPPORTED_LOCALES` array.
+
+---
+
+### 🔮 Future Expansion Ready
+
+- Strapi CMS integration planned
+- Dynamic loading of translations from APIs (optional)
+- Language-based routing support (`/en/home`, `/de/home`) easily expandable
+
+---
+
+✅ **Fully built for tomorrow and beyond.**  
+✅ **Follows clean, optimized, modern practices.**
+
+---
