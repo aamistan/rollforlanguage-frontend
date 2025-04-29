@@ -29,13 +29,16 @@ importers:
         version: 9.25.1
       '@intlify/vite-plugin-vue-i18n':
         specifier: ^7.0.0
-        version: 7.0.0(vite@5.4.18)(vue-i18n@9.14.4(vue@3.5.13))
+        version: 7.0.0(vite@5.4.18(@types/node@22.15.3))(vue-i18n@9.14.4(vue@3.5.13))
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.15.3
       '@vitejs/plugin-vue':
         specifier: ^5.0.2
-        version: 5.2.3(vite@5.4.18)(vue@3.5.13)
+        version: 5.2.3(vite@5.4.18(@types/node@22.15.3))(vue@3.5.13)
       '@vitejs/plugin-vue-jsx':
         specifier: ^3.0.1
-        version: 3.1.0(vite@5.4.18)(vue@3.5.13)
+        version: 3.1.0(vite@5.4.18(@types/node@22.15.3))(vue@3.5.13)
       '@vue/eslint-config-prettier':
         specifier: ^8.0.0
         version: 8.0.0(eslint@8.57.1)(prettier@3.5.3)
@@ -60,6 +63,9 @@ importers:
       globals:
         specifier: ^16.0.0
         version: 16.0.0
+      path:
+        specifier: ^0.12.7
+        version: 0.12.7
       postcss:
         specifier: ^8.4.30
         version: 8.5.3
@@ -83,10 +89,10 @@ importers:
         version: 28.5.0(@babel/parser@7.27.0)(vue@3.5.13)
       vite:
         specifier: ^5.2.10
-        version: 5.4.18
+        version: 5.4.18(@types/node@22.15.3)
       vitest:
         specifier: ^1.2.2
-        version: 1.6.1
+        version: 1.6.1(@types/node@22.15.3)
 
 packages:
 
@@ -628,6 +634,9 @@ packages:
 
   '@types/minimist@1.2.5':
     resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
+
+  '@types/node@22.15.3':
+    resolution: {integrity: sha512-lX7HFZeHf4QG/J7tBZqrCAXwz9J5RD56Y6MpP0eJkka8p+K0RY/yBTW7CYFJ4VGCclxqOLKmiGP5juQc6MKgcw==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -1369,6 +1378,9 @@ packages:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
     deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
+  inherits@2.0.3:
+    resolution: {integrity: sha512-x00IRNXNy63jwGkJmzPigoySHbaqpNuzKbBOmzK+g2OdZpQ9w+sxCN+VSB3ja7IAge2OP2qpfxTjeNcyjmW1uw==}
+
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
 
@@ -1715,6 +1727,9 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
 
+  path@0.12.7:
+    resolution: {integrity: sha512-aXXC6s+1w7otVF9UletFkFcDsJeO7lSZBPUQhtb5O0xJe8LtYhj/GxldoL09bBj9+ZmE2hNoHqQSFMN5fikh4Q==}
+
   pathe@1.1.2:
     resolution: {integrity: sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==}
 
@@ -1824,6 +1839,10 @@ packages:
   pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+
+  process@0.11.10:
+    resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
+    engines: {node: '>= 0.6.0'}
 
   proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
@@ -2095,6 +2114,9 @@ packages:
   ufo@1.6.1:
     resolution: {integrity: sha512-9a4/uxlTWJ4+a5i0ooc1rU7C7YOw3wT+UGqdeNNHWnOF9qcMBgLRS+4IYUqbczewFx4mLEig6gawh7X6mFlEkA==}
 
+  undici-types@6.21.0:
+    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
+
   unimport@3.14.6:
     resolution: {integrity: sha512-CYvbDaTT04Rh8bmD8jz3WPmHYZRG/NnvYVzwD6V1YAlvvKROlAeNDUBhkBGzNav2RKaeuXvlWYaa1V4Lfi/O0g==}
 
@@ -2146,6 +2168,9 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  util@0.10.4:
+    resolution: {integrity: sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==}
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
@@ -2646,7 +2671,7 @@ snapshots:
 
   '@intlify/shared@9.14.4': {}
 
-  '@intlify/vite-plugin-vue-i18n@7.0.0(vite@5.4.18)(vue-i18n@9.14.4(vue@3.5.13))':
+  '@intlify/vite-plugin-vue-i18n@7.0.0(vite@5.4.18(@types/node@22.15.3))(vue-i18n@9.14.4(vue@3.5.13))':
     dependencies:
       '@intlify/bundle-utils': 3.4.0(vue-i18n@9.14.4(vue@3.5.13))
       '@intlify/shared': 12.0.0-alpha.2
@@ -2655,7 +2680,7 @@ snapshots:
       fast-glob: 3.3.3
       source-map: 0.6.1
     optionalDependencies:
-      vite: 5.4.18
+      vite: 5.4.18(@types/node@22.15.3)
       vue-i18n: 9.14.4(vue@3.5.13)
     transitivePeerDependencies:
       - supports-color
@@ -2788,23 +2813,27 @@ snapshots:
 
   '@types/minimist@1.2.5': {}
 
+  '@types/node@22.15.3':
+    dependencies:
+      undici-types: 6.21.0
+
   '@types/normalize-package-data@2.4.4': {}
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitejs/plugin-vue-jsx@3.1.0(vite@5.4.18)(vue@3.5.13)':
+  '@vitejs/plugin-vue-jsx@3.1.0(vite@5.4.18(@types/node@22.15.3))(vue@3.5.13)':
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-transform-typescript': 7.27.0(@babel/core@7.26.10)
       '@vue/babel-plugin-jsx': 1.4.0(@babel/core@7.26.10)
-      vite: 5.4.18
+      vite: 5.4.18(@types/node@22.15.3)
       vue: 3.5.13
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@5.2.3(vite@5.4.18)(vue@3.5.13)':
+  '@vitejs/plugin-vue@5.2.3(vite@5.4.18(@types/node@22.15.3))(vue@3.5.13)':
     dependencies:
-      vite: 5.4.18
+      vite: 5.4.18(@types/node@22.15.3)
       vue: 3.5.13
 
   '@vitest/expect@1.6.1':
@@ -3599,6 +3628,8 @@ snapshots:
       once: 1.4.0
       wrappy: 1.0.2
 
+  inherits@2.0.3: {}
+
   inherits@2.0.4: {}
 
   ini@1.3.8: {}
@@ -3908,6 +3939,11 @@ snapshots:
 
   path-type@4.0.0: {}
 
+  path@0.12.7:
+    dependencies:
+      process: 0.11.10
+      util: 0.10.4
+
   pathe@1.1.2: {}
 
   pathe@2.0.3: {}
@@ -4000,6 +4036,8 @@ snapshots:
       '@jest/schemas': 29.6.3
       ansi-styles: 5.2.0
       react-is: 18.3.1
+
+  process@0.11.10: {}
 
   proto-list@1.2.4: {}
 
@@ -4323,6 +4361,8 @@ snapshots:
 
   ufo@1.6.1: {}
 
+  undici-types@6.21.0: {}
+
   unimport@3.14.6(rollup@4.40.1):
     dependencies:
       '@rollup/pluginutils': 5.1.4(rollup@4.40.1)
@@ -4399,18 +4439,22 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
+  util@0.10.4:
+    dependencies:
+      inherits: 2.0.3
+
   validate-npm-package-license@3.0.4:
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
 
-  vite-node@1.6.1:
+  vite-node@1.6.1(@types/node@22.15.3):
     dependencies:
       cac: 6.7.14
       debug: 4.4.0
       pathe: 1.1.2
       picocolors: 1.1.1
-      vite: 5.4.18
+      vite: 5.4.18(@types/node@22.15.3)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -4422,15 +4466,16 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.4.18:
+  vite@5.4.18(@types/node@22.15.3):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.3
       rollup: 4.40.1
     optionalDependencies:
+      '@types/node': 22.15.3
       fsevents: 2.3.3
 
-  vitest@1.6.1:
+  vitest@1.6.1(@types/node@22.15.3):
     dependencies:
       '@vitest/expect': 1.6.1
       '@vitest/runner': 1.6.1
@@ -4449,9 +4494,11 @@ snapshots:
       strip-literal: 2.1.1
       tinybench: 2.9.0
       tinypool: 0.8.4
-      vite: 5.4.18
-      vite-node: 1.6.1
+      vite: 5.4.18(@types/node@22.15.3)
+      vite-node: 1.6.1(@types/node@22.15.3)
       why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/node': 22.15.3
     transitivePeerDependencies:
       - less
       - lightningcss
