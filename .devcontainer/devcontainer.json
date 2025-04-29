@@ -28,5 +28,5 @@
       ]
     }
   },
-  "postCreateCommand": "pnpm install",
+  "postCreateCommand": "pnpm install"
 }
