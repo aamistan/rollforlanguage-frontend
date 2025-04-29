@@ -210,3 +210,39 @@ This structure delivers a **future-proof**, **scalable**, and **developer-first*
 We are building **not just for today, but for tomorrow and beyond**. 🚀
 
 ---
+## 🎨 Global Styles Setup — `global.css`
+
+This update introduces a complete, scalable, best-practices-driven `global.css` to complement the Tailwind-based design system.
+
+### ✅ What We Accomplished
+
+- **Created** `global.css` at `/src/assets/styles/global.css`
+- **Integrated** custom font `MedReg.woff2` in `/src/assets/fonts/`
+- **Updated** `main.js` to globally import the stylesheet
+
+### 🧱 File Architecture Breakdown
+
+The global stylesheet is structured in 7 clean, well-commented sections:
+
+1. **@font-face declarations**
+   - Registers and loads `MedReg` using `font-display: swap` for performance.
+2. **CSS Reset / Normalize Layer**
+   - Applies a modern, Tailwind-compatible reset with normalized margins, box model, form font inheritance, and media elements.
+3. **Base Typography Defaults**
+   - Styles `body`, headings, links, paragraphs, and emphasis elements with scalable, readable defaults.
+4. **Structural HTML Element Defaults**
+   - Sets default display for semantic blocks and resets form element styles.
+5. **Accessibility Helpers**
+   - Adds motion reduction support, `:focus-visible` outlines, and screen reader `.sr-only` class.
+6. **Utility Enhancements**
+   - Improves rendering, scroll behavior, and mobile interaction defaults.
+7. **Global Utility Classes**
+   - Includes `.hidden-scrollbar`, `.no-scroll`, `.truncate-1`, and `.center-absolute` for layout control and cross-component utility.
+
+### 🧩 Tailwind Compatibility
+
+- All styles respect and extend Tailwind Preflight rather than overwrite it.
+- Classes like `.sr-only` and `.truncate-1` match utility conventions already familiar to Tailwind users.
+
+---
+

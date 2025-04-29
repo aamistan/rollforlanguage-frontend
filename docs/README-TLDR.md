@@ -199,3 +199,8 @@ This is designed exactly for what you mentioned: **tracking your project workflo
 ✅ **Still expandable if deeper details needed**
 
 ---
+🎨 Added `global.css` with custom font + full base styling system  
+✅ `/src/assets/styles/global.css` created  
+✅ `MedReg.woff2` font integrated + imported via `@font-face`  
+✅ `main.js` updated for global import  
+✅ Includes resets, typography, a11y, and utility classes

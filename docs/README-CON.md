@@ -205,3 +205,11 @@ find src -type d -exec touch {}/.gitkeep \;
 > _We build not just for today, but for tomorrow and beyond._ 🚀
 
 ---
+## 🎨 Global Style System Integrated
+
+- ✅ Added `/src/assets/styles/global.css` with clean, modular sections:
+  - Font loading, resets, typography, structural defaults, a11y, enhancements, utilities
+- ✅ Integrated `MedReg.woff2` custom font
+- ✅ Updated `main.js` to import `global.css`
+- ✅ Structure aligns with Tailwind Preflight and keeps components minimal
+- ✅ Utility classes included: `.sr-only`, `.truncate-1`, `.no-scroll`, `.center-absolute`, `.hidden-scrollbar`
