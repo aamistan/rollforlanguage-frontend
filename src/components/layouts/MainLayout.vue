@@ -12,11 +12,11 @@
   </template>
   
   <script setup>
-  import NavbarPlaceholder from '@/components/organisms/NavbarPlaceholder.vue';
-  import FooterPlaceholder from '@/components/organisms/FooterPlaceholder.vue';
+  import NavbarPlaceholder from '@/components/organisms/navbar/Navbar.vue';
+  import FooterPlaceholder from '@/components/organisms/footer/Footer.vue';
   
   const backgroundStyle = {
-    backgroundImage: "url('/assets/backgrounds/landing-page-bg.jpg')",
+    backgroundImage: "url('/assets/backgrounds/bg-landing.webp')",
   };
   </script>
   
