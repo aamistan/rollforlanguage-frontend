@@ -1,12 +1,22 @@
-// /src/i18n/index.js
 import { createI18n } from 'vue-i18n';
 
-const getUserLocale = () => {
-  const saved = localStorage.getItem('locale');
-  if (saved) return saved;
+const SUPPORTED_LOCALES = ['en', 'de'];
 
-  const browser = navigator.language.split('-')[0];
-  return ['en', 'de'].includes(browser) ? browser : 'en';
+const getUserLocale = () => {
+  // 1. Check localStorage first
+  const savedLocale = localStorage.getItem('locale');
+  if (savedLocale && SUPPORTED_LOCALES.includes(savedLocale)) {
+    return savedLocale;
+  }
+
+  // 2. Then check browser language
+  const browserLocale = navigator.language.split('-')[0];
+  if (SUPPORTED_LOCALES.includes(browserLocale)) {
+    return browserLocale;
+  }
+
+  // 3. Default fallback
+  return 'en';
 };
 
 export const i18n = createI18n({
