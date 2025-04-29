@@ -11,6 +11,6 @@
 </template>
 
 <script setup>
-import NavbarPlaceholder from '@/components/organisms/Navbar.vue';
-import FooterPlaceholder from '@/components/organisms/Footer.vue';
+import NavbarPlaceholder from '@/components/organisms/navbar/Navbar.vue';
+import FooterPlaceholder from '@/components/organisms/footer/Footer.vue';
 </script>
