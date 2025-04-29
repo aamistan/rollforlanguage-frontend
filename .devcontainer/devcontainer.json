@@ -2,11 +2,9 @@
   "name": "Frontend Dev Environment",
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "20"
-    },
-    "ghcr.io/devcontainers/features/pnpm:1": {
-      "version": "latest"
+    "ghcr.io/devcontainers/features/node:2": {
+      "version": "20",
+      "pnpm": true
     }
   },
   "customizations": {
