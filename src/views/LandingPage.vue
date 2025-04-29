@@ -1,7 +1,7 @@
 <template>
   <div
     class="min-h-screen flex flex-col bg-cover bg-center"
-    style="background-image: url('/assets/backgrounds/bg-landing.webp')"
+    style="background-image: url('src/assets/backgrounds/bg-landing.webp')"
   >
     <MainLayout>
       <section class="flex flex-col items-center justify-center text-center px-6 py-20">
