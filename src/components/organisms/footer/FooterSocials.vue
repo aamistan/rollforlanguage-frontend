@@ -1,11 +1,3 @@
-<script setup>
-const socials = [
-  { name: 'GitHub', url: 'https://github.com/', icon: 'github' },
-  { name: 'Twitter', url: 'https://twitter.com/', icon: 'twitter' }
-  // Add more socials as needed
-]
-</script>
-
 <template>
   <div class="flex space-x-4">
     <a
@@ -21,3 +13,11 @@ const socials = [
     </a>
   </div>
 </template>
+
+<script setup>
+const socials = [
+  { name: 'GitHub', url: 'https://github.com/', icon: 'github' },
+  { name: 'Twitter', url: 'https://twitter.com/', icon: 'twitter' }
+  // Add more socials as needed
+]
+</script>
