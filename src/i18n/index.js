@@ -40,8 +40,10 @@ const createI18nInstance = async () => {
     fallbackLocale: 'en',
     messages,
     globalInjection: true,
-    warnHtmlMessage: false
-  });
+    warnHtmlMessage: false,
+    missingWarn: import.meta.env.DEV,
+    fallbackWarn: import.meta.env.DEV
+  });  
 };
 
 export { createI18nInstance };
