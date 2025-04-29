@@ -75,7 +75,7 @@ import { useRoute } from 'vue-router'
 import NavbarDesktop from './NavbarDesktop.vue'
 import NavbarMobile from './NavbarMobile.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
-import LocaleSwitcher from '@/components/atoms/LocaleSwitcher.vue'
+// import LocaleSwitcher from '@/components/atoms/LocaleSwitcher.vue'
 
 // Reactive states
 const isMenuOpen = ref(false)
