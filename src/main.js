@@ -2,7 +2,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
-import { createI18nInstance } from './i18n';
+import { createI18nInstance } from './i18n/i18n-setup';
 
 import './assets/styles/global.css';
 import './assets/styles/tailwind.css';
