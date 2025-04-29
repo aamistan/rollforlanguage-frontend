@@ -215,20 +215,6 @@ This is designed exactly for what you mentioned: **tracking your project workflo
 
 ---
 
-## 🌍 i18n (TL;DR)
-
-- Vue 3 + Vue I18n, lazy loaded
-- Auto-detect + persist user locale
-- Modular JSONs + namespaced keys
-- Locale Switcher UI with flags
-- Strapi CMS prep done
-
-✅ Future-ready  
-✅ Fast  
-✅ Scalable
-
----
-
 # ✨ Final Note
 
 Each version ties cleanly into your **main mantra**:  

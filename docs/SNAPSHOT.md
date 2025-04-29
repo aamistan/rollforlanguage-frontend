@@ -70,7 +70,7 @@ No extra questions unless you specifically ask — just fast, clean, organized s
 |:--------|:------|:------|
 | 🌟 Project Charter | ✅ Complete | Tech stack + development mantra locked |
 | 🗺️ Frontend Setup README | ✅ Complete | Codespaces/Vite/Tailwind scaffolded |
-| 🌍 i18n Setup | ✅ Complete | Vue I18n lazy-loaded, modular, scalable |
+| 🌍 i18n Setup | 🕐 Pending | Vue I18n lazy-loaded, modular, scalable |
 | 🧱 Navbar System | ✅ Complete | Responsive Desktop/Mobile Navbar + Locale Switcher |
 | 🧱 Footer System | ✅ Complete | Modular Footer with Branding, Links, Socials, Credits |
 | 🚀 Frontend Deployment & Domain | ✅ Complete | Vercel + Cloudflare Domain Live |

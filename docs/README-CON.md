@@ -236,24 +236,6 @@ Quick summary of all tasks completed to establish the base frontend Landing Page
 
 ---
 
-## 🌍 i18n System (At-a-Glance)
-
-- **Vue 3 + Vite + Vue I18n** internationalization system
-- **Languages:** English (`en`), German (`de`) — ready for expansion
-- **Auto-Detection:** First checks `localStorage`, then browser settings
-- **Lazy Loading:** Loads only the needed JSON file on startup
-- **Locale Switcher:** Accessible `<LocaleSwitcher />` component with flags
-- **Namespacing:** Organized translation keys (`navbar.play`, `auth.loginButton`)
-- **Missing Key Warnings:** Show during dev, silent in production
-- **Future CMS:** Strapi integration roadmap ready
-- **Simple Expansion:** Add new JSON, update `SUPPORTED_LOCALES`, done.
-
-✅ Clean.  
-✅ Scalable.  
-✅ Developer-friendly.
-
----
-
 # 📋 2. Condensed Version (for `README-CON.md`)
 
 ---
