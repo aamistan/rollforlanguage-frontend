@@ -26,8 +26,15 @@ const loadLocaleMessages = async (locale) => {
   try {
     const loader = localeImports[locale];
     if (!loader) throw new Error(`No loader found for locale: ${locale}`);
-    const messages = await loader();
-    return messages.default;
+    const messagesModule = await loader();
+    
+    // Defend against weird wrapping
+    const messages = messagesModule.default || messagesModule;
+    if (typeof messages !== 'object' || messages === null) {
+      throw new Error(`Invalid message format loaded for locale: ${locale}`);
+    }
+
+    return messages;
   } catch (error) {
     console.error(`Failed to load messages for locale: ${locale}`, error);
     return {};
