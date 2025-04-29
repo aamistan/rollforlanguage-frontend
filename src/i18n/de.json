@@ -1,0 +1,33 @@
+{
+    "app": {
+      "title": "Roll für Sprache",
+      "description": "Ein RPG-Abenteuer zum Sprachenlernen!"
+    },
+    "navbar": {
+      "home": "Startseite",
+      "play": "Spielen",
+      "campaigns": "Kampagnen",
+      "login": "Anmelden",
+      "language": "Sprache"
+    },
+    "auth": {
+      "loginButton": "Anmelden",
+      "logoutButton": "Abmelden",
+      "email": "E-Mail",
+      "password": "Passwort"
+    },
+    "landing": {
+      "headline": "Beginne dein Abenteuer heute",
+      "subtext": "Lerne Sprachen, während du Quests meisterst.",
+      "ctaButton": "Jetzt starten"
+    },
+    "campaign": {
+      "createButton": "Kampagne erstellen",
+      "joinButton": "Kampagne beitreten"
+    },
+    "inventory": {
+      "title": "Dein Inventar",
+      "empty": "Keine Gegenstände gefunden."
+    }
+  }
+  

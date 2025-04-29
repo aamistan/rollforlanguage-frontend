@@ -1,5 +1,32 @@
-"landing": {
-  "heroTitle": "Master a Language, Forge Your Adventure!",
-  "heroSubtitle": "Join a story-driven RPG where every quest helps you learn German.",
-  "cta": "Start Your Journey"
+{
+  "app": {
+    "title": "Roll for Language",
+    "description": "An RPG-based language learning adventure!"
+  },
+  "navbar": {
+    "home": "Home",
+    "play": "Play",
+    "campaigns": "Campaigns",
+    "login": "Log In",
+    "language": "Language"
+  },
+  "auth": {
+    "loginButton": "Log In",
+    "logoutButton": "Log Out",
+    "email": "Email",
+    "password": "Password"
+  },
+  "landing": {
+    "headline": "Start Your Adventure Today",
+    "subtext": "Learn languages while conquering quests.",
+    "ctaButton": "Get Started"
+  },
+  "campaign": {
+    "createButton": "Create Campaign",
+    "joinButton": "Join Campaign"
+  },
+  "inventory": {
+    "title": "Your Inventory",
+    "empty": "No items found."
+  }
 }
