@@ -12,5 +12,4 @@
     }
   },
   "postCreateCommand": "pnpm install",
-  "remoteUser": "vscode"
 }
