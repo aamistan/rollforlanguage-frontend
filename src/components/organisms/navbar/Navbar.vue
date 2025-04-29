@@ -29,7 +29,7 @@
         <!-- Right Section -->
         <div class="flex items-center space-x-4">
           <!-- Language Switcher -->
-          <!-- <LocaleSwitcher /> -->
+          <LocaleSwitcher />
 
           <!-- Mobile Menu Button -->
           <button
@@ -75,7 +75,7 @@ import { useRoute } from 'vue-router'
 import NavbarDesktop from './NavbarDesktop.vue'
 import NavbarMobile from './NavbarMobile.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
-// import LocaleSwitcher from '@/components/atoms/LocaleSwitcher.vue'
+import LocaleSwitcher from '@/components/atoms/LocaleSwitcher.vue'
 
 // Reactive states
 const isMenuOpen = ref(false)
