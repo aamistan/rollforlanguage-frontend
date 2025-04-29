@@ -213,3 +213,21 @@ find src -type d -exec touch {}/.gitkeep \;
 - ✅ Updated `main.js` to import `global.css`
 - ✅ Structure aligns with Tailwind Preflight and keeps components minimal
 - ✅ Utility classes included: `.sr-only`, `.truncate-1`, `.no-scroll`, `.center-absolute`, `.hidden-scrollbar`
+
+## ✅ Landing Page & Layout Overview
+
+Quick summary of all tasks completed to establish the base frontend Landing Page:
+
+- **index.html** created in project root (SEO, Vite-ready, Tailwind body)
+- **Vue Router** setup with `/` → `LandingPage.vue`
+- **MainLayout.vue** created (Navbar/Footer placeholder, background support)
+- **LandingPage.vue** created with:
+  - Hero text + CTA
+  - Responsive Tailwind layout
+  - i18n text keys (`$t`)
+- **NavbarPlaceholder** + **FooterPlaceholder** created
+- **App.vue** cleaned to only use `<RouterView />`
+- **main.js** initialized (app, router, Tailwind import)
+- **Tailwind** confirmed via `main.css`
+
+> Result: Clean, componentized, responsive landing structure — ready for enhancements.
