@@ -1,9 +1,9 @@
-<script setup>
-// No special logic needed — static for now
-</script>
-
 <template>
   <div class="text-center md:text-right">
-    {{ $t('footer.credits') }}
+    Built with ❤️ using Vue 3, Vite, TailwindCSS, and more.
   </div>
 </template>
+
+<script setup>
+// No logic yet
+</script>
