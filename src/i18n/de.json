@@ -28,6 +28,16 @@
     "inventory": {
       "title": "Dein Inventar",
       "empty": "Keine Gegenstände gefunden."
+    },
+    "footer": {
+      "tagline": "Dein Tor zu Abenteuern und Sprachbeherrschung.",
+      "rights": "Alle Rechte vorbehalten.",
+      "links": {
+        "home": "Startseite",
+        "about": "Über uns",
+        "contact": "Kontakt"
+      },
+      "credits": "Erstellt mit ❤️ mit Vue 3, Vite, TailwindCSS und mehr."
     }
   }
   

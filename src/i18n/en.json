@@ -28,5 +28,15 @@
   "inventory": {
     "title": "Your Inventory",
     "empty": "No items found."
+  },
+  "footer": {
+    "tagline": "Your portal to adventure and language mastery.",
+    "rights": "All rights reserved.",
+    "links": {
+      "home": "Home",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "credits": "Built with ❤️ using Vue 3, Vite, TailwindCSS, and more."
   }
 }
