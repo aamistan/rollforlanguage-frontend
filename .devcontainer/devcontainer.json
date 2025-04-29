@@ -8,7 +8,25 @@
   },
   "customizations": {
     "vscode": {
-      "extensions": []
+      "extensions": [
+        "vue.volar",
+        "vue.vscode-typescript-vue-plugin",
+        "tailwindcss-intellisense.tailwindcss-intellisense",
+        "antfu.vite",
+        "sdras.vue-vscode-snippets",
+        "lokalise.i18n-ally",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "stylelint.vscode-stylelint",
+        "christian-kohler.path-intellisense",
+        "wix.vscode-import-cost",
+        "eamodio.gitlens",
+        "github.copilot",
+        "usernamehw.errorlens",
+        "humao.rest-client",
+        "streetsidesoftware.code-spell-checker",
+        "pkief.material-icon-theme"
+      ]
     }
   },
   "postCreateCommand": "pnpm install",
