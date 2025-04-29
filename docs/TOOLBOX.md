@@ -21,7 +21,6 @@
 
 **Auto-Installed Extensions**:
 - `vue.volar` - Vue Language Features (official)
-- `vue.vscode-typescript-vue-plugin` - Volar Takeover support
 - `tailwindcss-intellisense.tailwindcss-intellisense` - Tailwind CSS IntelliSense
 - `antfu.vite` - Vite Extension Pack
 - `sdras.vue-vscode-snippets` - Vue VSCode Snippets
