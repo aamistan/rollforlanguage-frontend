@@ -16,10 +16,17 @@ const getUserLocale = () => {
   return 'en';
 };
 
-// Lazy-load only the active locale file
+// Map of static imports
+const localeImports = {
+  en: () => import('@/i18n/locales/en.json'),
+  de: () => import('@/i18n/locales/de.json')
+};
+
 const loadLocaleMessages = async (locale) => {
   try {
-    const messages = await import(`@/i18n/locales/${locale}.json`);
+    const loader = localeImports[locale];
+    if (!loader) throw new Error(`No loader found for locale: ${locale}`);
+    const messages = await loader();
     return messages.default;
   } catch (error) {
     console.error(`Failed to load messages for locale: ${locale}`, error);
@@ -27,7 +34,6 @@ const loadLocaleMessages = async (locale) => {
   }
 };
 
-// Create and initialize i18n instance
 const createI18nInstance = async () => {
   const locale = getUserLocale();
   const messages = {
@@ -43,7 +49,7 @@ const createI18nInstance = async () => {
     warnHtmlMessage: false,
     missingWarn: import.meta.env.DEV,
     fallbackWarn: import.meta.env.DEV
-  });  
+  });
 };
 
 export { createI18nInstance };
