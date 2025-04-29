@@ -5,11 +5,11 @@
       @click="toggleDropdown"
       class="flex items-center space-x-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
     >
-      <img
+      <!-- <img
         src="/avatar-placeholder.png"
         alt="User Avatar"
         class="h-10 w-10 rounded-full object-cover"
-      />
+      /> -->
     </button>
 
     <!-- Dropdown Menu -->
