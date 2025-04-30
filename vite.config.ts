@@ -7,14 +7,14 @@ import Components from 'unplugin-vue-components/vite';
 import fs from 'fs';
 import path from 'path';
 
-// Recreate __dirname
+// Recreate __dirname for ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default defineConfig(() => {
   const isCodespaces = process.env.CODESPACES === 'true';
 
-  let serverOptions: Record<string, any> = {
+  const serverOptions: Record<string, any> = {
     host: '0.0.0.0',
     port: 5173,
     strictPort: true,
@@ -26,14 +26,11 @@ export default defineConfig(() => {
 
   if (isCodespaces) {
     try {
-      const key = fs.readFileSync(path.resolve(__dirname, 'certs/localhost-key.pem'));
-      const cert = fs.readFileSync(path.resolve(__dirname, 'certs/localhost.pem'));
-      serverOptions = {
-        ...serverOptions,
-        https: { key, cert },
-      };
-    } catch (err) {
-      console.warn('[vite] HTTPS certs not found. Using HTTP instead.');
+      const key = fs.readFileSync(resolve(__dirname, 'certs/localhost-key.pem'));
+      const cert = fs.readFileSync(resolve(__dirname, 'certs/localhost.pem'));
+      serverOptions.https = { key, cert };
+    } catch {
+      console.warn('[vite] HTTPS certs not found. Falling back to HTTP.');
     }
   }
 
