@@ -8,11 +8,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    FeatureHighlight: typeof import('./components/molecules/landing-page/FeatureHighlight.vue')['default']
     Footer: typeof import('./components/organisms/footer/Footer.vue')['default']
     FooterBranding: typeof import('./components/organisms/footer/FooterBranding.vue')['default']
     FooterCredits: typeof import('./components/organisms/footer/FooterCredits.vue')['default']
     FooterLinks: typeof import('./components/organisms/footer/FooterLinks.vue')['default']
     FooterSocials: typeof import('./components/organisms/footer/FooterSocials.vue')['default']
+    LandingValueShowcase: typeof import('./components/organisms/landing-page/LandingValueShowcase.vue')['default']
     LocaleSwitcher: typeof import('./components/atoms/LocaleSwitcher.vue')['default']
     MainLayout: typeof import('./components/layouts/MainLayout.vue')['default']
     Navbar: typeof import('./components/organisms/navbar/Navbar.vue')['default']
@@ -21,5 +23,6 @@ declare module 'vue' {
     ProfileDropdown: typeof import('./components/organisms/navbar/ProfileDropdown.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    WhyChooseUsCard: typeof import('./components/molecules/landing-page/WhyChooseUsCard.vue')['default']
   }
 }
