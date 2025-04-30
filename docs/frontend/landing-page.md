@@ -2,12 +2,16 @@
  * Landing Page Component
  * 
  * Related Documentation:
- * /docs/frontend/MainLayout.md
+ * /docs/frontend/MainLayout.md  
+ * /docs/frontend/ThreeColumnShell.md
+ * /docs/frontend/LandingHeroSection.md
+ * /docs/frontend/LandingValueShowcase.md
+ * /docs/frontend/PlayablePreviewCarousel.md
  * 
  * Purpose:
  * - Sets up the entry point view for the application with headline, subheadline, and CTA
- * - Integrates clean layout structure using MainLayout.vue and Tailwind CSS
- * - Establishes standardized background image usage for view-specific styling
+ * - Integrates responsive, slot-driven layout using ThreeColumnShell.vue
+ * - Showcases platform value, playable content, and onboarding experience modules
  * 
  * Development Mantra:
  * "We build not for today, but for tomorrow and beyond."
@@ -17,22 +21,25 @@
 
 ## Overview
 > The Landing Page is the entry point of the application and introduces users to the platform’s purpose.  
-It features a bold headline, a supporting tagline, and a CTA button that leads to user onboarding.  
-It is wrapped in `MainLayout.vue` for consistent Navbar/Footer placement and manages its own background.
+It features a bold headline, supporting tagline, CTA buttons, and preview sections highlighting platform strengths and RPG features.  
+It is wrapped in `MainLayout.vue` and utilizes `ThreeColumnShell.vue` for layout structure.
 
 ## Location  
 > `/src/views/LandingPage.vue`
 
 ## Features
-- [x] Hero section with headline and subheadline
-- [x] Call-to-Action buttons linking to `/register` & `/login`
-- [x] Responsive, mobile-first Tailwind layout
+- [x] Centered hero section with `LandingHeroSection.vue`
+- [x] Register/Login CTA buttons
+- [x] Left-side `LandingValueShowcase` with Why Choose Us + Features
+- [x] Left-side `PlayablePreviewCarousel` showing rotating characters
+- [x] Right-side `LandingExperienceCarousel` (planned)
+- [x] Fully responsive, mobile-first 3-column layout
 - [x] Page-specific background image rendering
 
 ## Props (if applicable)
 | Prop Name | Type | Default | Description |
 |:----------|:-----|:--------|:------------|
-| *None*    |      |         | Background is handled internally within the view |
+| *None*    | —    | —       | Layout is composed of modular, slotted components |
 
 ## Emits (if applicable)
 | Event Name | Payload | Description |
@@ -40,11 +47,15 @@ It is wrapped in `MainLayout.vue` for consistent Navbar/Footer placement and man
 | *None*     | —       | —          |
 
 ## Dependencies
-- `MainLayout.vue` — Wraps the page with Navbar and Footer components
-- `RouterLink` — Used to link to `/register`
-- `Tailwind CSS` — Handles layout, spacing, and responsive design
+- `MainLayout.vue` — Page frame (Navbar + Footer)
+- `ThreeColumnShell.vue` — Responsive 3-column layout wrapper
+- `LandingHeroSection.vue` — Center hero headline, subheadline, and CTA buttons
+- `LandingValueShowcase.vue` — 2x2 value grid and feature highlights
+- `PlayablePreviewCarousel.vue` — Rotating preview of character classes/species
+- `Tailwind CSS` — Layout, spacing, responsiveness
+- `RouterLink` — For page navigation (CTA buttons)
 
 ## Usage
 ```vue
-<!-- Imported and routed via Vue Router -->
+<!-- Registered via Vue Router -->
 <Route path="/" element={<LandingPage />} />
