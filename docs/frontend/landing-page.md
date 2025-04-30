@@ -25,7 +25,7 @@ It is wrapped in `MainLayout.vue` for consistent Navbar/Footer placement and man
 
 ## Features
 - [x] Hero section with headline and subheadline
-- [x] Call-to-Action button linking to `/register`
+- [x] Call-to-Action buttons linking to `/register` & `/login`
 - [x] Responsive, mobile-first Tailwind layout
 - [x] Page-specific background image rendering
 
