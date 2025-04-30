@@ -17,7 +17,6 @@ declare module 'vue' {
     LandingExperienceCarousel: typeof import('./components/organisms/landing-page/LandingExperienceCarousel.vue')['default']
     LandingHeroSection: typeof import('./components/organisms/landing-page/LandingHeroSection.vue')['default']
     LandingValueShowcase: typeof import('./components/organisms/landing-page/LandingValueShowcase.vue')['default']
-    LocaleSwitcher: typeof import('./components/atoms/LocaleSwitcher.vue')['default']
     MainLayout: typeof import('./components/layouts/MainLayout.vue')['default']
     Navbar: typeof import('./components/organisms/navbar/Navbar.vue')['default']
     NavbarDesktop: typeof import('./components/organisms/navbar/NavbarDesktop.vue')['default']
