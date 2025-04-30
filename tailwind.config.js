@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['MedReg', 'ui-sans-serif', 'system-ui'],
+      },
+    },
   },
   plugins: [],
 }
