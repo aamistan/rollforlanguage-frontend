@@ -7,14 +7,14 @@ import FooterCredits from './FooterCredits.vue'
 
 <template>
   <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-t border-gray-300 dark:border-gray-700">
-    <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="flex flex-col items-center md:items-start space-y-2">
+    <div class="max-w-7xl mx-auto px-4 py-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="flex flex-col items-center md:items-start space-y-1">
         <FooterBranding />
       </div>
-      <div class="flex flex-col items-center space-y-2">
+      <div class="flex flex-col items-center space-y-1">
         <FooterLinks />
       </div>
-      <div class="flex flex-col items-center md:items-end space-y-2">
+      <div class="flex flex-col items-center md:items-end space-y-1">
         <FooterSocials />
       </div>
     </div>
