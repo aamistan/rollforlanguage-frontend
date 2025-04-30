@@ -1,7 +1,7 @@
 <template>
     <section class="py-16 px-6 max-w-7xl mx-auto text-center space-y-16">
       <!-- WHY CHOOSE US SECTION -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[560px] md:max-w-none">
         <WhyChooseUsCard
           icon="🧠"
           title="Story-Driven Learning"
