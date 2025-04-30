@@ -1,23 +1,25 @@
 <template>
-  <MainLayout>
-    <ThreeColumnShell>
-      <!-- LEFT COLUMN -->
-      <template #left>
-        <LandingValueShowcase />
-        <PlayablePreviewCarousel />
-      </template>
+  <div class="min-h-screen flex flex-col bg-cover bg-center" style="background-image: url('backgrounds/bg-landing.webp');">
+    <MainLayout>
+      <ThreeColumnShell>
+        <!-- LEFT COLUMN -->
+        <template #left>
+          <LandingValueShowcase />
+          <PlayablePreviewCarousel />
+        </template>
 
-      <!-- CENTER COLUMN -->
-      <template #center>
-        <LandingHeroSection />
-      </template>
+        <!-- CENTER COLUMN -->
+        <template #center>
+          <LandingHeroSection />
+        </template>
 
-      <!-- RIGHT COLUMN -->
-      <template #right>
-        <LandingExperienceCarousel />
-      </template>
-    </ThreeColumnShell>
-  </MainLayout>
+        <!-- RIGHT COLUMN -->
+        <template #right>
+          <LandingExperienceCarousel />
+        </template>
+      </ThreeColumnShell>
+    </MainLayout>
+  </div>
 </template>
 
 <script setup>
