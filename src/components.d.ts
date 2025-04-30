@@ -14,6 +14,7 @@ declare module 'vue' {
     FooterCredits: typeof import('./components/organisms/footer/FooterCredits.vue')['default']
     FooterLinks: typeof import('./components/organisms/footer/FooterLinks.vue')['default']
     FooterSocials: typeof import('./components/organisms/footer/FooterSocials.vue')['default']
+    LandingHeroSection: typeof import('./components/organisms/landing-page/LandingHeroSection.vue')['default']
     LandingValueShowcase: typeof import('./components/organisms/landing-page/LandingValueShowcase.vue')['default']
     LocaleSwitcher: typeof import('./components/atoms/LocaleSwitcher.vue')['default']
     MainLayout: typeof import('./components/layouts/MainLayout.vue')['default']
