@@ -2,7 +2,7 @@
   <div class="min-h-screen flex flex-col">
     <NavbarPlaceholder />
 
-    <main class="flex-1">
+    <main class="flex-1 layout-offset-top">
       <slot />
     </main>
 
