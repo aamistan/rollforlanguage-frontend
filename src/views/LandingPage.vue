@@ -5,13 +5,15 @@
   >
     <MainLayout>
       <section class="flex flex-col items-center justify-center text-center px-6 py-20">
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+        <!-- Headline -->
+        <div class="bg-white/80 text-gray-900 text-4xl md:text-6xl font-extrabold px-6 py-4 rounded-xl shadow-md mb-6 leading-tight max-w-2xl mx-auto text-center">
           Master a Language, Forge Your Adventure!
-        </h1>
+        </div>
 
-        <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
+        <!-- Subheadline -->
+        <div class="bg-slate-800/70 text-gray-100 text-lg md:text-xl px-6 py-4 rounded-xl shadow-md max-w-2xl mx-auto text-center mb-8">
           Join a story-driven RPG where every quest helps you learn German.
-        </p>
+        </div>
 
         <RouterLink to="/register">
           <button class="bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold px-6 py-3 rounded-xl transition">
