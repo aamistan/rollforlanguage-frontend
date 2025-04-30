@@ -23,6 +23,7 @@ declare module 'vue' {
     ProfileDropdown: typeof import('./components/organisms/navbar/ProfileDropdown.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ThreeColumnShell: typeof import('./components/layouts/ThreeColumnShell.vue')['default']
     WhyChooseUsCard: typeof import('./components/molecules/landing-page/WhyChooseUsCard.vue')['default']
   }
 }
