@@ -1,34 +1,29 @@
 <template>
-    <section class="bg-white/5 text-white rounded-xl p-6 shadow-md flex flex-col items-center space-y-6 min-h-[400px] overflow-hidden">
+    <section class="bg-gradient-to-b from-gray-300/80 to-gray-900/80 text-gray-900 rounded-xl p-6 shadow-md ...">
+
       <!-- Section Title -->
       <h2 class="text-xl font-semibold">Meet the Characters</h2>
   
-      <!-- Character Preview Card -->
-      <div class="w-full max-w-xs bg-white/10 rounded-xl p-4 text-center shadow-inner transition duration-500">
+      <div class="w-full max-w-xs bg-white/10 rounded-lg p-4 text-center shadow-inner transition duration-500 h-[400px] flex flex-col justify-between">
         <img
           :src="currentItem.image"
           :alt="currentItem.name"
-          class="mx-auto mb-4 rounded-lg w-full h-48 object-cover object-center"
+          class="mx-auto rounded-lg w-full h-40 object-cover object-center"
         />
-  
-        <h3 class="text-lg font-bold mb-1">{{ currentItem.name }}</h3>
-        <p class="text-sm text-gray-300">{{ currentItem.description }}</p>
-      </div>
-  
-      <!-- Controls -->
-      <div class="flex space-x-4">
-        <button
-          @click="previous"
-          class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-sm transition"
-        >
-          ◀ Previous
-        </button>
-        <button
-          @click="next"
-          class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-sm transition"
-        >
-          Next ▶
-        </button>
+
+        <div class="flex-1 mt-4">
+          <h3 class="text-lg font-bold mb-1">{{ currentItem.name }}</h3>
+          <p class="text-sm text-gray-300 overflow-hidden">{{ currentItem.description }}</p>
+        </div>
+
+        <div class="mt-4 flex space-x-4 justify-center">
+          <button @click="previous" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-sm transition">
+            ◀ Previous
+          </button>
+          <button @click="next" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-sm transition">
+            Next ▶
+          </button>
+        </div>
       </div>
     </section>
   </template>

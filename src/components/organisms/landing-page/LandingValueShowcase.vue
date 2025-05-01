@@ -1,5 +1,5 @@
 <template>
-    <section class="py-16 px-6 max-w-7xl mx-auto text-center space-y-16">
+    <section class="py-2 px-6 max-w-7xl mx-auto text-center space-y-16">
       <!-- WHY CHOOSE US SECTION -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[560px] md:max-w-none">
         <WhyChooseUsCard
@@ -25,10 +25,10 @@
       </div>
   
       <!-- DIVIDER -->
-      <div class="border-t border-white/20 w-full"></div>
+      <div class="border-t-2 border-white/50 w-full my-4"></div>
   
-      <!-- FEATURE HIGHLIGHTS GRID -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- FEATURE HIGHLIGHTS SECTION -->
+      <div class="flex flex-col space-y-6">
         <FeatureHighlight
           icon="🧾"
           title="Quest Logs"

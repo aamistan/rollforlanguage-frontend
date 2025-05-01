@@ -5,7 +5,6 @@
         <!-- LEFT COLUMN -->
         <template #left>
           <LandingValueShowcase />
-          <PlayablePreviewCarousel />
         </template>
 
         <!-- CENTER COLUMN -->
@@ -16,6 +15,7 @@
         <!-- RIGHT COLUMN -->
         <template #right>
           <LandingExperienceCarousel />
+          <PlayablePreviewCarousel />
         </template>
       </ThreeColumnShell>
     </MainLayout>

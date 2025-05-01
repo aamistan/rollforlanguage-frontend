@@ -1,25 +1,25 @@
 <template>
-    <section class="bg-white/5 text-white rounded-xl p-6 shadow-md space-y-10 min-h-[320px] lg:min-h-[400px] overflow-hidden">
+    <section class="bg-gray-300/80 text-gray-900 rounded-xl p-6 shadow-md space-y-10 min-h-[320px] lg:min-h-[400px] overflow-hidden">
       <!-- SECTION: How It Works -->
       <div class="text-center space-y-4">
         <h2 class="text-xl font-semibold">How It Works</h2>
-        <div class="bg-white/10 p-4 rounded-lg shadow transition duration-500">
-          <h3 class="text-lg font-bold mb-1">
+        <div class="bg-gradient-to-b from-gray-300/80 to-gray-900/80 p-4 rounded-lg shadow transition duration-500 space-y-1">
+          <h3 class="text-lg font-bold text-gray-900">
             Step {{ currentStepIndex + 1 }}: {{ currentStep.title }}
           </h3>
-          <p class="text-sm text-gray-300">{{ currentStep.description }}</p>
+          <p class="text-sm text-gray-100">{{ currentStep.description }}</p>
         </div>
       </div>
-  
+
       <!-- Divider -->
-      <div class="border-t border-white/20 w-full"></div>
-  
+      <div class="border-t-2 border-white/50 w-full my-4"></div>
+
       <!-- SECTION: Testimonials -->
       <div class="text-center space-y-4">
         <h2 class="text-xl font-semibold">What Adventurers Are Saying</h2>
-        <div class="bg-white/10 p-4 rounded-lg shadow transition duration-500 italic">
-          <p class="text-gray-300">“{{ currentTestimonial.text }}”</p>
-          <p class="mt-2 text-sm text-gray-400">— {{ currentTestimonial.author }}</p>
+        <div class="bg-gradient-to-b from-gray-300/80 to-gray-900/80 p-4 rounded-lg shadow transition duration-500 italic space-y-1">
+          <p class="text-gray-100">“{{ currentTestimonial.text }}”</p>
+          <p class="mt-2 text-sm text-gray-300">— {{ currentTestimonial.author }}</p>
         </div>
       </div>
     </section>
