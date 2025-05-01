@@ -1,5 +1,5 @@
 <template>
-    <section class="bg-white/5 text-white rounded-xl p-6 shadow-md flex flex-col items-center space-y-6">
+    <section class="bg-white/5 text-white rounded-xl p-6 shadow-md flex flex-col items-center space-y-6 min-h-[400px] overflow-hidden">
       <!-- Section Title -->
       <h2 class="text-xl font-semibold">Meet the Characters</h2>
   

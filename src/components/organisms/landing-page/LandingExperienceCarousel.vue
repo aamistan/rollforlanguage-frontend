@@ -1,5 +1,5 @@
 <template>
-    <section class="bg-white/5 text-white rounded-xl p-6 shadow-md space-y-10">
+    <section class="bg-white/5 text-white rounded-xl p-6 shadow-md space-y-10 min-h-[320px] lg:min-h-[400px] overflow-hidden">
       <!-- SECTION: How It Works -->
       <div class="text-center space-y-4">
         <h2 class="text-xl font-semibold">How It Works</h2>
