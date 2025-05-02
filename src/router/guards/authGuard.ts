@@ -8,9 +8,10 @@ export function authGuard(
   next: NavigationGuardNext
 ): void {
   const authStore = useAuthStore()
-  if (authStore.isAuthenticated) {
-    next()
-  } else {
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next({ name: AppRouteNames.Login })
+  } else {
+    next()
   }
 }

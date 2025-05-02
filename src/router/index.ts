@@ -12,7 +12,6 @@ const routes: Array<RouteRecordRaw> = [
     path: AppRoutePaths.Landing,
     name: AppRouteNames.Landing,
     component: LandingPage,
-    beforeEnter: authGuard,
     meta: { requiresAuth: false },
   },
   {
@@ -28,7 +27,14 @@ const routes: Array<RouteRecordRaw> = [
         next()
       }
     },
-  },  // Future routes can be added here
+  },
+  {
+    path: AppRoutePaths.Dashboard,
+    name: AppRouteNames.Dashboard,
+    component: () => import('@/features/dashboard/views/DashboardView.vue'),
+    meta: { requiresAuth: true },
+    beforeEnter: authGuard,
+  },
 ]
 
 const router = createRouter({
