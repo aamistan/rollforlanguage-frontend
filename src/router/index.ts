@@ -13,6 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     name: AppRouteNames.Landing,
     component: LandingPage,
     beforeEnter: authGuard,
+    meta: { requiresAuth: false },
   },
   {
     path: AppRoutePaths.Login,
