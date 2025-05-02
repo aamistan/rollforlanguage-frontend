@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { authService } from '@/features/auth/services/authService'
 import type { User } from '../types/types'
 
 export interface AuthState {
@@ -21,6 +22,22 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
+    async login(payload: { email: string; password: string }) {
+      return authService.login(this, payload.email, payload.password)
+    },
+
+    async register(payload: { username: string; email: string; password: string }) {
+      return authService.register(this, payload.username, payload.email, payload.password)
+    },
+
+    async logout() {
+      return authService.logout(this)
+    },
+
+    async refreshToken() {
+      return authService.refreshToken(this)
+    },
+
     setAuth(token: string, user: User) {
       this.token = token
       this.user = user

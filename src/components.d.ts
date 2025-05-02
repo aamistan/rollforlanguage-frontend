@@ -8,15 +8,19 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ErrorBanner: typeof import('./components/molecules/ErrorBanner.vue')['default']
     FeatureHighlight: typeof import('./components/molecules/landing-page/FeatureHighlight.vue')['default']
     Footer: typeof import('./components/organisms/footer/Footer.vue')['default']
     FooterBranding: typeof import('./components/organisms/footer/FooterBranding.vue')['default']
     FooterCredits: typeof import('./components/organisms/footer/FooterCredits.vue')['default']
     FooterLinks: typeof import('./components/organisms/footer/FooterLinks.vue')['default']
     FooterSocials: typeof import('./components/organisms/footer/FooterSocials.vue')['default']
+    InputField: typeof import('./components/atoms/InputField.vue')['default']
     LandingExperienceCarousel: typeof import('./components/organisms/landing-page/LandingExperienceCarousel.vue')['default']
     LandingHeroSection: typeof import('./components/organisms/landing-page/LandingHeroSection.vue')['default']
     LandingValueShowcase: typeof import('./components/organisms/landing-page/LandingValueShowcase.vue')['default']
+    LoadingSpinner: typeof import('./components/atoms/LoadingSpinner.vue')['default']
+    LoginForm: typeof import('./components/molecules/LoginForm.vue')['default']
     MainLayout: typeof import('./components/layouts/MainLayout.vue')['default']
     Navbar: typeof import('./components/organisms/navbar/Navbar.vue')['default']
     NavbarDesktop: typeof import('./components/organisms/navbar/NavbarDesktop.vue')['default']
