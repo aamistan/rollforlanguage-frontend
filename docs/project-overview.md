@@ -1,3 +1,9 @@
+Absolutely! Here’s the **full, fully updated version** of the document you pasted, now including all the authentication system details we’ve built.
+I’ve integrated the new auth system content smoothly into the existing sections, keeping everything clean and stylistically consistent.
+
+---
+
+````md
 # 🏰 **Roll for Language Frontend: Project Overview**  
 > *“We build not for today, but for tomorrow and beyond.”*
 
@@ -15,50 +21,66 @@ Located under `/src`, the project uses a **domain-driven design**:
 - `i18n/` → Internationalization files  
 - `router/` → Vue Router configs  
 - `services/`, `stores/`, `utils/`, `plugins/`, `sockets/` → Supporting logic  
-- Core files: `App.vue`, `main.js`, `tailwind.config.js`
+- Core files: `App.vue`, `main.ts`, `tailwind.config.ts`
 
 Scaffold with:  
 ```bash
-mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{auth, dashboard, inventory, campaigns}/{components,stores,services,views},i18n,router,stores,services,utils,plugins,sockets,views}
-```
+mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{auth,dashboard,inventory,campaigns}/{components,stores,services,views,types},i18n,router,stores,services,utils,plugins,sockets,views}
+````
 
 ---
 
-## ⚙ **Key Components & Systems**  
-- **Navbar**: Responsive, locale-switching, auth-aware navigation (`Navbar.vue`)  
-- **Footer**: Modular, multilingual, responsive footer (`Footer.vue`)  
-- **Landing Page**: Hero CTAs, feature highlights, onboarding previews, playable RPG teasers (`LandingPage.vue`)  
-- **Layouts**: `ThreeColumnShell.vue` (responsive slot-based layout), `MainLayout.vue` (page wrapper)  
-- **Global Styles**: `global.css` integrates custom font (`MedReg`), accessibility helpers, and Tailwind resets  
+## ⚙ **Key Components & Systems**
+
+* **Navbar**: Responsive, locale-switching, auth-aware navigation (`Navbar.vue`)
+* **Footer**: Modular, multilingual, responsive footer (`Footer.vue`)
+* **Landing Page**: Hero CTAs, feature highlights, onboarding previews, playable RPG teasers (`LandingPage.vue`)
+* **Layouts**: `ThreeColumnShell.vue` (responsive slot-based layout), `MainLayout.vue` (page wrapper)
+* **Auth System**:
+
+  * `authStore.ts`: Manages global auth state (user, token, error, loading) using Pinia
+  * `authService.ts`: Provides strongly typed login, register, logout, and token refresh API calls using Axios
+  * `axiosInstance.ts`: Centralized Axios instance with token injection and 401 handling
+  * `authGuard.ts`: Vue Router guard protecting authenticated routes
+  * `routes.ts`: Centralized route names and paths using enums for type-safe navigation
+  * `setupAuthListeners.ts`: Syncs multi-tab logout using localStorage event listeners
+* **Global Styles**: `global.css` integrates custom font (`MedReg`), accessibility helpers, and Tailwind resets
 
 ---
 
-## 🛠 **Development & Build Setup**  
-- **DevContainer**:  
-  - Node 20 + pnpm  
-  - Preinstalled VSCode extensions (Vue, Tailwind, ESLint, Prettier, i18n-ally, GitLens, Copilot, etc.)  
-  - Chromium dependencies pre-installed  
-  - Ports: 4001 → Vite Dev Server  
+## 🛠 **Development & Build Setup**
 
-- **Vite Config (`vite.config.ts`)**:  
-  - TypeScript setup  
-  - Auto-Import + Vue Components plugins  
-  - Vue i18n integration  
-  - Optimized for continuous deployment  
+* **DevContainer**:
 
-- **Deployment**:  
-  - GitHub → Vercel → Custom domain (via Cloudflare CNAME, HTTPS-enabled)  
-  - Auto-deploys on push to `main`  
+  * Node 20 + pnpm
+  * Preinstalled VSCode extensions (Vue, Tailwind, ESLint, Prettier, i18n-ally, GitLens, Copilot, etc.)
+  * Chromium dependencies pre-installed
+  * Ports: 4001 → Vite Dev Server
+
+* **Vite Config (`vite.config.ts`)**:
+
+  * TypeScript setup
+  * Auto-Import + Vue Components plugins
+  * Vue i18n integration
+  * `.env` integration with type-safe `import.meta.env` typings
+  * Optimized for continuous deployment
+
+* **Deployment**:
+
+  * GitHub → Vercel → Custom domain (via Cloudflare CNAME, HTTPS-enabled)
+  * Auto-deploys on push to `main`
 
 ---
 
-## 📦 **Dependencies Overview**  
-- **Core**: `vue`, `vue-router`, `pinia`, `vue-i18n`, `axios`  
-- **Dev Tools**: `vite`, `vitest`, `eslint`, `prettier`, `stylelint`, `@vitejs/plugin-vue`, `@intlify/unplugin-vue-i18n`  
-- **Styling**: `tailwindcss`, `autoprefixer`, `tailwind-merge`, `class-variance-authority`  
-- **Utilities**: `unplugin-auto-import`, `unplugin-vue-components`, `puppeteer` (for automated tasks/testing)  
+## 📦 **Dependencies Overview**
+
+* **Core**: `vue`, `vue-router`, `pinia`, `vue-i18n`, `axios`
+* **Dev Tools**: `vite`, `vitest`, `eslint`, `prettier`, `stylelint`, `@vitejs/plugin-vue`, `@intlify/unplugin-vue-i18n`
+* **Styling**: `tailwindcss`, `autoprefixer`, `tailwind-merge`, `class-variance-authority`
+* **Utilities**: `unplugin-auto-import`, `unplugin-vue-components`, `puppeteer` (for automated tasks/testing)
 
 Scripts:
+
 ```bash
 pnpm dev        # Vite Dev Server
 pnpm build      # Build for production
@@ -70,7 +92,8 @@ pnpm test       # Run Vitest tests
 
 ---
 
-## 🏹 **Guiding Mantra**  
+## 🏹 **Guiding Mantra**
+
 > Every component, script, and deployment decision is made to support long-term growth, modularity, and maintainability. We don’t just code for today’s needs; we architect for tomorrow’s expansions — scalable, international, and game-ready.
 
 ---
