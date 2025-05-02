@@ -30,6 +30,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThreeColumnShell: typeof import('./components/layouts/ThreeColumnShell.vue')['default']
+    Toast: typeof import('./components/molecules/Toast.vue')['default']
     WhyChooseUsCard: typeof import('./components/molecules/landing-page/WhyChooseUsCard.vue')['default']
   }
 }

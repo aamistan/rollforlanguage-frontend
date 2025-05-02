@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-import { authGuard } from './guards/authGuard'
+// import { authGuard } from './guards/authGuard'
 import { AppRouteNames, AppRoutePaths } from './routes'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
