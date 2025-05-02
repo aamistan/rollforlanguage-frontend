@@ -73,9 +73,13 @@ const dismissToast = () => {
     </button>
 
     <div class="text-center text-sm mt-4">
-      <a href="#" class="text-indigo-600 hover:underline">Forgot Password?</a>
+      <RouterLink to="/forgot-password" class="text-indigo-600 hover:underline">
+        Forgot Password?
+      </RouterLink>
       <span class="mx-2 text-gray-400 dark:text-gray-500">|</span>
-      <a href="/register" class="text-indigo-600 hover:underline">Register</a>
+      <RouterLink to="/register" class="text-indigo-600 hover:underline">
+        Register
+      </RouterLink>
     </div>
   </form>
 </template>
