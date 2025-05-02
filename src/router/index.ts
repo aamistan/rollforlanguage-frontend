@@ -3,7 +3,7 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { AppRouteNames, AppRoutePaths } from './routes'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 import LandingPage from '@/views/LandingPage.vue'
-import AuthView from '@/features/auth/views/AuthView.vue'
+import LoginView from '@/features/auth/views/LoginView.vue'
 import RegisterView from '@/features/auth/views/RegisterView.vue'
 import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
 
@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: AppRoutePaths.Login,
     name: AppRouteNames.Login,
-    component: AuthView,
+    component: LoginView,
     meta: { requiresAuth: false },
     beforeEnter: (to, from, next) => {
       const authStore = useAuthStore()
