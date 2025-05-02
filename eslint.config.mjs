@@ -1,11 +1,12 @@
 import js from '@eslint/js';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import pluginVue from 'eslint-plugin-vue';
 import prettier from 'eslint-config-prettier';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
-import { defineConfig } from 'eslint/config';
+
 
 export default defineConfig([
   // Base JS config
