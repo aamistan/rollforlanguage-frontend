@@ -1,5 +1,6 @@
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import { useAuthStore } from '@/features/auth/stores/authStore'
+import { AppRouteNames } from '@/router/routes'
 
 export function authGuard(
   to: RouteLocationNormalized,
@@ -10,6 +11,6 @@ export function authGuard(
   if (authStore.isAuthenticated) {
     next()
   } else {
-    next({ name: 'Login' }) // or use '/login' if you're routing by path
+    next({ name: AppRouteNames.Login })
   }
 }

@@ -1,15 +1,19 @@
 import { defineStore } from 'pinia'
-import { User } from '../types/types'
+import type { User } from '../types/types'
 
 export interface AuthState {
   user: User | null
   token: string | null
+  authError: string | null
+  isLoading: boolean
 }
 
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
     token: null,
+    authError: null,
+    isLoading: false,
   }),
 
   getters: {
@@ -20,6 +24,7 @@ export const useAuthStore = defineStore('auth', {
     setAuth(token: string, user: User) {
       this.token = token
       this.user = user
+      this.authError = null
       localStorage.setItem('auth_token', token)
       localStorage.setItem('auth_user', JSON.stringify(user))
     },
@@ -29,6 +34,18 @@ export const useAuthStore = defineStore('auth', {
       this.user = null
       localStorage.removeItem('auth_token')
       localStorage.removeItem('auth_user')
+    },
+
+    setError(message: string) {
+      this.authError = message
+    },
+
+    clearError() {
+      this.authError = null
+    },
+
+    setLoading(status: boolean) {
+      this.isLoading = status
     },
 
     initFromStorage() {
@@ -46,3 +63,6 @@ export const useAuthStore = defineStore('auth', {
     },
   },
 })
+
+// ✅ Export reusable type for services
+export type AuthStore = ReturnType<typeof useAuthStore>
