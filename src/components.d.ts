@@ -20,7 +20,7 @@ declare module 'vue' {
     LandingHeroSection: typeof import('./components/organisms/landing-page/LandingHeroSection.vue')['default']
     LandingValueShowcase: typeof import('./components/organisms/landing-page/LandingValueShowcase.vue')['default']
     LoadingSpinner: typeof import('./components/atoms/LoadingSpinner.vue')['default']
-    LoginForm: typeof import('./components/molecules/LoginForm.vue')['default']
+    LoginForm: typeof import('./components/organisms/login-form/LoginForm.vue')['default']
     MainLayout: typeof import('./components/layouts/MainLayout.vue')['default']
     Navbar: typeof import('./components/organisms/navbar/Navbar.vue')['default']
     NavbarDesktop: typeof import('./components/organisms/navbar/NavbarDesktop.vue')['default']
