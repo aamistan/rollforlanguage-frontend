@@ -1,17 +1,19 @@
-import axios from '@/services/axiosInstance'; // ← Adjust if you have a global axios setup
+import { axiosInstance } from '@/features/auth/services/axiosInstance'
+import { AuthResponse } from '@/features/auth/types/types'
 
-interface RegisterPayload {
-  username: string;
-  email: string;
-  password: string;
+export interface RegisterPayload {
+  username: string
+  email: string
+  password: string
 }
 
-export async function registerUser(payload: RegisterPayload) {
+export async function registerUser(
+  payload: RegisterPayload
+): Promise<AuthResponse> {
   try {
-    const response = await axios.post('/api/register', payload);
-    return response;
+    const response = await axiosInstance.post<AuthResponse>('/api/register', payload)
+    return response.data
   } catch (error) {
-    // Log or process here if you want, but generally pass up to store
-    throw error;
+    throw error // Optional: wrap with custom error or logging here
   }
 }

@@ -1,4 +1,3 @@
-// src/features/auth/hooks/useAuth.ts
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '../stores/authStore'
 
@@ -10,7 +9,9 @@ export function useAuth() {
     user,
     token,
     isAuthenticated,
-    login: authStore.setAuth,
-    logout: authStore.clearAuth,
+    login: authStore.setAuth.bind(authStore),
+    logout: authStore.clearAuth.bind(authStore),
   }
 }
+
+export type UseAuthReturn = ReturnType<typeof useAuth>

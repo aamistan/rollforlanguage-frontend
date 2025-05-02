@@ -1,24 +1,33 @@
-import { defineStore } from 'pinia';
-import { registerUser } from '@/features/auth/services/registerService';
+import { defineStore } from 'pinia'
+import { registerUser } from '@/features/auth/services/registerService'
+import { User, AuthResponse } from '@/features/auth/types/types'
+
+export interface RegisterState {
+  user: User | null
+}
 
 export const useRegisterStore = defineStore('register', {
-  state: () => ({
-    user: null,  // You can store the user or token here if needed
+  state: (): RegisterState => ({
+    user: null,
   }),
 
   actions: {
-    async register({ username, email, password }) {
+    async register(payload: {
+      username: string
+      email: string
+      password: string
+    }): Promise<AuthResponse> {
       try {
-        const response = await registerUser({ username, email, password });
+        const response = await registerUser(payload)
 
-        // You can store the user/token if returned
-        this.user = response.data.user;
+        // Store the user part of the response
+        this.user = response.user
 
-        return response.data;
+        return response
       } catch (error) {
-        console.error('RegisterStore error:', error);
-        throw error; // Let the component handle user-facing errors
+        console.error('RegisterStore error:', error)
+        throw error
       }
     },
   },
-});
+})

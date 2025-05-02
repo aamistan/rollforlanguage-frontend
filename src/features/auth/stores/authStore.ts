@@ -1,18 +1,23 @@
-// src/features/auth/stores/authStore.ts
 import { defineStore } from 'pinia'
+import { User } from '../types/types'
+
+export interface AuthState {
+  user: User | null
+  token: string | null
+}
 
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    user: null as null | Record<string, any>,
-    token: null as null | string,
+  state: (): AuthState => ({
+    user: null,
+    token: null,
   }),
 
   getters: {
-    isAuthenticated: (state) => !!state.token,
+    isAuthenticated: (state): boolean => !!state.token,
   },
 
   actions: {
-    setAuth(token: string, user: Record<string, any>) {
+    setAuth(token: string, user: User) {
       this.token = token
       this.user = user
       localStorage.setItem('auth_token', token)
@@ -32,7 +37,11 @@ export const useAuthStore = defineStore('auth', {
 
       if (storedToken && storedUser) {
         this.token = storedToken
-        this.user = JSON.parse(storedUser)
+        try {
+          this.user = JSON.parse(storedUser) as User
+        } catch {
+          this.user = null
+        }
       }
     },
   },
