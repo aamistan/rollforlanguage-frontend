@@ -9,9 +9,9 @@ import LoginForm from '@/components/organisms/login-form/LoginForm.vue'
     style="background-image: url('/backgrounds/bg-login.webp');"
   >
     <MainLayout>
-      <div class="flex flex-col md:flex-row w-full h-full">
+      <div class="flex flex-col md:flex-row w-full h-full mt-12">
         <!-- Left hero panel -->
-        <div class="hidden md:flex w-1/2 items-center justify-center relative">
+        <div class="hidden md:flex w-1/2 items-center justify-center relative ml-12">
           <div class="absolute inset-0 bg-black opacity-50"></div>
           <div class="relative text-center px-8">
             <h1 class="text-4xl font-bold text-white mb-4">Welcome Back, Adventurer</h1>
@@ -23,7 +23,7 @@ import LoginForm from '@/components/organisms/login-form/LoginForm.vue'
 
         <!-- Right login form -->
         <div class="flex w-full md:w-1/2 items-center justify-center p-6 animate-fadeIn">
-          <div class="w-full max-w-md space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl">
+          <div class="w-full max-w-md space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl mt-12">
             <div class="text-center">
               <img src="/logo.webp" alt="Roll for Language Logo" class="mx-auto h-12 mb-4" />
               <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Log In</h2>
