@@ -1,4 +1,5 @@
 import { axiosInstance } from '../services/axiosInstance'
+import type { AxiosError } from 'axios'
 import type { User, AuthResponse } from '../types/types'
 import type { AuthStore } from '../stores/authStore'
 
@@ -10,8 +11,9 @@ export const authService = {
       const { token, user } = response.data
       authStore.setAuth(token, user)
       return user
-    } catch (error: any) {
-      authStore.setError(error.response?.data?.message || 'Login failed')
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>
+      authStore.setError(axiosError.response?.data?.message || 'Login failed')
       throw error
     } finally {
       authStore.setLoading(false)
@@ -29,8 +31,9 @@ export const authService = {
       const { token, user } = response.data
       authStore.setAuth(token, user)
       return user
-    } catch (error: any) {
-      authStore.setError(error.response?.data?.message || 'Registration failed')
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>
+      authStore.setError(axiosError.response?.data?.message || 'Registration failed')
       throw error
     } finally {
       authStore.setLoading(false)
@@ -42,8 +45,26 @@ export const authService = {
     try {
       await axiosInstance.post('/api/auth/logout')
       authStore.clearAuth()
-    } catch (error: any) {
-      authStore.setError('Logout failed')
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>
+      authStore.setError(axiosError.response?.data?.message || 'Logout failed')
+      throw error
+    } finally {
+      authStore.setLoading(false)
+    }
+  },
+
+  async refreshToken(authStore: AuthStore): Promise<string> {
+    authStore.setLoading(true)
+    try {
+      const response = await axiosInstance.post<{ token: string }>('/api/auth/refresh')
+      const { token } = response.data
+      authStore.token = token
+      localStorage.setItem('auth_token', token)
+      return token
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>
+      authStore.setError(axiosError.response?.data?.message || 'Token refresh failed')
       throw error
     } finally {
       authStore.setLoading(false)
