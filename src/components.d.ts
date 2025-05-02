@@ -28,6 +28,7 @@ declare module 'vue' {
     NavbarMobile: typeof import('./components/organisms/navbar/NavbarMobile.vue')['default']
     PlayablePreviewCarousel: typeof import('./components/organisms/landing-page/PlayablePreviewCarousel.vue')['default']
     ProfileDropdown: typeof import('./components/organisms/navbar/ProfileDropdown.vue')['default']
+    RegisterForm: typeof import('./components/organisms/register-form/RegisterForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThreeColumnShell: typeof import('./components/layouts/ThreeColumnShell.vue')['default']
