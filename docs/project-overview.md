@@ -61,7 +61,7 @@ mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{au
 
   * TypeScript setup
   * Auto-Import + Vue Components plugins
-  * Vue i18n integration
+  * Vue i18n integration (Temporarily on hold)
   * `.env` integration with type-safe `import.meta.env` typings
   * Optimized for continuous deployment
 
