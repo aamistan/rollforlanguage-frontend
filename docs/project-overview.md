@@ -1,9 +1,3 @@
-Absolutely! Here’s the **full, fully updated version** of the document you pasted, now including all the authentication system details we’ve built.
-I’ve integrated the new auth system content smoothly into the existing sections, keeping everything clean and stylistically consistent.
-
----
-
-````md
 # 🏰 **Roll for Language Frontend: Project Overview**  
 > *“We build not for today, but for tomorrow and beyond.”*
 
@@ -26,7 +20,7 @@ Located under `/src`, the project uses a **domain-driven design**:
 Scaffold with:  
 ```bash
 mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{auth,dashboard,inventory,campaigns}/{components,stores,services,views,types},i18n,router,stores,services,utils,plugins,sockets,views}
-````
+```
 
 ---
 
@@ -44,6 +38,12 @@ mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{au
   * `authGuard.ts`: Vue Router guard protecting authenticated routes
   * `routes.ts`: Centralized route names and paths using enums for type-safe navigation
   * `setupAuthListeners.ts`: Syncs multi-tab logout using localStorage event listeners
+  * **Login Page (`AuthView.vue` + `LoginForm.vue`)**:
+    * Responsive, animated two-column layout with fantasy background and hero text
+    * Reusable `LoginForm` organism integrating `InputField`, `LoadingSpinner`, `ErrorBanner`, and `Toast`
+    * Navigation links wired for future `Forgot Password` and `Register` flows
+    * Polished button interactions, success notifications, and dark mode support
+
 * **Global Styles**: `global.css` integrates custom font (`MedReg`), accessibility helpers, and Tailwind resets
 
 ---
