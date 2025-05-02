@@ -70,4 +70,18 @@ export const authService = {
       authStore.setLoading(false)
     }
   },
+  
+  async forgotPassword(authStore: AuthStore, email: string): Promise<void> {
+    authStore.setLoading(true)
+    try {
+      await axiosInstance.post('/api/auth/forgot-password', { email })
+      authStore.clearError()  // clear any old errors on success
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>
+      authStore.setError(axiosError.response?.data?.message || 'Password reset failed')
+      throw error
+    } finally {
+      authStore.setLoading(false)
+    }
+  },   
 }

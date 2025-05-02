@@ -5,7 +5,7 @@ import { useAuthStore } from '@/features/auth/stores/authStore'
 import LandingPage from '@/views/LandingPage.vue'
 import AuthView from '@/features/auth/views/AuthView.vue'
 // import RegisterView from '@/features/auth/views/RegisterView.vue'
-// import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
+import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -28,6 +28,14 @@ const routes: Array<RouteRecordRaw> = [
       }
     },
   },
+
+  {
+    path: AppRoutePaths.ForgotPassword,
+    name: AppRouteNames.ForgotPassword,
+    component: ForgotPasswordView,
+    meta: { requiresAuth: false },
+  },
+  
   // {
   //   path: AppRoutePaths.Register,
   //   name: AppRouteNames.Register,

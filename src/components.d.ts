@@ -15,6 +15,7 @@ declare module 'vue' {
     FooterCredits: typeof import('./components/organisms/footer/FooterCredits.vue')['default']
     FooterLinks: typeof import('./components/organisms/footer/FooterLinks.vue')['default']
     FooterSocials: typeof import('./components/organisms/footer/FooterSocials.vue')['default']
+    ForgotPasswordForm: typeof import('./components/organisms/forgot-password/ForgotPasswordForm.vue')['default']
     InputField: typeof import('./components/atoms/InputField.vue')['default']
     LandingExperienceCarousel: typeof import('./components/organisms/landing-page/LandingExperienceCarousel.vue')['default']
     LandingHeroSection: typeof import('./components/organisms/landing-page/LandingHeroSection.vue')['default']

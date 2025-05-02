@@ -38,6 +38,10 @@ export const useAuthStore = defineStore('auth', {
       return authService.refreshToken(this)
     },
 
+    async forgotPassword(email: string) {
+      return authService.forgotPassword(this, email)
+    },
+
     setAuth(token: string, user: User) {
       this.token = token
       this.user = user
