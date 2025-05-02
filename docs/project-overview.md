@@ -1,23 +1,32 @@
-# 🏰 **Roll for Language Frontend: Project Overview**  
+Here’s your **updated project overview** including all the work we completed in this chat:
+
+---
+
+# 🏰 **Roll for Language Frontend: Project Overview**
+
 > *“We build not for today, but for tomorrow and beyond.”*
 
 ---
 
-## 🌟 **Project Purpose & Vision**  
+## 🌟 **Project Purpose & Vision**
+
 The Roll for Language frontend is a modular, scalable Vue 3 application designed to deliver an immersive, gamified language-learning experience. Built for global deployment, it integrates responsive layouts, internationalization, real-time features, and continuous deployment pipelines — all guided by a forward-thinking clean architecture philosophy.
 
 ---
 
-## 📁 **Folder & File Structure**  
-Located under `/src`, the project uses a **domain-driven design**:  
-- `components/` → Atomic design (atoms, molecules, organisms, layouts)  
-- `features/` → Domain-specific modules (auth, dashboard, inventory, campaigns)  
-- `i18n/` → Internationalization files  
-- `router/` → Vue Router configs  
-- `services/`, `stores/`, `utils/`, `plugins/`, `sockets/` → Supporting logic  
-- Core files: `App.vue`, `main.ts`, `tailwind.config.ts`
+## 📁 **Folder & File Structure**
 
-Scaffold with:  
+Located under `/src`, the project uses a **domain-driven design**:
+
+* `components/` → Atomic design (atoms, molecules, organisms, layouts)
+* `features/` → Domain-specific modules (auth, dashboard, inventory, campaigns)
+* `i18n/` → Internationalization files
+* `router/` → Vue Router configs
+* `services/`, `stores/`, `utils/`, `plugins/`, `sockets/` → Supporting logic
+* Core files: `App.vue`, `main.ts`, `tailwind.config.ts`
+
+Scaffold with:
+
 ```bash
 mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{auth,dashboard,inventory,campaigns}/{components,stores,services,views,types},i18n,router,stores,services,utils,plugins,sockets,views}
 ```
@@ -27,22 +36,33 @@ mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{au
 ## ⚙ **Key Components & Systems**
 
 * **Navbar**: Responsive, locale-switching, auth-aware navigation (`Navbar.vue`)
+
 * **Footer**: Modular, multilingual, responsive footer (`Footer.vue`)
+
 * **Landing Page**: Hero CTAs, feature highlights, onboarding previews, playable RPG teasers (`LandingPage.vue`)
+
 * **Layouts**: `ThreeColumnShell.vue` (responsive slot-based layout), `MainLayout.vue` (page wrapper)
+
 * **Auth System**:
 
   * `authStore.ts`: Manages global auth state (user, token, error, loading) using Pinia
-  * `authService.ts`: Provides strongly typed login, register, logout, and token refresh API calls using Axios
+  * `authService.ts`: Provides strongly typed login, register, logout, token refresh, and **forgot password** API calls using Axios
   * `axiosInstance.ts`: Centralized Axios instance with token injection and 401 handling
   * `authGuard.ts`: Vue Router guard protecting authenticated routes
   * `routes.ts`: Centralized route names and paths using enums for type-safe navigation
   * `setupAuthListeners.ts`: Syncs multi-tab logout using localStorage event listeners
   * **Login Page (`AuthView.vue` + `LoginForm.vue`)**:
+
     * Responsive, animated two-column layout with fantasy background and hero text
     * Reusable `LoginForm` organism integrating `InputField`, `LoadingSpinner`, `ErrorBanner`, and `Toast`
     * Navigation links wired for future `Forgot Password` and `Register` flows
     * Polished button interactions, success notifications, and dark mode support
+  * **Forgot Password Page (`ForgotPasswordView.vue` + `ForgotPasswordForm.vue`)**:
+
+    * Full-page two-column layout with RPG-themed reset instructions and visuals
+    * Integrated `ForgotPasswordForm` using global auth store actions and service calls
+    * Displays animated success toast with **3-second auto-redirect to Login**
+    * Error handling and loading states wired through Pinia, styled to match auth system
 
 * **Global Styles**: `global.css` integrates custom font (`MedReg`), accessibility helpers, and Tailwind resets
 
