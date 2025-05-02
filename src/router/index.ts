@@ -1,4 +1,6 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
+
 import { authGuard } from './guards/authGuard';
 import LandingPage from '@/views/LandingPage.vue';
 
