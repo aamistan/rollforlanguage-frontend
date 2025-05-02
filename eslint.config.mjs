@@ -4,6 +4,7 @@ import pluginVue from 'eslint-plugin-vue';
 import prettier from 'eslint-config-prettier';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import importPlugin from 'eslint-plugin-import';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
@@ -17,8 +18,40 @@ export default defineConfig([
         sourceType: 'module'
       }
     },
+    plugins: {
+      import: importPlugin
+    },
     rules: {
-      ...js.configs.recommended.rules
+      ...js.configs.recommended.rules,
+      'import/no-unresolved': 'error',
+      'import/no-absolute-path': 'error',
+      'import/order': [
+        'warn',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          pathGroups: [
+            {
+              pattern: '@/components/**',
+              group: 'internal',
+              position: 'after'
+            },
+            {
+              pattern: '@/features/**',
+              group: 'internal',
+              position: 'after'
+            }
+          ],
+          alphabetize: { order: 'asc', caseInsensitive: true }
+        }
+      ]
+    },
+    settings: {
+      'import/resolver': {
+        alias: {
+          map: [['@', './src']],
+          extensions: ['.js', '.ts', '.vue']
+        }
+      }
     }
   },
 
@@ -33,13 +66,43 @@ export default defineConfig([
       }
     },
     plugins: {
-      '@typescript-eslint': tseslint
+      '@typescript-eslint': tseslint,
+      import: importPlugin
     },
     rules: {
       ...tseslint.configs.recommended.rules,
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/consistent-type-imports': 'warn'
+      '@typescript-eslint/consistent-type-imports': 'warn',
+      'import/no-unresolved': 'error',
+      'import/no-absolute-path': 'error',
+      'import/order': [
+        'warn',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          pathGroups: [
+            {
+              pattern: '@/components/**',
+              group: 'internal',
+              position: 'after'
+            },
+            {
+              pattern: '@/features/**',
+              group: 'internal',
+              position: 'after'
+            }
+          ],
+          alphabetize: { order: 'asc', caseInsensitive: true }
+        }
+      ]
+    },
+    settings: {
+      'import/resolver': {
+        alias: {
+          map: [['@', './src']],
+          extensions: ['.js', '.ts', '.vue']
+        }
+      }
     }
   },
 
@@ -56,10 +119,40 @@ export default defineConfig([
       }
     },
     plugins: {
-      vue: pluginVue
+      vue: pluginVue,
+      import: importPlugin
     },
     rules: {
-      ...pluginVue.configs['flat/essential'].rules
+      ...pluginVue.configs['flat/essential'].rules,
+      'import/no-unresolved': 'error',
+      'import/no-absolute-path': 'error',
+      'import/order': [
+        'warn',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          pathGroups: [
+            {
+              pattern: '@/components/**',
+              group: 'internal',
+              position: 'after'
+            },
+            {
+              pattern: '@/features/**',
+              group: 'internal',
+              position: 'after'
+            }
+          ],
+          alphabetize: { order: 'asc', caseInsensitive: true }
+        }
+      ]
+    },
+    settings: {
+      'import/resolver': {
+        alias: {
+          map: [['@', './src']],
+          extensions: ['.js', '.ts', '.vue']
+        }
+      }
     }
   },
 
