@@ -28,13 +28,13 @@ const routes: Array<RouteRecordRaw> = [
       }
     },
   },
-  {
-    path: AppRoutePaths.Dashboard,
-    name: AppRouteNames.Dashboard,
-    component: () => import('@/features/dashboard/views/DashboardView.vue'),
-    meta: { requiresAuth: true },
-    beforeEnter: authGuard,
-  },
+  // {
+  //   path: AppRoutePaths.Dashboard,
+  //   name: AppRouteNames.Dashboard,
+  //   component: () => import('@/features/dashboard/views/DashboardView.vue'),
+  //   meta: { requiresAuth: true },
+  //   beforeEnter: authGuard,
+  // },
 ]
 
 const router = createRouter({
