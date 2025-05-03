@@ -1,7 +1,3 @@
-Here’s your **updated project overview** including all the work we completed in this chat:
-
----
-
 # 🏰 **Roll for Language Frontend: Project Overview**
 
 > *“We build not for today, but for tomorrow and beyond.”*
@@ -46,23 +42,39 @@ mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{au
 * **Auth System**:
 
   * `authStore.ts`: Manages global auth state (user, token, error, loading) using Pinia
+
   * `authService.ts`: Provides strongly typed login, register, logout, token refresh, and **forgot password** API calls using Axios
+
   * `axiosInstance.ts`: Centralized Axios instance with token injection and 401 handling
+
   * `authGuard.ts`: Vue Router guard protecting authenticated routes
+
   * `routes.ts`: Centralized route names and paths using enums for type-safe navigation
+
   * `setupAuthListeners.ts`: Syncs multi-tab logout using localStorage event listeners
+
   * **Login Page (`AuthView.vue` + `LoginForm.vue`)**:
 
     * Responsive, animated two-column layout with fantasy background and hero text
     * Reusable `LoginForm` organism integrating `InputField`, `LoadingSpinner`, `ErrorBanner`, and `Toast`
     * Navigation links wired for future `Forgot Password` and `Register` flows
     * Polished button interactions, success notifications, and dark mode support
+
   * **Forgot Password Page (`ForgotPasswordView.vue` + `ForgotPasswordForm.vue`)**:
 
     * Full-page two-column layout with RPG-themed reset instructions and visuals
     * Integrated `ForgotPasswordForm` using global auth store actions and service calls
     * Displays animated success toast with **3-second auto-redirect to Login**
     * Error handling and loading states wired through Pinia, styled to match auth system
+
+  * **Registration Page (`RegisterView.vue` + `RegisterForm.vue`)**:
+
+    * Two-column layout with fantasy-themed hero text and RPG background image
+    * `RegisterForm` integrates username, email, password, confirm password, **optional gender identity**, and **optional pronouns** fields
+    * Uses reusable `InputField`, `LoadingSpinner`, and `ErrorBanner` components
+    * Fully wired into `authStore` and `authService`, forwarding expanded user data to backend
+    * On success, redirects to dashboard; handles loading states and error messages cleanly
+    * Deprecated and safely removed old `useRegisterStore` and `registerService` files to reduce redundancy
 
 * **Global Styles**: `global.css` integrates custom font (`MedReg`), accessibility helpers, and Tailwind resets
 
