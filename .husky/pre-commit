@@ -1,2 +1,1 @@
-echo "🐶 Husky pre-commit hook ran!"
 npx lint-staged
