@@ -10,6 +10,39 @@ The Roll for Language frontend is a modular, scalable Vue 3 application designed
 
 ---
 
+## 🏹 **Guiding Mantra**
+
+> Every component, script, and deployment decision is made to support long-term growth, modularity, and maintainability. We don’t just code for today’s needs; we architect for tomorrow’s expansions — scalable, international, and game-ready.
+
+1. We build clean code.
+2. We build optimized code.
+3. We build using best practices.
+4. We build modernly.
+5. We write our wish list of tools/components/features…then make it so!
+We ask the questions:
+What are the must-haves? What are the should-haves? What are the would-be-nice-to-haves?
+After we answer those questions, we include all of them! We build not for today, but for tomorrow and beyond.
+
+---
+
+## 💻 **Tech Stack**
+
+Frontend Framework	Vue 3 + Vite + Tailwind CSS
+Frontend Hosting	Vercel
+Backend Language	Node.js
+Backend Hosting	Railway
+API Structure	Fastify
+Real-Time Layer	Socket.IO
+Database	PlanetScale
+Authentication	JWT
+Static Asset Hosting	Vercel + GitHub
+i18n Support	Vue I18n + JSON + Strapi (future)
+Audio Features	Web MediaRecorder + Backblaze B2
+Monitoring	Sentry + Vercel logs
+Analytics	PostHog
+
+---
+
 ## 📁 **Folder & File Structure**
 
 Located under `/src`, the project uses a **domain-driven design**:
@@ -121,11 +154,5 @@ pnpm lint       # Lint codebase
 pnpm format     # Prettier format
 pnpm test       # Run Vitest tests
 ```
-
----
-
-## 🏹 **Guiding Mantra**
-
-> Every component, script, and deployment decision is made to support long-term growth, modularity, and maintainability. We don’t just code for today’s needs; we architect for tomorrow’s expansions — scalable, international, and game-ready.
 
 ---
