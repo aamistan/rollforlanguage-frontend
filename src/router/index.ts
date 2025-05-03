@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-// import { authGuard } from './guards/authGuard'
 import LandingPage from '@/views/LandingPage.vue'
+import AdminDashboardView from '@/features/admin/views/AdminDashboardView.vue'
+import CampaignManagementView from '@/features/admin/views/CampaignManagementView.vue'
+import ContentManagementView from '@/features/admin/views/ContentManagementView.vue'
+import SystemMonitorView from '@/features/admin/views/SystemMonitorView.vue'
+import UserManagementView from '@/features/admin/views/UserManagementView.vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
 import LoginView from '@/features/auth/views/LoginView.vue'
 import RegisterView from '@/features/auth/views/RegisterView.vue'
-import { AppRouteNames, AppRoutePaths } from './routes'
-import AdminDashboardView from '@/features/admin/views/AdminDashboardView.vue'
-import UserManagementView from '@/features/admin/views/UserManagementView.vue'
-import CampaignManagementView from '@/features/admin/views/CampaignManagementView.vue'
-import ContentManagementView from '@/features/admin/views/ContentManagementView.vue'
-import SystemMonitorView from '@/features/admin/views/SystemMonitorView.vue'
 import { adminGuard } from './guards/adminGuard'
+import { AppRouteNames, AppRoutePaths } from './routes'
+
 
 
 const routes: Array<RouteRecordRaw> = [
