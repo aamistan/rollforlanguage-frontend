@@ -6,6 +6,13 @@ import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
 import LoginView from '@/features/auth/views/LoginView.vue'
 import RegisterView from '@/features/auth/views/RegisterView.vue'
 import { AppRouteNames, AppRoutePaths } from './routes'
+import AdminDashboardView from '@/features/admin/views/AdminDashboardView.vue'
+import UserManagementView from '@/features/admin/views/UserManagementView.vue'
+import CampaignManagementView from '@/features/admin/views/CampaignManagementView.vue'
+import ContentManagementView from '@/features/admin/views/ContentManagementView.vue'
+import SystemMonitorView from '@/features/admin/views/SystemMonitorView.vue'
+import { adminGuard } from './guards/adminGuard'
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -49,7 +56,38 @@ const routes: Array<RouteRecordRaw> = [
         next()
       }
     },
-  },  // Future protected routes (dashboard, etc.)
+  },
+  
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: AdminDashboardView,
+    meta: { requiresAuth: true },
+    beforeEnter: adminGuard,
+    children: [
+      {
+        path: 'users',
+        name: 'AdminUsers',
+        component: UserManagementView,
+      },
+      {
+        path: 'campaigns',
+        name: 'AdminCampaigns',
+        component: CampaignManagementView,
+      },
+      {
+        path: 'content',
+        name: 'AdminContent',
+        component: ContentManagementView,
+      },
+      {
+        path: 'system',
+        name: 'AdminSystem',
+        component: SystemMonitorView,
+      },
+    ],
+  },
+  // Future protected routes (dashboard, etc.)
 ]
 
 
