@@ -20,14 +20,19 @@ export const authService = {
     }
   },
 
-  async register(authStore: AuthStore, username: string, email: string, password: string): Promise<User> {
+  async register(
+    authStore: AuthStore,
+    payload: {
+      username: string
+      email: string
+      password: string
+      genderIdentity?: string | null
+      pronouns?: string | null
+    }
+  ): Promise<User> {
     authStore.setLoading(true)
     try {
-      const response = await axiosInstance.post<AuthResponse>('/api/auth/register', {
-        username,
-        email,
-        password,
-      })
+      const response = await axiosInstance.post<AuthResponse>('/api/auth/register', payload)
       const { token, user } = response.data
       authStore.setAuth(token, user)
       return user
@@ -70,12 +75,12 @@ export const authService = {
       authStore.setLoading(false)
     }
   },
-  
+
   async forgotPassword(authStore: AuthStore, email: string): Promise<void> {
     authStore.setLoading(true)
     try {
       await axiosInstance.post('/api/auth/forgot-password', { email })
-      authStore.clearError()  // clear any old errors on success
+      authStore.clearError() // clear any old errors on success
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>
       authStore.setError(axiosError.response?.data?.message || 'Password reset failed')
@@ -83,5 +88,5 @@ export const authService = {
     } finally {
       authStore.setLoading(false)
     }
-  },   
+  },
 }
