@@ -25,8 +25,8 @@
 <script setup>
 import MainLayout from '@/components/layouts/MainLayout.vue';
 import ThreeColumnShell from '@/components/layouts/ThreeColumnShell.vue';
-import LandingValueShowcase from '@/components/organisms/landing-page/LandingValueShowcase.vue';
 import LandingExperienceCarousel from '@/components/organisms/landing-page/LandingExperienceCarousel.vue';
 import LandingHeroSection from '@/components/organisms/landing-page/LandingHeroSection.vue';
+import LandingValueShowcase from '@/components/organisms/landing-page/LandingValueShowcase.vue';
 import PlayablePreviewCarousel from '@/components/organisms/landing-page/PlayablePreviewCarousel.vue';
 </script>

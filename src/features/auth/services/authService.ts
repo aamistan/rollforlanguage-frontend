@@ -1,7 +1,7 @@
-import { axiosInstance } from '../services/axiosInstance'
 import type { AxiosError } from 'axios'
-import type { User, AuthResponse } from '../types/types'
+import { axiosInstance } from '../services/axiosInstance'
 import type { AuthStore } from '../stores/authStore'
+import type { User, AuthResponse } from '../types/types'
 
 export const authService = {
   async login(authStore: AuthStore, email: string, password: string): Promise<User> {

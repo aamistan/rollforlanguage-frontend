@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAuthStore } from '@/features/auth/stores/authStore'
 import InputField from '@/components/atoms/InputField.vue'
 import LoadingSpinner from '@/components/atoms/LoadingSpinner.vue'
 import ErrorBanner from '@/components/molecules/ErrorBanner.vue'
 import Toast from '@/components/molecules/Toast.vue'
+import { useAuthStore } from '@/features/auth/stores/authStore'
 
 const authStore = useAuthStore()
 

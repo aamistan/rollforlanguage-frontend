@@ -1,5 +1,5 @@
 import { axiosInstance } from '@/features/auth/services/axiosInstance'
-import { AuthResponse } from '@/features/auth/types/types'
+import type { AuthResponse } from '@/features/auth/types/types'
 
 export interface RegisterPayload {
   username: string

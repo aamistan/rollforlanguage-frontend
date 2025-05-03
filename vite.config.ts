@@ -1,11 +1,11 @@
-import { fileURLToPath } from 'url'
 import { dirname } from 'path'
-import { defineConfig, loadEnv } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import vueI18n from '@intlify/unplugin-vue-i18n/vite'
+import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import path from 'path'
+import { defineConfig, loadEnv } from 'vite'
 
 // Recreate __dirname
 const __filename = fileURLToPath(import.meta.url)

@@ -1,5 +1,6 @@
 // src/features/auth/services/axiosInstance.ts
-import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosError } from 'axios'
+import type { AxiosInstance, InternalAxiosRequestConfig, AxiosError } from 'axios';
+import axios from 'axios'
 import { useAuthStore } from '../stores/authStore'
 
 export const axiosInstance: AxiosInstance = axios.create({

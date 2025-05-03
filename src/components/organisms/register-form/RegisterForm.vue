@@ -72,12 +72,12 @@
   <script setup lang="ts">
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
-  import { useAuthStore } from '@/features/auth/stores/authStore'
   import { AppRoutePaths } from '@/router/routes'
   
   import InputField from '@/components/atoms/InputField.vue'
-  import ErrorBanner from '@/components/molecules/ErrorBanner.vue'
   import LoadingSpinner from '@/components/atoms/LoadingSpinner.vue'
+  import ErrorBanner from '@/components/molecules/ErrorBanner.vue'
+  import { useAuthStore } from '@/features/auth/stores/authStore'
   
   const authStore = useAuthStore()
   const router = useRouter()

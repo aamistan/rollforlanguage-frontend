@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 // import { authGuard } from './guards/authGuard'
-import { AppRouteNames, AppRoutePaths } from './routes'
-import { useAuthStore } from '@/features/auth/stores/authStore'
 import LandingPage from '@/views/LandingPage.vue'
+import { useAuthStore } from '@/features/auth/stores/authStore'
+import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
 import LoginView from '@/features/auth/views/LoginView.vue'
 import RegisterView from '@/features/auth/views/RegisterView.vue'
-import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
+import { AppRouteNames, AppRoutePaths } from './routes'
 
 const routes: Array<RouteRecordRaw> = [
   {

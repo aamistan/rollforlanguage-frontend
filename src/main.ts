@@ -1,8 +1,8 @@
+import { createPinia } from 'pinia'
 import { createApp } from 'vue'
+import { setupAuthListeners } from '@/features/auth/utils/setupAuthListeners'
 import App from './App.vue'
 import router from './router'
-import { createPinia } from 'pinia'
-import { setupAuthListeners } from '@/features/auth/utils/setupAuthListeners'
 
 import './assets/styles/global.css'
 import './assets/styles/tailwind.css'

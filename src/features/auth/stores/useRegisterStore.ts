@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { registerUser } from '@/features/auth/services/registerService'
-import { User, AuthResponse } from '@/features/auth/types/types'
+import type { User, AuthResponse } from '@/features/auth/types/types'
 
 export interface RegisterState {
   user: User | null

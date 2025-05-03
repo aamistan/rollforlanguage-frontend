@@ -54,7 +54,7 @@
   </template>
   
   <script setup>
-  import WhyChooseUsCard from '@/components/molecules/landing-page/WhyChooseUsCard.vue';
   import FeatureHighlight from '@/components/molecules/landing-page/FeatureHighlight.vue';
+  import WhyChooseUsCard from '@/components/molecules/landing-page/WhyChooseUsCard.vue';
   </script>
   

@@ -1,8 +1,8 @@
 <script setup>
 import FooterBranding from './FooterBranding.vue'
+import FooterCredits from './FooterCredits.vue'
 import FooterLinks from './FooterLinks.vue'
 import FooterSocials from './FooterSocials.vue'
-import FooterCredits from './FooterCredits.vue'
 </script>
 
 <template>
