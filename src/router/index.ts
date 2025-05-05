@@ -1,25 +1,19 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-
-// Public views
 import LandingPage from '@/views/LandingPage.vue'
-
-// Auth views
-import LoginView from '@/features/auth/views/LoginView.vue'
-import RegisterView from '@/features/auth/views/RegisterView.vue'
-import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
-
-// Admin layout + views
 import AdminLayout from '@/features/admin/components/AdminLayout.vue'
 import AdminDashboardView from '@/features/admin/views/AdminDashboardView.vue'
-import UserManagementView from '@/features/admin/views/UserManagementView.vue'
 import CampaignManagementView from '@/features/admin/views/CampaignManagementView.vue'
 import ContentManagementView from '@/features/admin/views/ContentManagementView.vue'
 import SystemMonitorView from '@/features/admin/views/SystemMonitorView.vue'
-
-// Guards + enums
+import UserManagementView from '@/features/admin/views/UserManagementView.vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
+import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
+import LoginView from '@/features/auth/views/LoginView.vue'
+import RegisterView from '@/features/auth/views/RegisterView.vue'
 import { adminGuard } from './guards/adminGuard'
 import { AppRouteNames, AppRoutePaths } from './routes'
+
+
 
 const routes: Array<RouteRecordRaw> = [
   // Public routes
