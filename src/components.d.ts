@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppIcon: typeof import('./components/atoms/AppIcon.vue')['default']
     ErrorBanner: typeof import('./components/molecules/ErrorBanner.vue')['default']
     FeatureHighlight: typeof import('./components/molecules/landing-page/FeatureHighlight.vue')['default']
     Footer: typeof import('./components/organisms/footer/Footer.vue')['default']
