@@ -13,10 +13,8 @@ export const authService = {
       authStore.setAuth(token)
 
       const user = authStore.user
-      if (user?.roles?.includes('superadmin')) {
-        router.push('/superadmin-dashboard')
-      } else if (user?.roles?.includes('admin')) {
-        router.push('/admin-dashboard')
+      if (user?.roles?.includes('superadmin') || user?.roles?.includes('admin')) {
+        router.push('/admin-dashboard')     
       } else if (user?.roles?.includes('teacher')) {
         router.push('/teacher-dashboard')
       } else if (user?.roles?.includes('student')) {
@@ -52,9 +50,7 @@ export const authService = {
       authStore.setAuth(token)
 
       const user = authStore.user
-      if (user?.roles?.includes('superadmin')) {
-        router.push('/superadmin-dashboard')
-      } else if (user?.roles?.includes('admin')) {
+      if (user?.roles?.includes('superadmin') || user?.roles?.includes('admin')) {
         router.push('/admin-dashboard')
       } else if (user?.roles?.includes('teacher')) {
         router.push('/teacher-dashboard')
