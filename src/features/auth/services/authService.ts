@@ -7,7 +7,7 @@ export const authService = {
   async login(authStore: AuthStore, email: string, password: string): Promise<User> {
     authStore.setLoading(true)
     try {
-      const response = await axiosInstance.post<AuthResponse>('/api/auth/login', { email, password })
+      const response = await axiosInstance.post<AuthResponse>('/auth/login', { email, password })
       const { token, user } = response.data
       authStore.setAuth(token, user)
       return user
@@ -32,7 +32,7 @@ export const authService = {
   ): Promise<User> {
     authStore.setLoading(true)
     try {
-      const response = await axiosInstance.post<AuthResponse>('/api/auth/register', payload)
+      const response = await axiosInstance.post<AuthResponse>('/auth/register', payload)
       const { token, user } = response.data
       authStore.setAuth(token, user)
       return user
@@ -48,7 +48,7 @@ export const authService = {
   async logout(authStore: AuthStore): Promise<void> {
     authStore.setLoading(true)
     try {
-      await axiosInstance.post('/api/auth/logout')
+      await axiosInstance.post('/auth/logout')
       authStore.clearAuth()
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>
@@ -62,7 +62,7 @@ export const authService = {
   async refreshToken(authStore: AuthStore): Promise<string> {
     authStore.setLoading(true)
     try {
-      const response = await axiosInstance.post<{ token: string }>('/api/auth/refresh')
+      const response = await axiosInstance.post<{ token: string }>('/auth/refresh')
       const { token } = response.data
       authStore.token = token
       localStorage.setItem('auth_token', token)
@@ -79,7 +79,7 @@ export const authService = {
   async forgotPassword(authStore: AuthStore, email: string): Promise<void> {
     authStore.setLoading(true)
     try {
-      await axiosInstance.post('/api/auth/forgot-password', { email })
+      await axiosInstance.post('/auth/forgot-password', { email })
       authStore.clearError() // clear any old errors on success
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>
