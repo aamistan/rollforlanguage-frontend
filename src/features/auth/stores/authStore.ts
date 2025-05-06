@@ -1,3 +1,4 @@
+import { jwtDecode } from 'jwt-decode'
 import { defineStore } from 'pinia'
 import { authService } from '@/features/auth/services/authService'
 import type { User } from '../types/types'
@@ -7,6 +8,15 @@ export interface AuthState {
   token: string | null
   authError: string | null
   isLoading: boolean
+}
+
+interface DecodedToken {
+  id: string
+  email: string
+  username: string
+  role: string
+  iat: number
+  exp: number
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -42,12 +52,24 @@ export const useAuthStore = defineStore('auth', {
       return authService.forgotPassword(this, email)
     },
 
-    setAuth(token: string, user: User) {
+    setAuth(token: string) {
       this.token = token
-      this.user = user
       this.authError = null
       localStorage.setItem('auth_token', token)
-      localStorage.setItem('auth_user', JSON.stringify(user))
+
+      try {
+        const decoded = jwtDecode<DecodedToken>(token)
+        this.user = {
+          id: decoded.id,
+          email: decoded.email,
+          username: decoded.username,
+          roles: [decoded.role], // map single role to array
+        }
+        localStorage.setItem('auth_user', JSON.stringify(this.user))
+      } catch (error) {
+        console.error('Failed to decode token:', error)
+        this.user = null
+      }
     },
 
     clearAuth() {
@@ -71,12 +93,17 @@ export const useAuthStore = defineStore('auth', {
 
     initFromStorage() {
       const storedToken = localStorage.getItem('auth_token')
-      const storedUser = localStorage.getItem('auth_user')
 
-      if (storedToken && storedUser) {
+      if (storedToken) {
         this.token = storedToken
         try {
-          this.user = JSON.parse(storedUser) as User
+          const decoded = jwtDecode<DecodedToken>(storedToken)
+          this.user = {
+            id: decoded.id,
+            email: decoded.email,
+            username: decoded.username,
+            roles: [decoded.role], // map here too
+          }
         } catch {
           this.user = null
         }

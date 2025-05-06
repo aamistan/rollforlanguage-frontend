@@ -1,15 +1,29 @@
 import type { AxiosError } from 'axios'
+import router from '@/router'
 import { axiosInstance } from '../services/axiosInstance'
 import type { AuthStore } from '../stores/authStore'
 import type { User, AuthResponse } from '../types/types'
 
+
 export const authService = {
-  async login(authStore: AuthStore, email: string, password: string): Promise<User> {
+  async login(authStore: AuthStore, email: string, password: string): Promise<User | undefined> {
     authStore.setLoading(true)
     try {
       const response = await axiosInstance.post<AuthResponse>('/auth/login', { email, password })
-      const { token, user } = response.data
-      authStore.setAuth(token, user)
+      const { token } = response.data
+      authStore.setAuth(token)
+
+      const user = authStore.user
+      if (user?.roles.includes('superadmin')) {
+        router.push('/superadmin-dashboard')
+      } else if (user?.roles.includes('admin')) {
+        router.push('/admin-dashboard')
+      } else if (user?.roles.includes('teacher')) {
+        router.push('/teacher-dashboard')
+      } else {
+        router.push('/dashboard') // fallback for students or general users
+      }
+
       return user
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>
@@ -29,12 +43,24 @@ export const authService = {
       genderIdentity?: string | null
       pronouns?: string | null
     }
-  ): Promise<User> {
+  ): Promise<User | undefined> {
     authStore.setLoading(true)
     try {
       const response = await axiosInstance.post<AuthResponse>('/auth/register', payload)
-      const { token, user } = response.data
-      authStore.setAuth(token, user)
+      const { token } = response.data
+      authStore.setAuth(token)
+
+      const user = authStore.user
+      if (user?.roles.includes('superadmin')) {
+        router.push('/superadmin-dashboard')
+      } else if (user?.roles.includes('admin')) {
+        router.push('/admin-dashboard')
+      } else if (user?.roles.includes('teacher')) {
+        router.push('/teacher-dashboard')
+      } else {
+        router.push('/dashboard')
+      }
+
       return user
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>
@@ -50,6 +76,7 @@ export const authService = {
     try {
       await axiosInstance.post('/auth/logout')
       authStore.clearAuth()
+      router.push('/login') // redirect to login after logout
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>
       authStore.setError(axiosError.response?.data?.message || 'Logout failed')
