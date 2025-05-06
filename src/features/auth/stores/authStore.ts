@@ -6,6 +6,7 @@ import type { User } from '../types/types'
 export interface AuthState {
   user: User | null
   token: string | null
+  refreshToken: string | null
   authError: string | null
   isLoading: boolean
 }
@@ -22,12 +23,14 @@ interface DecodedToken {
 }
 
 const AUTH_TOKEN_KEY = 'auth_token'
+const AUTH_REFRESH_TOKEN_KEY = 'auth_refresh_token'
 const AUTH_USER_KEY = 'auth_user'
 
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
     token: null,
+    refreshToken: null,
     authError: null,
     isLoading: false,
   }),
@@ -41,7 +44,13 @@ export const useAuthStore = defineStore('auth', {
       return authService.login(this, payload.email, payload.password)
     },
 
-    async register(payload: { username: string; email: string; password: string; genderIdentity?: string | null; pronouns?: string | null }) {
+    async register(payload: {
+      username: string
+      email: string
+      password: string
+      genderIdentity?: string | null
+      pronouns?: string | null
+    }) {
       return authService.register(this, payload)
     },
 
@@ -49,7 +58,7 @@ export const useAuthStore = defineStore('auth', {
       return authService.logout(this)
     },
 
-    async refreshToken() {
+    async refreshTokenAction() {
       return authService.refreshToken(this)
     },
 
@@ -57,10 +66,13 @@ export const useAuthStore = defineStore('auth', {
       return authService.forgotPassword(this, email)
     },
 
-    setAuth(token: string) {
+    setAuth(token: string, refreshToken: string) {
       this.token = token
+      this.refreshToken = refreshToken
       this.authError = null
+
       localStorage.setItem(AUTH_TOKEN_KEY, token)
+      localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, refreshToken)
 
       try {
         const decoded = jwtDecode<DecodedToken>(token)
@@ -81,8 +93,10 @@ export const useAuthStore = defineStore('auth', {
 
     clearAuth() {
       this.token = null
+      this.refreshToken = null
       this.user = null
       localStorage.removeItem(AUTH_TOKEN_KEY)
+      localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY)
       localStorage.removeItem(AUTH_USER_KEY)
     },
 
@@ -100,9 +114,12 @@ export const useAuthStore = defineStore('auth', {
 
     initFromStorage() {
       const storedToken = localStorage.getItem(AUTH_TOKEN_KEY)
+      const storedRefreshToken = localStorage.getItem(AUTH_REFRESH_TOKEN_KEY)
 
       if (storedToken) {
         this.token = storedToken
+        this.refreshToken = storedRefreshToken
+
         try {
           const decoded = jwtDecode<DecodedToken>(storedToken)
           this.user = {

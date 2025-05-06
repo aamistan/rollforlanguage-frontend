@@ -1,38 +1,50 @@
-// src/features/auth/services/axiosInstance.ts
-
 import type { AxiosInstance, InternalAxiosRequestConfig, AxiosError } from 'axios'
 import axios from 'axios'
 import { useAuthStore } from '../stores/authStore'
-import router from '@/router'
+import { isTokenExpiringSoon } from '../utils/tokenHelpers'
 
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
-  headers: {
-    Accept: 'application/json',
-  },
 })
 
-// Attach token to each request if available
+// Attach token and refresh if needed
 axiosInstance.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
+  async (config: InternalAxiosRequestConfig) => {
     const authStore = useAuthStore()
+
     if (authStore.token) {
-      config.headers = config.headers || {}
-      config.headers.Authorization = `Bearer ${authStore.token}`
+      // Check if token is close to expiring
+      if (isTokenExpiringSoon(authStore.token)) {
+        try {
+          await authStore.refreshTokenAction()
+          console.log('Access token refreshed before request.')
+        } catch (error) {
+          console.error('Failed to refresh token:', error)
+          authStore.clearAuth()
+          window.location.href = '/login'
+          return Promise.reject(error)
+        }
+      }
+
+      // Attach valid token
+      if (config.headers) {
+        config.headers.Authorization = `Bearer ${authStore.token}`
+      }
     }
+
     return config
   },
   (error: AxiosError) => Promise.reject(error)
 )
 
-// Handle 401 responses globally
+// Optional: Handle 401 responses globally
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (error.response && error.response.status === 401) {
       const authStore = useAuthStore()
       authStore.clearAuth()
-      router.push('/login')
+      window.location.href = '/login'
     }
     return Promise.reject(error)
   }
