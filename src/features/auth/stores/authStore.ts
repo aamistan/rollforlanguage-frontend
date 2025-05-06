@@ -15,9 +15,14 @@ interface DecodedToken {
   email: string
   username: string
   role: string
+  genderIdentity?: string | null
+  pronouns?: string | null
   iat: number
   exp: number
 }
+
+const AUTH_TOKEN_KEY = 'auth_token'
+const AUTH_USER_KEY = 'auth_user'
 
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
@@ -55,7 +60,7 @@ export const useAuthStore = defineStore('auth', {
     setAuth(token: string) {
       this.token = token
       this.authError = null
-      localStorage.setItem('auth_token', token)
+      localStorage.setItem(AUTH_TOKEN_KEY, token)
 
       try {
         const decoded = jwtDecode<DecodedToken>(token)
@@ -63,9 +68,11 @@ export const useAuthStore = defineStore('auth', {
           id: decoded.id,
           email: decoded.email,
           username: decoded.username,
-          roles: [decoded.role], // map single role to array
-        }
-        localStorage.setItem('auth_user', JSON.stringify(this.user))
+          roles: [decoded.role],
+          genderIdentity: decoded.genderIdentity || null,
+          pronouns: decoded.pronouns || null,
+        } as User
+        localStorage.setItem(AUTH_USER_KEY, JSON.stringify(this.user))
       } catch (error) {
         console.error('Failed to decode token:', error)
         this.user = null
@@ -75,8 +82,8 @@ export const useAuthStore = defineStore('auth', {
     clearAuth() {
       this.token = null
       this.user = null
-      localStorage.removeItem('auth_token')
-      localStorage.removeItem('auth_user')
+      localStorage.removeItem(AUTH_TOKEN_KEY)
+      localStorage.removeItem(AUTH_USER_KEY)
     },
 
     setError(message: string) {
@@ -92,7 +99,7 @@ export const useAuthStore = defineStore('auth', {
     },
 
     initFromStorage() {
-      const storedToken = localStorage.getItem('auth_token')
+      const storedToken = localStorage.getItem(AUTH_TOKEN_KEY)
 
       if (storedToken) {
         this.token = storedToken
@@ -102,8 +109,10 @@ export const useAuthStore = defineStore('auth', {
             id: decoded.id,
             email: decoded.email,
             username: decoded.username,
-            roles: [decoded.role], // map here too
-          }
+            roles: [decoded.role],
+            genderIdentity: decoded.genderIdentity || null,
+            pronouns: decoded.pronouns || null,
+          } as User
         } catch {
           this.user = null
         }
@@ -112,5 +121,4 @@ export const useAuthStore = defineStore('auth', {
   },
 })
 
-// ✅ Export reusable type for services
 export type AuthStore = ReturnType<typeof useAuthStore>

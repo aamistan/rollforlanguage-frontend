@@ -13,9 +13,7 @@ export interface User {
   createdAt?: string
   updatedAt?: string
 }
-  
-  export interface AuthResponse {
-    token: string
-    user: User
-  }
-  
+
+export interface AuthResponse {
+  token: string
+}

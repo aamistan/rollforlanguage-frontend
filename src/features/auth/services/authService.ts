@@ -4,7 +4,6 @@ import { axiosInstance } from '../services/axiosInstance'
 import type { AuthStore } from '../stores/authStore'
 import type { User, AuthResponse } from '../types/types'
 
-
 export const authService = {
   async login(authStore: AuthStore, email: string, password: string): Promise<User | undefined> {
     authStore.setLoading(true)
@@ -14,17 +13,19 @@ export const authService = {
       authStore.setAuth(token)
 
       const user = authStore.user
-      if (user?.roles.includes('superadmin')) {
+      if (user?.roles?.includes('superadmin')) {
         router.push('/superadmin-dashboard')
-      } else if (user?.roles.includes('admin')) {
+      } else if (user?.roles?.includes('admin')) {
         router.push('/admin-dashboard')
-      } else if (user?.roles.includes('teacher')) {
+      } else if (user?.roles?.includes('teacher')) {
         router.push('/teacher-dashboard')
+      } else if (user?.roles?.includes('student')) {
+        router.push('/dashboard')
       } else {
-        router.push('/dashboard') // fallback for students or general users
+        router.push('/') // fallback route if no known role
       }
 
-      return user
+      return user || undefined
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>
       authStore.setError(axiosError.response?.data?.message || 'Login failed')
@@ -51,17 +52,19 @@ export const authService = {
       authStore.setAuth(token)
 
       const user = authStore.user
-      if (user?.roles.includes('superadmin')) {
+      if (user?.roles?.includes('superadmin')) {
         router.push('/superadmin-dashboard')
-      } else if (user?.roles.includes('admin')) {
+      } else if (user?.roles?.includes('admin')) {
         router.push('/admin-dashboard')
-      } else if (user?.roles.includes('teacher')) {
+      } else if (user?.roles?.includes('teacher')) {
         router.push('/teacher-dashboard')
-      } else {
+      } else if (user?.roles?.includes('student')) {
         router.push('/dashboard')
+      } else {
+        router.push('/') // fallback
       }
 
-      return user
+      return user || undefined
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>
       authStore.setError(axiosError.response?.data?.message || 'Registration failed')
