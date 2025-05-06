@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import LandingPage from '@/views/LandingPage.vue'
-import AdminLayout from '@/features/admin/components/AdminLayout.vue'
+import AdminBars from '@/features/admin/components/AdminBars.vue'
 import AdminDashboardView from '@/features/admin/views/AdminDashboardView.vue'
 import CampaignManagementView from '@/features/admin/views/CampaignManagementView.vue'
 import ContentManagementView from '@/features/admin/views/ContentManagementView.vue'
@@ -12,8 +12,6 @@ import LoginView from '@/features/auth/views/LoginView.vue'
 import RegisterView from '@/features/auth/views/RegisterView.vue'
 import { adminGuard } from './guards/adminGuard'
 import { AppRouteNames, AppRoutePaths } from './routes'
-
-
 
 const routes: Array<RouteRecordRaw> = [
   // Public routes
@@ -58,11 +56,11 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: false },
   },
 
-  // Admin routes (wrapped in AdminLayout)
+  // Admin routes (wrapped in AdminBars)
   {
     path: '/admin',
     name: AppRouteNames.Admin,
-    component: AdminLayout,
+    component: AdminBars,
     meta: { requiresAuth: true },
     beforeEnter: adminGuard,
     children: [
@@ -94,7 +92,7 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
 
-  // Future protected routes (main dashboard, etc.)
+  // Future protected routes (main user dashboard, etc.)
 ]
 
 const router = createRouter({

@@ -21,6 +21,9 @@ import { computed } from 'vue'
 import Sidebar from './Sidebar.vue'
 import Topbar from './Topbar.vue'
 
+export default {
+  name: 'AdminBars',
+}
 const backgroundStyle = computed(() => ({
   backgroundImage: "url('/backgrounds/bg-admin.webp')", // Ensure this matches your /public or /assets setup
 }))
