@@ -1,10 +1,10 @@
 <template>
-  <div class="min-h-screen bg-cover bg-center" :style="backgroundStyle">
+  <div class="min-h-screen flex flex-col">
     <!-- Topbar Component -->
     <Topbar />
 
     <!-- Sidebar + Main Content -->
-    <div class="flex">
+    <div class="flex flex-1">
       <!-- Sidebar Component -->
       <Sidebar />
 
@@ -17,16 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import Sidebar from './Sidebar.vue'
 import Topbar from './Topbar.vue'
-
-export default {
-  name: 'AdminBars',
-}
-const backgroundStyle = computed(() => ({
-  backgroundImage: "url('/backgrounds/bg-admin.webp')", // Ensure this matches your /public or /assets setup
-}))
 </script>
 
 <style scoped>
