@@ -19,7 +19,7 @@ export const authService = {
 
       const user = authStore.user
       if (user?.roles?.includes('superadmin') || user?.roles?.includes('admin')) {
-        router.push('/admin-dashboard')
+        router.push('/admin')
       } else if (user?.roles?.includes('teacher')) {
         router.push('/teacher-dashboard')
       } else if (user?.roles?.includes('student')) {
