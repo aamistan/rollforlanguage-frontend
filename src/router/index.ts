@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import LandingPage from '@/views/LandingPage.vue'
-import AdminBars from '@/features/admin/components/AdminBars.vue'
+
+import AdminLayout from '@/features/admin/layouts/AdminLayout.vue'
 import AdminDashboardView from '@/features/admin/views/AdminDashboardView.vue'
 import CampaignManagementView from '@/features/admin/views/CampaignManagementView.vue'
 import ContentManagementView from '@/features/admin/views/ContentManagementView.vue'
@@ -10,6 +11,8 @@ import { useAuthStore } from '@/features/auth/stores/authStore'
 import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
 import LoginView from '@/features/auth/views/LoginView.vue'
 import RegisterView from '@/features/auth/views/RegisterView.vue'
+
+
 import { adminGuard } from './guards/adminGuard'
 import { AppRouteNames, AppRoutePaths } from './routes'
 
@@ -56,39 +59,19 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: false },
   },
 
-  // Admin routes (wrapped in AdminBars)
+  // Admin routes (wrapped in AdminLayout)
   {
-    path: '/admin',
-    name: AppRouteNames.Admin,
-    component: AdminBars,
+    path: AppRoutePaths.Admin,
+    component: AdminLayout,
     meta: { requiresAuth: true },
     beforeEnter: adminGuard,
     children: [
-      {
-        path: '',
-        name: AppRouteNames.AdminDashboard,
-        component: AdminDashboardView,
-      },
-      {
-        path: 'users',
-        name: AppRouteNames.AdminUsers,
-        component: UserManagementView,
-      },
-      {
-        path: 'campaigns',
-        name: AppRouteNames.AdminCampaigns,
-        component: CampaignManagementView,
-      },
-      {
-        path: 'content',
-        name: AppRouteNames.AdminContent,
-        component: ContentManagementView,
-      },
-      {
-        path: 'system',
-        name: AppRouteNames.AdminSystem,
-        component: SystemMonitorView,
-      },
+      { path: '', redirect: { name: AppRouteNames.AdminDashboard } }, // Redirect /admin → /admin/dashboard
+      { path: 'dashboard', name: AppRouteNames.AdminDashboard, component: AdminDashboardView },
+      { path: 'users', name: AppRouteNames.AdminUsers, component: UserManagementView },
+      { path: 'campaigns', name: AppRouteNames.AdminCampaigns, component: CampaignManagementView },
+      { path: 'content', name: AppRouteNames.AdminContent, component: ContentManagementView },
+      { path: 'system', name: AppRouteNames.AdminSystem, component: SystemMonitorView },
     ],
   },
 
