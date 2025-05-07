@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-cover bg-center" :style="backgroundStyle">
+  <div class="min-h-screen flex flex-col bg-cover bg-center" style="background-image: url('backgrounds/bg-admin.webp');">
     <AdminBars>
       <section class="p-6 space-y-6">
         <h2 class="text-2xl font-bold text-white">Welcome, {{ userName }}!</h2>
@@ -35,9 +35,6 @@ const { user } = useAuth()
 
 const userName = user.value?.username || 'Admin'
 
-const backgroundStyle = computed(() => ({
-  backgroundImage: "url('/backgrounds/bg-admin.webp')", // adjust path if needed
-}))
 </script>
 
 <style scoped>
