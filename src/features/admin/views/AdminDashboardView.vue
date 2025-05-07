@@ -1,42 +1,52 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-cover bg-center" style="background-image: url('backgrounds/bg-admin.webp');">
-    <AdminBars>
-      <section class="p-6 space-y-6">
-        <h2 class="text-2xl font-bold text-white">Welcome, {{ userName }}!</h2>
+  <section class="min-h-screen bg-cover bg-center p-6 space-y-6">
+    <!-- Welcome Banner -->
+    <div class="bg-black bg-opacity-60 rounded-lg p-4 text-white shadow">
+      <h2 class="text-2xl font-bold">Welcome, {{ userName }}!</h2>
+      <p class="text-sm">Manage your realm of users, campaigns, and content here.</p>
+    </div>
 
-        <!-- Dashboard Widgets Area -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-black bg-opacity-50 rounded-lg p-4 text-white">
-            <h3 class="text-lg font-semibold">System Overview</h3>
-            <p class="text-sm">Summary stats, server health, etc.</p>
-          </div>
-
-          <div class="bg-black bg-opacity-50 rounded-lg p-4 text-white">
-            <h3 class="text-lg font-semibold">User Metrics</h3>
-            <p class="text-sm">Active users, signups, roles.</p>
-          </div>
-
-          <div class="bg-black bg-opacity-50 rounded-lg p-4 text-white">
-            <h3 class="text-lg font-semibold">Content Summary</h3>
-            <p class="text-sm">Quests, campaigns, language packs.</p>
-          </div>
+    <!-- Widget Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        v-for="widget in widgets"
+        :key="widget.title"
+        class="bg-black bg-opacity-50 rounded-lg p-4 text-white shadow hover:shadow-lg transition-shadow duration-300 flex items-center space-x-4"
+      >
+        <Icon :name="widget.icon" :library="widget.iconLibrary" class="w-8 h-8 text-indigo-400" />
+        <div>
+          <h3 class="text-lg font-semibold">{{ widget.title }}</h3>
+          <p class="text-sm">{{ widget.description }}</p>
         </div>
-      </section>
-    </AdminBars>
-  </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import AdminBars from '@/features/admin/components/AdminBars.vue'
+import Icon from '@/components/atoms/AppIcon.vue'
 import { useAuth } from '@/features/auth/hooks/useAuth'
+
 
 const { user } = useAuth()
 
 const userName = user.value?.username || 'Admin'
 
+
+const widgets: {
+  title: string
+  description: string
+  icon: string
+  iconLibrary: 'lucide' | 'heroicons' | 'iconify'
+}[] = [
+  { title: 'System Overview', description: 'Summary stats, server health, logs.', icon: 'ServerCog', iconLibrary: 'lucide' },
+  { title: 'User Metrics', description: 'Active users, signups, roles.', icon: 'Users', iconLibrary: 'lucide' },
+  { title: 'Content Summary', description: 'Quests, campaigns, language packs.', icon: 'BookText', iconLibrary: 'lucide' },
+]
+
 </script>
 
 <style scoped>
-/* Optional: Add dashboard-specific styles here */
+/* Optional: dashboard-specific styles */
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen bg-cover bg-center" :style="backgroundStyle">
     <!-- Topbar Component -->
     <Topbar />
 
@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import Sidebar from './Sidebar.vue'
 import Topbar from './Topbar.vue'
+const backgroundStyle = { backgroundImage: "url('/backgrounds/bg-admin.webp')" }
 </script>
 
 <style scoped>
