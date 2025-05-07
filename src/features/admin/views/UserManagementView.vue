@@ -1,5 +1,7 @@
 <template>
-    <div></div>
+    <div>
+      <p>This is the User Management Module</p>
+    </div>
   </template>
   
   <script setup lang="ts">

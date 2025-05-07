@@ -1,10 +1,7 @@
 <template>
   <section class="min-h-screen bg-cover bg-center p-6 space-y-6">
-    <!-- Welcome Banner -->
-    <div class="bg-black bg-opacity-60 rounded-lg p-4 text-white shadow">
-      <h2 class="text-2xl font-bold">Welcome, {{ userName }}!</h2>
-      <p class="text-sm">Manage your realm of users, campaigns, and content here.</p>
-    </div>
+    <!-- ✅ Use WelcomeBanner here -->
+    <WelcomeBanner :username="userName" :role="userRole" />
 
     <!-- Widget Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -26,12 +23,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import Icon from '@/components/atoms/AppIcon.vue'
+import WelcomeBanner from '@/features/admin/components/dashboard/WelcomeBanner.vue'
 import { useAuth } from '@/features/auth/hooks/useAuth'
+
 
 
 const { user } = useAuth()
 
 const userName = user.value?.username || 'Admin'
+const userRole = user.value?.roles?.[0] || 'admin'
 
 
 const widgets: {
