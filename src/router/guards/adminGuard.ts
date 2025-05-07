@@ -17,7 +17,7 @@ export function adminGuard(
 
   // Check if the user has 'admin' or 'super-admin' role
   const roles = authStore.user?.roles || []
-  if (roles.includes('admin') || roles.includes('super-admin')) {
+  if (roles.includes('admin') || roles.includes('superadmin')) {
     next()
   } else {
     // Redirect non-admin users away (e.g., back to landing or dashboard)
