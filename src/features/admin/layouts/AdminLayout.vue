@@ -24,12 +24,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import DashboardSidebarTools from '@/features/admin/components/dashboard/DashboardSidebarTools.vue'
 import Sidebar from '../components/Sidebar.vue'
 import Topbar from '../components/Topbar.vue'
-import DashboardSidebarTools from '@/features/admin/components/dashboard/DashboardSidebarTools.vue'
-
-import { useRoute } from 'vue-router'
-import { computed } from 'vue'
 
 // Current route name → used to determine which tools to render
 const route = useRoute()
