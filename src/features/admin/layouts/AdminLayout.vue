@@ -35,7 +35,7 @@ const route = useRoute()
 const currentRouteName = computed(() => route.name)
 
 // Placeholder userRole → later pull from auth store
-const userRole = 'admin'
+const userRole = 'superadmin'
 
 const backgroundStyle = {
   backgroundImage: "url('/backgrounds/bg-admin.webp')"
