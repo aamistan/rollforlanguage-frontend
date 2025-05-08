@@ -3,7 +3,7 @@
       <button
         v-for="tool in filteredTools"
         :key="tool.name"
-        class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded text-left"
+        class="flex items-center gap-2 px-4 py-2 bg-white text-black hover:bg-gray-400 rounded text-left"
         @click="handleToolClick(tool.action)"
       >
         <AppIcon :name="tool.icon" :library="tool.library" />
