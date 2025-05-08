@@ -1,50 +1,26 @@
 <template>
-    <div>
-      <!-- Compact Widget Card -->
-      <AdminCard @click="showModal = true" class="cursor-pointer hover:shadow-lg transition-shadow duration-300">
-        <div class="flex items-center space-x-4">
-          <Icon name="Users" library="lucide" class="w-8 h-8 text-indigo-400" />
-          <div>
-            <h3 class="text-lg font-semibold">Users</h3>
-            <p class="text-2xl font-bold">{{ totalUsers }}</p>
-            <p class="text-sm text-gray-300">Click for details</p>
-          </div>
-        </div>
-      </AdminCard>
-  
-      <!-- Expanded Modal -->
-      <AdminModal v-model:visible="showModal" title="User Metrics">
-        <div class="space-y-2">
-          <p>Total Users: <strong>{{ totalUsers }}</strong></p>
-          <p>Admins: <strong>{{ totalAdmins }}</strong></p>
-          <p>Superadmins: <strong>{{ totalSuperadmins }}</strong></p>
-  
-          <!-- Example placeholder: could swap with chart/table later -->
-          <div class="mt-4 p-4 bg-black bg-opacity-30 rounded text-sm">
-            Placeholder for future chart or detailed user breakdown
-          </div>
-        </div>
-      </AdminModal>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref } from 'vue'
-  import Icon from '@/components/atoms/AppIcon.vue'
-  import AdminCard from '@/features/admin/components/shared/AdminCard.vue'
-  import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
-  
- 
-  
-  // Static example data
-  const totalUsers = 527
-  const totalAdmins = 23
-  const totalSuperadmins = 4
-  
-  const showModal = ref(false)
-  </script>
-  
-  <style scoped>
-  /* Optional: extra hover/active styles */
-  </style>
-  
+  <div class="relative bg-white rounded-lg shadow p-4 group">
+    <!-- Hover tools overlay -->
+    <button
+      @click="isModalOpen = true"
+      class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-100 hover:bg-gray-200 rounded p-1"
+      aria-label="Widget Tools"
+    >
+      🛠
+    </button>
+
+    <h2 class="text-lg font-semibold">User Metrics Widget (Placeholder)</h2>
+
+    <!-- Modal -->
+    <AdminModal :visible="isModalOpen" @close="isModalOpen = false" title="User Metrics Details">
+      <p>This is placeholder content for the User Metrics widget modal.</p>
+    </AdminModal>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
+
+const isModalOpen = ref(false)
+</script>
