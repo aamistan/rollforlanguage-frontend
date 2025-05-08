@@ -32,8 +32,6 @@ import { adminDashboardTools } from '@/features/admin/utils/adminDashboardTools'
 
 const dashboardStore = useDashboardStore()
 
-
-
 const props = defineProps<{
   userRole: 'admin' | 'superadmin'
 }>()
