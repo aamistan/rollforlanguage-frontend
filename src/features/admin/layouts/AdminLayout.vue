@@ -4,8 +4,16 @@
     <Topbar />
 
     <div class="flex flex-1">
-      <!-- Sidebar -->
-      <Sidebar />
+      <!-- Sidebar with injected tools -->
+      <Sidebar>
+        <template #tools>
+          <DashboardSidebarTools
+            v-if="currentRouteName === 'AdminDashboard'"
+            :user-role="userRole"
+          />
+          <!-- Future: other tool panels per route -->
+        </template>
+      </Sidebar>
 
       <!-- Main content -->
       <main class="flex-1 p-6 overflow-y-auto">
@@ -18,8 +26,21 @@
 <script setup lang="ts">
 import Sidebar from '../components/Sidebar.vue'
 import Topbar from '../components/Topbar.vue'
+import DashboardSidebarTools from '@/features/admin/components/dashboard/DashboardSidebarTools.vue'
 
-const backgroundStyle = { backgroundImage: "url('/backgrounds/bg-admin.webp')" }
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+
+// Current route name → used to determine which tools to render
+const route = useRoute()
+const currentRouteName = computed(() => route.name)
+
+// Placeholder userRole → later pull from auth store
+const userRole = 'admin'
+
+const backgroundStyle = {
+  backgroundImage: "url('/backgrounds/bg-admin.webp')"
+}
 </script>
 
 <style scoped>
