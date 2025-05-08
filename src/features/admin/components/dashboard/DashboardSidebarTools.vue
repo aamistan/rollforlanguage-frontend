@@ -26,7 +26,12 @@ import { computed, ref } from 'vue'
 import { defineProps } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
+import { useDashboardStore } from '@/features/admin/stores/dashboardStore'
 import { adminDashboardTools } from '@/features/admin/utils/adminDashboardTools'
+
+
+const dashboardStore = useDashboardStore()
+
 
 
 const props = defineProps<{
@@ -44,8 +49,15 @@ const isLogsModalOpen = ref(false)
 function handleToolClick(action: string) {
   if (action === 'viewSystemLogs') {
     isLogsModalOpen.value = true
+  } else if (action === 'refreshMetrics') {
+    dashboardStore.refreshMetrics()
+  } else if (action === 'customizeDashboard') {
+    dashboardStore.enterCustomize()
+  } else if (action === 'expandAlertsPanel') {
+    dashboardStore.toggleAlerts()
   } else {
     console.log(`Tool clicked: ${action}`)
   }
 }
+
 </script>
