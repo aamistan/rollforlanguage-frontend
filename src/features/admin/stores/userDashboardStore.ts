@@ -1,9 +1,7 @@
 // /features/admin/stores/userDashboardStore.ts
-
+import type { AxiosError } from 'axios'
 import { defineStore } from 'pinia'
 import { userService, type CreateUserPayload } from '../services/userService'
-import type { AxiosError } from 'axios'
-
 
 export const useUserDashboardStore = defineStore('userDashboard', {
   state: () => ({
