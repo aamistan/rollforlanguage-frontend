@@ -10,7 +10,18 @@
       <span>{{ tool.name }}</span>
     </button>
 
-    <!-- Modal placeholders -->
+    <!-- Add User Modal -->
+    <AdminModal
+      :visible="isAddUserModalOpen"
+      @close="isAddUserModalOpen = false"
+      title="Add User"
+    >
+      <AddUserForm
+        @success="handleAddUserSuccess"
+      />
+    </AdminModal>
+
+    <!-- Manage Roles Modal -->
     <AdminModal
       :visible="isManageRolesModalOpen"
       @close="isManageRolesModalOpen = false"
@@ -19,6 +30,7 @@
       <p>This is placeholder content for manage roles modal.</p>
     </AdminModal>
 
+    <!-- Audit Logs Modal -->
     <AdminModal
       :visible="isAuditLogsModalOpen"
       @close="isAuditLogsModalOpen = false"
@@ -27,6 +39,7 @@
       <p>This is placeholder content for audit logs modal.</p>
     </AdminModal>
 
+    <!-- Merge Users Modal -->
     <AdminModal
       :visible="isMergeUsersModalOpen"
       @close="isMergeUsersModalOpen = false"
@@ -35,6 +48,7 @@
       <p>This is placeholder content for merge users modal.</p>
     </AdminModal>
 
+    <!-- Global User Settings Modal -->
     <AdminModal
       :visible="isGlobalSettingsModalOpen"
       @close="isGlobalSettingsModalOpen = false"
@@ -49,12 +63,13 @@
 import { computed, ref } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
+import AddUserForm from '@/features/admin/components/userDashboard/AddUserForm.vue'
 import { useUserDashboardStore } from '@/features/admin/stores/userDashboardStore'
 import { adminUserDashboardTools } from '@/features/admin/utils/adminUserDashboardTools'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 
 const { user } = useAuth()
-const userRole = (user.value?.roles?.[0] === 'superadmin') ? 'superadmin' : 'admin'
+const userRole = user.value?.roles?.[0] === 'superadmin' ? 'superadmin' : 'admin'
 
 const filteredTools = computed(() =>
   adminUserDashboardTools.filter(tool =>
@@ -62,7 +77,7 @@ const filteredTools = computed(() =>
   )
 )
 
-// Local modal flags (mirroring DashboardSidebarTools.vue)
+const isAddUserModalOpen = ref(false)
 const isManageRolesModalOpen = ref(false)
 const isAuditLogsModalOpen = ref(false)
 const isMergeUsersModalOpen = ref(false)
@@ -71,24 +86,37 @@ const isGlobalSettingsModalOpen = ref(false)
 const userDashboardStore = useUserDashboardStore()
 
 function handleToolClick(action: string) {
-  if (action === 'manageRoles') {
+  if (action === 'addUser') {
+    isAddUserModalOpen.value = true
+  }
+  else if (action === 'manageRoles') {
     isManageRolesModalOpen.value = true
-  } else if (action === 'viewAuditLogs') {
+  }
+  else if (action === 'viewAuditLogs') {
     isAuditLogsModalOpen.value = true
-  } else if (action === 'mergeUsers') {
+  }
+  else if (action === 'mergeUsers') {
     isMergeUsersModalOpen.value = true
-  } else if (action === 'globalUserSettings') {
+  }
+  else if (action === 'globalUserSettings') {
     isGlobalSettingsModalOpen.value = true
-  } else if (action === 'addUser') {
-    userDashboardStore.openAddUserForm()
-  } else if (action === 'searchUsers') {
+  }
+  else if (action === 'searchUsers') {
     userDashboardStore.searchUsers()
-  } else if (action === 'exportUsers') {
+  }
+  else if (action === 'exportUsers') {
     userDashboardStore.exportUsers()
-  } else if (action === 'bulkActions') {
+  }
+  else if (action === 'bulkActions') {
     userDashboardStore.openBulkActionsModal()
-  } else {
+  }
+  else {
     console.log(`Tool clicked: ${action}`)
   }
+}
+
+function handleAddUserSuccess() {
+  isAddUserModalOpen.value = false
+  userDashboardStore.refreshUserList() // Refresh user list after adding new user
 }
 </script>

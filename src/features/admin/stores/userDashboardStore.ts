@@ -1,20 +1,39 @@
 // /features/admin/stores/userDashboardStore.ts
 
 import { defineStore } from 'pinia'
+import { userService, type CreateUserPayload } from '../services/userService'
+import type { AxiosError } from 'axios'
+
 
 export const useUserDashboardStore = defineStore('userDashboard', {
   state: () => ({
-    // Example reactive state (can expand later)
+    // Existing state
     lastUserListRefresh: Date.now(),
     isBulkActionModalOpen: false,
     isManageRolesModalOpen: false,
     isAuditLogsModalOpen: false,
     isMergeUsersModalOpen: false,
     isGlobalSettingsModalOpen: false,
-    selectedUsers: [] as number[], // Example placeholder
+    selectedUsers: [] as number[],
+
+    // ✅ New state for API interaction
+    userCreationError: null as string | null,
   }),
 
   actions: {
+    // ✅ New action
+    async createUser(payload: CreateUserPayload): Promise<void> {
+      this.userCreationError = null
+      try {
+        await userService.createUser(payload)
+      } catch (error: unknown) {
+        const axiosError = error as AxiosError<{ error: string }>
+        this.userCreationError = axiosError.response?.data?.error || 'Failed to create user.'
+        throw error
+      }
+    },
+
+    // Existing actions
     refreshUserList() {
       console.log('🔄 Refreshing user list...')
       this.lastUserListRefresh = Date.now()
@@ -22,17 +41,14 @@ export const useUserDashboardStore = defineStore('userDashboard', {
 
     openAddUserForm() {
       console.log('➕ Opening add user form...')
-      // Trigger modal logic (if managed here) → placeholder
     },
 
     searchUsers() {
       console.log('🔍 Triggering user search input focus...')
-      // Could emit event or set flag for focusing search input
     },
 
     exportUsers() {
       console.log('📥 Exporting users to CSV...')
-      // Placeholder export logic
     },
 
     openBulkActionsModal() {

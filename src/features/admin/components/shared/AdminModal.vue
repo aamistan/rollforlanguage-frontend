@@ -2,11 +2,11 @@
   <transition name="fade">
     <div
       v-if="visible"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
       @click.self="close"
     >
       <div
-        class="bg-gray-900 text-white rounded-lg shadow-lg max-w-lg w-full p-6 relative"
+        class="relative bg-gray-900 text-white rounded-lg shadow-lg w-full max-w-lg p-6"
         role="dialog"
         aria-modal="true"
       >
@@ -19,8 +19,10 @@
           ✕
         </button>
 
-        <!-- Modal Title (optional) -->
-        <h2 v-if="title" class="text-xl font-bold mb-4">{{ title }}</h2>
+        <!-- Modal Title -->
+        <h2 v-if="title" class="text-xl font-semibold mb-4">
+          {{ title }}
+        </h2>
 
         <!-- Slot for modal content -->
         <div>

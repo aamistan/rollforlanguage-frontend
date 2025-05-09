@@ -1,7 +1,7 @@
 import type { AxiosInstance, InternalAxiosRequestConfig, AxiosError } from 'axios'
 import axios from 'axios'
-import { useAuthStore } from '../stores/authStore'
-import { isTokenExpiringSoon } from '../utils/tokenHelpers'
+import { useAuthStore } from '../features/auth/stores/authStore'
+import { isTokenExpiringSoon } from '../features/auth/utils/tokenHelpers'
 
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
