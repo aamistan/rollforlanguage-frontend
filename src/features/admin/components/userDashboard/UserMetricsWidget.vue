@@ -10,6 +10,7 @@
     </button>
 
     <h2 class="text-lg font-semibold">User Metrics Widget (Placeholder)</h2>
+    <p class="text-gray-500">Metrics like total users, active users, etc., will appear here.</p>
 
     <!-- Modal -->
     <AdminModal :visible="isModalOpen" @close="isModalOpen = false" title="User Metrics Details">

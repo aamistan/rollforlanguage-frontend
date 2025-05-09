@@ -9,11 +9,12 @@
       🛠
     </button>
 
-    <h2 class="text-lg font-semibold">User Metrics Widget (Placeholder)</h2>
+    <h2 class="text-lg font-semibold">User Table Widget (Placeholder)</h2>
+    <p class="text-gray-500">A table listing all users will appear here.</p>
 
     <!-- Modal -->
-    <AdminModal :visible="isModalOpen" @close="isModalOpen = false" title="User Metrics Details">
-      <p>This is placeholder content for the User Metrics widget modal.</p>
+    <AdminModal :visible="isModalOpen" @close="isModalOpen = false" title="User Table Details">
+      <p>This is placeholder content for the User Table widget modal.</p>
     </AdminModal>
   </div>
 </template>

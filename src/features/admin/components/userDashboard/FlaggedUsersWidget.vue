@@ -9,11 +9,12 @@
       🛠
     </button>
 
-    <h2 class="text-lg font-semibold">User Metrics Widget (Placeholder)</h2>
+    <h2 class="text-lg font-semibold">Flagged Users Widget (Placeholder)</h2>
+    <p class="text-gray-500">A list of flagged users for review will appear here.</p>
 
     <!-- Modal -->
-    <AdminModal :visible="isModalOpen" @close="isModalOpen = false" title="User Metrics Details">
-      <p>This is placeholder content for the User Metrics widget modal.</p>
+    <AdminModal :visible="isModalOpen" @close="isModalOpen = false" title="Flagged Users Details">
+      <p>This is placeholder content for the Flagged Users widget modal.</p>
     </AdminModal>
   </div>
 </template>
