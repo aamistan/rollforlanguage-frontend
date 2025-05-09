@@ -11,6 +11,11 @@
             v-if="currentRouteName === 'AdminDashboard'"
             :user-role="userRole"
           />
+
+          <UserDashboardSidebarTools
+            v-else-if="currentRouteName === 'AdminUsers'"
+            :user-role="userRole"
+          />
           <!-- Future: other tool panels per route -->
         </template>
       </Sidebar>
@@ -27,6 +32,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import DashboardSidebarTools from '@/features/admin/components/dashboard/DashboardSidebarTools.vue'
+import UserDashboardSidebarTools from '@/features/admin/components/userDashboard/UserDashboardSidebarTools.vue'
 import Sidebar from '../components/Sidebar.vue'
 import Topbar from '../components/Topbar.vue'
 

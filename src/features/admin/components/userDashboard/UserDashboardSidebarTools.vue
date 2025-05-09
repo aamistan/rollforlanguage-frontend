@@ -1,0 +1,94 @@
+<template>
+  <div class="flex flex-col gap-4">
+    <button
+      v-for="tool in filteredTools"
+      :key="tool.name"
+      class="flex items-center gap-2 px-4 py-2 bg-white text-black hover:bg-gray-400 rounded text-left"
+      @click="handleToolClick(tool.action)"
+    >
+      <AppIcon :name="tool.icon" :library="tool.library" />
+      <span>{{ tool.name }}</span>
+    </button>
+
+    <!-- Modal placeholders -->
+    <AdminModal
+      :visible="isManageRolesModalOpen"
+      @close="isManageRolesModalOpen = false"
+      title="Manage Roles"
+    >
+      <p>This is placeholder content for manage roles modal.</p>
+    </AdminModal>
+
+    <AdminModal
+      :visible="isAuditLogsModalOpen"
+      @close="isAuditLogsModalOpen = false"
+      title="Audit Logs"
+    >
+      <p>This is placeholder content for audit logs modal.</p>
+    </AdminModal>
+
+    <AdminModal
+      :visible="isMergeUsersModalOpen"
+      @close="isMergeUsersModalOpen = false"
+      title="Merge Users"
+    >
+      <p>This is placeholder content for merge users modal.</p>
+    </AdminModal>
+
+    <AdminModal
+      :visible="isGlobalSettingsModalOpen"
+      @close="isGlobalSettingsModalOpen = false"
+      title="Global User Settings"
+    >
+      <p>This is placeholder content for global user settings modal.</p>
+    </AdminModal>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import AppIcon from '@/components/atoms/AppIcon.vue'
+import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
+import { useUserDashboardStore } from '@/features/admin/stores/userDashboardStore'
+import { adminUserDashboardTools } from '@/features/admin/utils/adminUserDashboardTools'
+import { useAuth } from '@/features/auth/hooks/useAuth'
+
+const { user } = useAuth()
+const userRole = (user.value?.roles?.[0] === 'superadmin') ? 'superadmin' : 'admin'
+
+const filteredTools = computed(() =>
+  adminUserDashboardTools.filter(tool =>
+    !tool.roles || tool.roles.includes(userRole)
+  )
+)
+
+// Local modal flags (mirroring DashboardSidebarTools.vue)
+const isManageRolesModalOpen = ref(false)
+const isAuditLogsModalOpen = ref(false)
+const isMergeUsersModalOpen = ref(false)
+const isGlobalSettingsModalOpen = ref(false)
+
+const userDashboardStore = useUserDashboardStore()
+
+function handleToolClick(action: string) {
+  if (action === 'manageRoles') {
+    isManageRolesModalOpen.value = true
+  } else if (action === 'viewAuditLogs') {
+    isAuditLogsModalOpen.value = true
+  } else if (action === 'mergeUsers') {
+    isMergeUsersModalOpen.value = true
+  } else if (action === 'globalUserSettings') {
+    isGlobalSettingsModalOpen.value = true
+  } else if (action === 'addUser') {
+    userDashboardStore.openAddUserForm()
+  } else if (action === 'searchUsers') {
+    userDashboardStore.searchUsers()
+  } else if (action === 'exportUsers') {
+    userDashboardStore.exportUsers()
+  } else if (action === 'bulkActions') {
+    userDashboardStore.openBulkActionsModal()
+  } else {
+    console.log(`Tool clicked: ${action}`)
+  }
+}
+</script>
