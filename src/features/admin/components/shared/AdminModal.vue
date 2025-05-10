@@ -6,7 +6,10 @@
       @click.self="close"
     >
       <div
-        class="relative bg-gray-900 text-white rounded-lg shadow-lg w-full max-w-lg p-6"
+        :class="[
+          'relative bg-gray-900 text-white rounded-lg shadow-lg w-full p-6',
+          sizeClass,
+        ]"
         role="dialog"
         aria-modal="true"
       >
@@ -34,11 +37,13 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { defineProps, defineEmits } from 'vue'
 
 const props = defineProps<{
   visible: boolean
   title?: string
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl' | 'full'
 }>()
 
 const emit = defineEmits(['close'])
@@ -46,6 +51,11 @@ const emit = defineEmits(['close'])
 function close() {
   emit('close')
 }
+
+const sizeClass = computed(() => {
+  const size = props.size || 'lg'
+  return `max-w-${size}`
+})
 </script>
 
 <style scoped>
