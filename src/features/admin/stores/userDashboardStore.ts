@@ -1,42 +1,48 @@
 // /features/admin/stores/userDashboardStore.ts
 import type { AxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import { userService, type CreateUserPayload } from '../services/userService'
+import { userService, type CreateUserPayload } from '@/features/admin/services/userService'
 
 export const useUserDashboardStore = defineStore('userDashboard', {
   state: () => ({
-    // Existing state
+    // 🔄 Trigger for refreshing any user table widgets
     lastUserListRefresh: Date.now(),
+
+    // 🧩 Modal toggles (scoped to sidebar tools)
     isBulkActionModalOpen: false,
     isManageRolesModalOpen: false,
     isAuditLogsModalOpen: false,
     isMergeUsersModalOpen: false,
     isGlobalSettingsModalOpen: false,
+
+    // 🧠 Selection state
     selectedUsers: [] as number[],
 
-    // ✅ New state for API interaction
+    // ⚠️ Error handling
     userCreationError: null as string | null,
   }),
 
   actions: {
-    // ✅ New action
+    // ✅ Backend integration: create user
     async createUser(payload: CreateUserPayload): Promise<void> {
       this.userCreationError = null
       try {
         await userService.createUser(payload)
+        this.refreshUserList()
       } catch (error: unknown) {
         const axiosError = error as AxiosError<{ error: string }>
-        this.userCreationError = axiosError.response?.data?.error || 'Failed to create user.'
+        this.userCreationError =
+          axiosError.response?.data?.error || 'Failed to create user.'
         throw error
       }
     },
 
-    // Existing actions
+    // ✅ Table refresh trigger
     refreshUserList() {
-      console.log('🔄 Refreshing user list...')
       this.lastUserListRefresh = Date.now()
     },
 
+    // 🧭 UI action toggles
     openAddUserForm() {
       console.log('➕ Opening add user form...')
     },
@@ -50,27 +56,22 @@ export const useUserDashboardStore = defineStore('userDashboard', {
     },
 
     openBulkActionsModal() {
-      console.log('✅ Opening bulk actions modal...')
       this.isBulkActionModalOpen = true
     },
 
     openManageRolesModal() {
-      console.log('🛡 Opening manage roles modal...')
       this.isManageRolesModalOpen = true
     },
 
     openAuditLogsModal() {
-      console.log('📋 Opening audit logs modal...')
       this.isAuditLogsModalOpen = true
     },
 
     openMergeUsersModal() {
-      console.log('👥 Opening merge users modal...')
       this.isMergeUsersModalOpen = true
     },
 
     openGlobalUserSettingsModal() {
-      console.log('⚙️ Opening global user settings modal...')
       this.isGlobalSettingsModalOpen = true
     },
   },

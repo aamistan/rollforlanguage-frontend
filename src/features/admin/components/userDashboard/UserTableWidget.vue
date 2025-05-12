@@ -20,12 +20,12 @@
 
 
     <!-- 🪟 Modal with user table -->
-    <AdminModal
-      :visible="isModalOpen"
-      @close="isModalOpen = false"
-      title="User Management"
-      size="4x1"
-    >
+  <AdminModal
+    :visible="isModalOpen"
+    @close="isModalOpen = false"
+    title="User Management"
+    size="4xl"
+  >
       <UserTable />
     </AdminModal>
   </div>

@@ -1,13 +1,19 @@
 <template>
   <div class="space-y-4">
     <!-- 🔍 Search Bar -->
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between flex-wrap gap-4">
       <input
         v-model="search"
         type="text"
         placeholder="Search users..."
         class="input w-full max-w-xs"
       />
+
+      <select v-model="limit" class="input w-24">
+        <option v-for="opt in [10, 25, 50, 100]" :key="opt" :value="opt">
+          {{ opt }} / page
+        </option>
+      </select>
     </div>
 
     <!-- 📋 User Table -->
@@ -22,9 +28,12 @@
             <th class="px-4 py-2 text-center">Actions</th>
           </tr>
         </thead>
-        <tbody class="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+        <tbody
+          v-if="!loading && users.length"
+          class="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+        >
           <tr
-            v-for="user in filteredUsers"
+            v-for="user in users"
             :key="user.id"
             class="border-b bg-gray-900 text-gray-200 hover:bg-white hover:text-gray-900 transition-colors"
           >
@@ -44,50 +53,107 @@
             <td class="px-4 py-2 text-center text-gray-400 italic">–</td>
           </tr>
         </tbody>
-
+        <tbody v-else-if="loading">
+          <tr><td colspan="5" class="text-center p-4 text-gray-500">Loading users…</td></tr>
+        </tbody>
+        <tbody v-else>
+          <tr><td colspan="5" class="text-center p-4 text-gray-500">No users found.</td></tr>
+        </tbody>
       </table>
+    </div>
+
+    <!-- 📄 Pagination Controls -->
+    <div class="flex items-center justify-between pt-2 text-sm text-gray-600 dark:text-gray-300">
+      <div>
+        Page {{ page }} of {{ pagination.totalPages }} • {{ pagination.total }} total users
+      </div>
+      <div class="flex gap-2">
+        <button
+          class="btn"
+          :disabled="page === 1 || loading"
+          @click="page--"
+        >
+          ⬅ Prev
+        </button>
+        <button
+          class="btn"
+          :disabled="page === pagination.totalPages || loading"
+          @click="page++"
+        >
+          Next ➡
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, watch } from 'vue'
+import { userService } from '@/features/admin/services/userService'
+import type { User } from '@/features/admin/services/userService'
+import { useUserDashboardStore } from '@/features/admin/stores/userDashboardStore'
 
-// Mocked user data (replace with real API integration later)
-const users = ref([
-  {
-    id: 1,
-    username: 'admin_hero',
-    email: 'admin@example.com',
-    role: 'admin',
-    createdAt: '2025-05-01T12:00:00Z',
-  },
-  {
-    id: 2,
-    username: 'frau.lehrerin',
-    email: 'teacher@example.com',
-    role: 'teacher',
-    createdAt: '2025-04-27T08:15:00Z',
-  },
-  {
-    id: 3,
-    username: 'novice_knight',
-    email: 'student@example.com',
-    role: 'student',
-    createdAt: '2025-05-05T16:30:00Z',
-  },
-])
-
+const users = ref<User[]>([])
 const search = ref('')
-
-const filteredUsers = computed(() => {
-  if (!search.value) return users.value
-  return users.value.filter(
-    (u) =>
-      u.username.toLowerCase().includes(search.value.toLowerCase()) ||
-      u.email.toLowerCase().includes(search.value.toLowerCase())
-  )
+const page = ref(1)
+const limit = ref(25)
+const loading = ref(false)
+const error = ref<string | null>(null)
+const pagination = ref({
+  total: 0,
+  page: 1,
+  limit: 25,
+  totalPages: 1,
 })
+
+const userDashboardStore = useUserDashboardStore()
+
+async function fetchUsers() {
+  loading.value = true
+  error.value = null
+  try {
+    const response = await userService.getUsers({
+      search: search.value,
+      page: page.value,
+      limit: limit.value,
+      sortBy: 'createdAt',
+      sortOrder: 'desc',
+    })
+    users.value = response.data
+    pagination.value = response.pagination
+  } catch (err) {
+    error.value = 'Failed to load users.'
+    console.error(err)
+  } finally {
+    loading.value = false
+  }
+}
+
+// 🔁 Load on init
+fetchUsers()
+
+// 🔍 Debounced search watcher
+let timeout: ReturnType<typeof setTimeout>
+watch(search, () => {
+  clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    page.value = 1
+    fetchUsers()
+  }, 300)
+})
+
+// 📄 Page / Limit watchers
+watch([page, limit], () => {
+  fetchUsers()
+})
+
+// 🔄 Refresh trigger from dashboard
+watch(
+  () => userDashboardStore.lastUserListRefresh,
+  () => {
+    fetchUsers()
+  }
+)
 
 function formatDate(iso: string): string {
   const date = new Date(iso)
@@ -113,5 +179,16 @@ const roleColors: Record<string, string> = {
   border-radius: 0.375rem;
   color: #111;
   background-color: #fff;
+}
+.btn {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.375rem;
+  background-color: #f8f8f8;
+  color: #333;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>
