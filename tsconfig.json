@@ -17,6 +17,6 @@
     "jsx": "preserve",
     "resolveJsonModule": true
   },
-  "include": ["src", "shims-vue.d.ts", "vite.config.ts"],
+  "include": ["src", "shims-vue.d.ts", "vite.config.ts", "src/types/headless.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

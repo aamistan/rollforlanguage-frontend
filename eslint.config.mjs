@@ -48,6 +48,9 @@ export default defineConfig([
     },
     settings: {
       'import/resolver': {
+          node: {
+          extensions: ['.js', '.ts', '.vue']
+        },
         alias: {
           map: [['@', './src']],
           extensions: ['.js', '.ts', '.vue']
