@@ -293,3 +293,230 @@ await userService.createUser({
 
 ✅ **All four documented with full consistency, matching the template!**
 
+Absolutely! Here's the ✨ **fully updated and regenerated documentation set** reflecting everything we've built so far—including live data integration, modal interaction, and API usage—all polished and aligned with your documentation template.
+
+---
+
+## 📁 **`/docs/frontend/userManagementView.md`**
+
+````markdown
+/**
+ * User Management Dashboard View
+ * 
+ * Related Documentation:
+ * /docs/frontend/userManagementView.md
+ * 
+ * Purpose:
+ * - Sets up the main user management dashboard view inside the admin system
+ * - Mirrors AdminDashboardView.vue structure for architectural consistency
+ * - Hosts user management-specific widgets inside DashboardWidgetGrid
+ * 
+ * Development Mantra:
+ * "We build not for today, but for tomorrow and beyond."
+ */
+
+# UserManagementView.vue Component
+
+## Overview
+> The landing view shown when an admin clicks "Users" in the admin topbar. Mirrors the structure of AdminDashboardView.vue but swaps in widgets related to user management. Provides a modular grid container for user-focused widgets.
+
+## Location
+> `/src/features/admin/views/UserManagementView.vue`
+
+## Features
+- [x] Renders DashboardWidgetGrid to manage widget layout
+- [x] Loads user management widgets: UserTableWidget, FlaggedUsersWidget
+- [x] Future support for superadmin-only widgets via `v-if`
+
+## Props
+_None_
+
+## Emits
+_None_
+
+## Dependencies
+- `DashboardWidgetGrid`
+- `UserTableWidget`
+- `FlaggedUsersWidget`
+
+## Usage
+```vue
+<UserManagementView />
+```
+````
+
+---
+
+## 📁 **`/docs/frontend/userTableWidget.md`**
+
+````markdown
+/**
+ * User Table Widget
+ * 
+ * Related Documentation:
+ * /docs/frontend/userTableWidget.md
+ * 
+ * Purpose:
+ * - Displays snapshot metrics of users inside the dashboard
+ * - Opens full user management table in a modal
+ * 
+ * Development Mantra:
+ * "We build not for today, but for tomorrow and beyond."
+ */
+
+# UserTableWidget.vue Component
+
+## Overview
+> Widget component showing live user statistics pulled from `/admin/users/metrics`. Includes a modal for opening the full user management table with pagination, sorting, and filtering.
+
+## Location
+> `/src/features/admin/components/userDashboard/UserTableWidget.vue`
+
+## Features
+- [x] Snapshot view of total users and role breakdown
+- [x] Hover 🛠 button opens full user table in modal
+- [x] Reacts to global userDashboardStore refresh events
+- [x] Displays loading and fallback states
+
+## Props
+_None_
+
+## Emits
+_None_
+
+## Dependencies
+- `AdminModal`
+- `UserTable`
+- `userDashboardStore`
+
+## Usage
+```vue
+<UserTableWidget />
+```
+````
+
+---
+
+## 📁 **`/docs/frontend/flaggedUsersWidget.md`**
+
+````markdown
+/**
+ * Flagged Users Widget
+ * 
+ * Related Documentation:
+ * /docs/frontend/flaggedUsersWidget.md
+ * 
+ * Purpose:
+ * - Placeholder for a future feature showing flagged users
+ * - Modal-ready for moderation actions
+ * 
+ * Development Mantra:
+ * "We build not for today, but for tomorrow and beyond."
+ */
+
+# FlaggedUsersWidget.vue Component
+
+## Overview
+> Widget for displaying users who may require admin attention (suspensions, reports, behavior flags). Currently a placeholder for future moderation tools.
+
+## Location
+> `/src/features/admin/components/userDashboard/FlaggedUsersWidget.vue`
+
+## Features
+- [x] Hover 🛠 tool button
+- [x] Modal-ready interaction
+- [x] Placeholder content
+
+## Props
+_None_
+
+## Emits
+_None_
+
+## Dependencies
+- `AdminModal`
+
+## Usage
+```vue
+<FlaggedUsersWidget />
+```
+````
+
+---
+
+## 📁 **`/docs/frontend/userService.md`**
+
+````markdown
+/**
+ * Admin User Service (API Integration)
+ * 
+ * Related Documentation:
+ * /docs/frontend/userService.md
+ * 
+ * Purpose:
+ * - Provides frontend API methods to manage users via /admin/users endpoints
+ * - Supports paginated search, filtered queries, and user creation
+ * - Includes input sanitization and type-safe payloads
+ * 
+ * Development Mantra:
+ * "We build not for today, but for tomorrow and beyond."
+ */
+
+# userService.ts Module
+
+## Overview
+> This module contains all user-related backend API functions for the admin dashboard.  
+> It ensures consistent communication with the backend `/admin/users` endpoints, with built-in query cleanup and type safety.
+
+## Location
+> `/src/features/admin/services/userService.ts`
+
+## Features
+- [x] `getUsers()` → fetch paginated, filtered user data
+- [x] `createUser()` → securely post a new user to the backend
+- [x] `getUserMetrics()` → fetch `/admin/users/metrics` summary
+- [x] Query param sanitization (removes empty/undefined/null)
+- [x] Centralized `userService` object for scalable access
+
+## Interfaces & Types
+| Name | Description |
+|------|-------------|
+| `User` | Basic user object returned from API |
+| `UserQueryParams` | Accepted GET query filters |
+| `PaginatedUserResponse` | Standard response format for paged results |
+| `CreateUserPayload` | Fields required to create a new user |
+| `UserMetricsResponse` | Summary metrics format for dashboard |
+
+## Example Usage
+```ts
+const { data, pagination } = await userService.getUsers({
+  search: 'admin',
+  roles: ['admin', 'teacher'],
+  page: 1,
+  limit: 25
+})
+
+await userService.createUser({
+  email: 'new@example.com',
+  username: 'newuser',
+  password: 'StrongPass123!',
+  role: 'student'
+})
+
+const metrics = await userService.getUserMetrics()
+console.log(metrics.totalUsers)
+```
+
+## Dependencies
+- `axiosInstance` from `/src/services/axiosInstance.ts`
+- Used by `userDashboardStore.ts`
+
+## Notes
+- API requires `manage_users` permission and valid JWT
+- `getUserMetrics()` supports role-safe data breakdown
+- Future support for user editing and deletion can be added cleanly
+````
+
+---
+
+Let me know when you're ready to refactor or remove the deprecated `UserMetricsWidget.vue`!

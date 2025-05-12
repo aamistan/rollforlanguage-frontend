@@ -1,3 +1,8 @@
+Here is your **fully updated and clean** version of the **Project Overview**, with all the User Management system updates, live data integration, widget patterns, and service/store interactions clearly integrated:
+
+---
+
+````markdown
 # 🏰 **Roll for Language Frontend: Project Overview**
 
 > *“We build not for today, but for tomorrow and beyond.”*
@@ -113,15 +118,16 @@ mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{au
 
 - `UserManagementView.vue` → main dashboard view for user control
 - `DashboardWidgetGrid.vue` reused for layout
-- `UserTableWidget.vue`, `UserMetricsWidget.vue`, `FlaggedUsersWidget.vue` → all use AdminModal + 🛠 hover tools
+- `UserTableWidget.vue`, `FlaggedUsersWidget.vue` → widget/modal pattern
+- `UserTable.vue` → live user data table w/ pagination & filters
 
 ### Sidebar Tools:
 
 - Injected via `UserDashboardSidebarTools.vue`
 - Defined in `adminUserDashboardTools.ts` (role-filtered)
 - Tools:
-  - ➕ Add User (opens modal)
-  - 🔍 Search Users (focus/expand input)
+  - ➕ Add User
+  - 🔍 Search Users
   - 📥 Export Users
   - ⚙️ Global Settings
   - 🛡 Manage Roles
@@ -132,58 +138,55 @@ mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{au
 ### Shared Store:
 
 - `userDashboardStore.ts` (Pinia)
-  - Manages tool states, modal flags
-  - Tracks `lastUserListRefresh` to allow external refresh triggers
-  - Handles `createUser()` via service + `userCreationError` feedback
+  - Manages modal visibility and sidebar tool state
+  - Tracks `lastUserListRefresh` for reactive triggers
+  - `createUser(payload)` with `userCreationError` handling
+  - `fetchUserMetrics()` pulls `/admin/users/metrics` API
 
 ### Services:
 
 - `userService.ts`
-  - `getUsers(query)` → supports search, filter, pagination, sort, role filter
-  - `createUser(payload)` → secure role-based user creation
-  - Auto-cleans query params to avoid 400 errors
-
-### Integrated Components:
-
-- `UserTable.vue` → table in modal from `UserTableWidget`
-  - ✅ Debounced search
-  - ✅ Pagination (page, limit)
-  - ✅ Role styling
-  - ✅ Backend sync via `getUsers()`
+  - `getUsers(query)` → paginated search/sort/filter request
+  - `createUser(payload)` → secure user creation
+  - `getUserMetrics()` → stats for `UserTableWidget`
+  - Auto-cleans query params to prevent 400 errors
 
 ---
 
 ### ✅ Features Implemented
 
-- UserManagementView.vue scaffolded
-- Widget interaction patterns mirrored from admin system
-- Hover 🛠 icon opens AdminModal with responsive sizing
-- Modal size system (`size="lg"`, etc.) implemented
-- Shared store triggers reactive fetches
-- Clean API sync (pagination, filtering, search)
-- Improved role badge styles and table readability
-- Toasts, error handling, loading states added
+- UserManagementView fully scaffolded
+- DashboardWidgetGrid reused for layout parity
+- Widgets with modals, hover tools, and local state
+- Metrics integrated from `/admin/users/metrics`
+- User table: pagination, search, sorting, loading states
+- Modal sizing system implemented (`size="4xl"`, etc.)
+- Live data sync via userDashboardStore watchers
+- Red squiggle monsters slain ☠️
 
 ---
 
 ## 📝 **Next Steps**
 
-- Implement role-based action buttons (edit, suspend, etc.)
-- Connect audit log and settings modals to APIs
-- Add user-specific row dropdown with moderation controls
-- Wire metrics widget with real backend stats
-- Add bulk action modal + backend sync
+- Expand widget detail modals (e.g. Flagged Users)
+- Implement user action dropdowns (edit, suspend, delete)
+- Populate Manage Roles, Audit Logs, Global Settings
+- Hook up bulk action tools with backend
+- Add toast feedback on actions (create, edit, suspend)
 
 ---
 
-✅ **Current Frontend Milestone Achieved:**
+✅ **Current Frontend Milestone Achieved**
 
-- Admin + User dashboards architecturally aligned  
-- Widget/modal/tool patterns standardized across dashboards  
-- User management system fully scaffolded and live-integrated with backend  
-- Role-based sidebar tool injection working  
-- User CRUD interaction (create, view/paginate) online
+- ✅ Fully modular user management system
+- ✅ Backend API integration with stats + table
+- ✅ Shared store + service architecture refined
+- ✅ Widget + modal + sidebar pattern validated across views
+- ✅ Clean dev hand-off for future expansion
 
 ---
 
 > *We build not for today, but for tomorrow and beyond.*
+````
+
+Let me know when you'd like to deprecate the placeholder `UserMetricsWidget.vue`, or if you want to repurpose it into something new!
