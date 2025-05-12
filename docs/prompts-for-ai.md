@@ -4,7 +4,7 @@ To help you make recommendations, I'm going to share the document which contains
 
 We should use this information to make the ultimate ###########.
 
-Before I share the tech stack, development mantra, and condense-work-completed, do you understand the scope of our mission in this chat?
+Before I share the tech stack, development mantra, and condensed-work-completed, do you understand the scope of our mission in this chat?
 
 
 
