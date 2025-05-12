@@ -1,10 +1,3 @@
-✨ Absolutely! Thanks for sharing your template and context. Here’s a fully updated **Project Overview** that integrates everything we’ve accomplished in **this chat**, while seamlessly weaving it into the original overview.
-
-✅ I matched the tone, formatting, and structure → while adding the **User Management Dashboard** work alongside the existing **Admin Dashboard** system.
-
----
-
-````md
 # 🏰 **Roll for Language Frontend: Project Overview**
 
 > *“We build not for today, but for tomorrow and beyond.”*
@@ -27,11 +20,11 @@ Built for global deployment, it integrates responsive layouts, internationalizat
 2. We build optimized code.  
 3. We build using best practices.  
 4. We build modernly.  
-5. We write our wish list of tools/components/features…then make it so!
+5. We write our wish list of tools/components/features… then make it so!
 
 We ask the questions:  
 What are the must-haves? What are the should-haves? What are the would-be-nice-to-haves?  
-After we answer those questions, we include all of them!  
+After we answer those questions, we include all of them.  
 We build not for today, but for tomorrow and beyond.
 
 ---
@@ -47,7 +40,7 @@ We build not for today, but for tomorrow and beyond.
 | API Structure        | Fastify                                          |
 | Real-Time Layer      | Socket.IO                                        |
 | Database             | PlanetScale                                      |
-| Authentication      | JWT                                              |
+| Authentication       | JWT                                              |
 | Static Asset Hosting | Vercel + GitHub                                  |
 | i18n Support         | Vue I18n + JSON + Strapi (future)                |
 | Audio Features       | Web MediaRecorder + Backblaze B2                 |
@@ -61,171 +54,136 @@ We build not for today, but for tomorrow and beyond.
 Located under `/src`, the project uses a **domain-driven design**:
 
 - `components/` → Atomic design (atoms, molecules, organisms, layouts)
-- `features/` → Domain-specific modules (auth, dashboard, inventory, campaigns, userDashboard)
+- `features/` → Domain-specific modules (auth, dashboard, userDashboard, campaigns, inventory)
 - `i18n/` → Internationalization files
 - `router/` → Vue Router configs
 - `services/`, `stores/`, `utils/`, `plugins/`, `sockets/` → Supporting logic
 - Core files: `App.vue`, `main.ts`, `tailwind.config.ts`
 
-Scaffold with:
+Scaffold:
 
 ```bash
-mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{auth,dashboard,inventory,campaigns,userDashboard}/{components,stores,services,views,types},i18n,router,stores,services,utils,plugins,sockets,views}
+mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{auth,dashboard,userDashboard,campaigns,inventory}/{components,stores,services,views},i18n,router,services,stores,utils,plugins,sockets}
 ```
 
 ---
 
 ## ⚙ **Key Components & Systems**
 
-* **Navbar**: Responsive, locale-switching, auth-aware navigation (`Navbar.vue`)
-* **Footer**: Modular, multilingual, responsive footer (`Footer.vue`)
-* **Landing Page**: Hero CTAs, feature highlights, onboarding previews, playable RPG teasers (`LandingPage.vue`)
-* **Layouts**:
-
-  * `MainLayout.vue` → sitewide layout
-  * `AdminLayout.vue` → admin dashboard-specific layout (includes Topbar, Sidebar, background)
+- **Navbar** → responsive, i18n, auth-aware navigation
+- **Footer** → multilingual, flexible layout
+- **Landing Page** → immersive RPG teaser, hero CTAs, feature grid
+- **Layouts**:
+  - `MainLayout.vue` → standard public layout
+  - `AdminLayout.vue` → topbar + sidebar + routed content slot, with context-aware Sidebar injection
 
 ---
 
 ## 🏰 **Admin Dashboard System**
 
-✅ A modular, interactive admin dashboard for managing users, campaigns, content, and system monitoring.
+✅ Modular admin dashboard to manage users, system content, and platform health.
 
-### **Key Admin Components:**
+### Core Components:
 
-* **`AdminLayout.vue`**
-
-  * Acts as a wrapper for all admin routes
-  * Renders `<Topbar>`, `<Sidebar>`, and `<router-view>` inside a shared layout
-  * Supports slot injection for Sidebar tools
-  * Handles persistent background image
-
-* **`AdminDashboardView.vue`**
-
-  * Default landing view at `/admin/dashboard`
-  * Displays `WelcomeBanner` (dynamic username + role, color-coded)
-  * Renders grid of widgets (`SystemOverviewWidget`, `UserMetricsWidget`, `ContentSummaryWidget`) inside `DashboardWidgetGrid`
-  * Prepares each widget for expansion via `AdminModal`
-
-* **`DashboardWidgetGrid.vue`**
-
-  * Provides responsive grid layout via Tailwind utilities
-  * Accepts widgets via `<slot>`
-
-* **`DashboardSidebarTools.vue`**
-
-  * Dynamically renders admin dashboard tool buttons based on config (`adminDashboardTools.ts`)
-  * Filters tools based on `userRole` (admin vs superadmin)
-  * Wires buttons to actions in shared `dashboardStore`
-
-* **`AdminModal.vue`**
-
-  * Reusable modal for widget expansion or admin dialogs
-  * Slot-based content injection
-  * Closeable via button or overlay
-
-* **`dashboardStore.ts` (Pinia Store)**
-
-  * Shared reactive store managing dashboard-level state and events
-  * Tracks `isCustomizeMode`, `isAlertsExpanded`, `lastRefreshTimestamp`
-  * Provides actions: `enterCustomize()`, `exitCustomize()`, `toggleAlerts()`, `refreshMetrics()`
+- `AdminDashboardView.vue` → grid layout of summary widgets
+- `DashboardWidgetGrid.vue` → accepts widget slots
+- `UserMetricsWidget.vue`, `SystemOverviewWidget.vue`, `ContentSummaryWidget.vue`
+- `AdminModal.vue` → reusable modal shell
+- `DashboardSidebarTools.vue` → tools injected via config + role
+- `adminDashboardTools.ts` → tool definition
+- `dashboardStore.ts` → scoped Pinia store for admin view state
 
 ---
 
-### 📝 **Admin Dashboard Features Implemented:**
+### ✅ Features Implemented
 
-✅ AdminLayout + slot-based Sidebar integration  
-✅ Sidebar tools injected dynamically per route (`AdminDashboardView` injects `DashboardSidebarTools`)  
-✅ Sidebar tools config-driven (`adminDashboardTools.ts`)  
-✅ Tools filtered by user role (admin, superadmin)  
-✅ Tools wired to shared store actions:  
-  - 🔄 Refresh Metrics → `dashboardStore.refreshMetrics()`  
-  - 🛠 Customize Dashboard → `dashboardStore.enterCustomize()`  
-  - 🚨 Expand Alerts Panel → `dashboardStore.toggleAlerts()`  
-  - 📝 View System Logs → opens modal (local modal state)  
-✅ All widgets wrapped inside `DashboardWidgetGrid`  
-✅ Widget hover overlays (🛠 icon → open `AdminModal`) implemented  
-✅ Role-based filtering validated  
-✅ Shared store pattern implemented (Pinia) to manage dashboard-level flags + actions  
-✅ Confirmed full interaction flow: Sidebar tools → shared store → reactive state → modal/widget updates
+- Slot-injected sidebar tools based on route + role
+- Config-driven tool rendering + filtering (`adminDashboardTools.ts`)
+- Widget 🛠 tool → triggers modal
+- Shared dashboard store to sync state between view, sidebar, and modals
+- Hover styling enhancements for visibility/accessibility
 
 ---
 
-## 🗂️ **User Management Dashboard System (NEW)**
+## 🗂️ **User Management Dashboard System**
 
-✅ A parallel dashboard under `/admin/users` for managing platform users, integrated with the admin system.
+✅ Full user management interface under `/admin/users`, scaffolded for live API interaction and feature growth.
 
-### **Key User Dashboard Components:**
+### Core View & Components:
 
-* **`UserManagementView.vue`**
+- `UserManagementView.vue` → main dashboard view for user control
+- `DashboardWidgetGrid.vue` reused for layout
+- `UserTableWidget.vue`, `UserMetricsWidget.vue`, `FlaggedUsersWidget.vue` → all use AdminModal + 🛠 hover tools
 
-  * Landing view when clicking “Users” in admin topbar
-  * Mirrors `AdminDashboardView.vue` → uses `DashboardWidgetGrid` for widget layout
-  * Loads user management-specific widgets (`UserTableWidget`, `UserMetricsWidget`, `FlaggedUsersWidget`)
-  * Future support for superadmin-only widgets
+### Sidebar Tools:
 
-* **`UserTableWidget.vue`**
+- Injected via `UserDashboardSidebarTools.vue`
+- Defined in `adminUserDashboardTools.ts` (role-filtered)
+- Tools:
+  - ➕ Add User (opens modal)
+  - 🔍 Search Users (focus/expand input)
+  - 📥 Export Users
+  - ⚙️ Global Settings
+  - 🛡 Manage Roles
+  - 📋 Audit Logs
+  - 👥 Merge Users
+  - ✅ Bulk Actions
 
-  * Placeholder scaffold for user table display
-  * Card-style widget with 🛠 hover tool button to open `AdminModal`
-  * Modal interaction scoped locally per widget
+### Shared Store:
 
-* **`UserMetricsWidget.vue`**
+- `userDashboardStore.ts` (Pinia)
+  - Manages tool states, modal flags
+  - Tracks `lastUserListRefresh` to allow external refresh triggers
+  - Handles `createUser()` via service + `userCreationError` feedback
 
-  * Placeholder scaffold for user summary metrics
-  * Same hover tool + modal interaction pattern
+### Services:
 
-* **`FlaggedUsersWidget.vue`**
+- `userService.ts`
+  - `getUsers(query)` → supports search, filter, pagination, sort, role filter
+  - `createUser(payload)` → secure role-based user creation
+  - Auto-cleans query params to avoid 400 errors
 
-  * Placeholder scaffold for list of flagged users
-  * Same hover tool + modal interaction pattern
+### Integrated Components:
 
-* **🛠 Widget Hover Button Styling Improvement**
-
-  * Updated hover tool button styling to `bg-gray-600 hover:bg-gray-900 text-white` for improved contrast and visibility without breaking aesthetic
-
----
-
-### 📝 **User Management Dashboard Features Implemented:**
-
-✅ UserManagementView.vue scaffolded (mirrors AdminDashboardView structure)  
-✅ DashboardWidgetGrid reused for consistent layout  
-✅ Placeholder widgets scaffolded (UserTableWidget, UserMetricsWidget, FlaggedUsersWidget)  
-✅ Each widget follows same interactive pattern as admin dashboard widgets (hover 🛠 + modal)  
-✅ Widget modal interaction scoped to local `ref` → uses shared `AdminModal`  
-✅ Hover tool button upgraded for better visibility (bg-gray-600 → hover:bg-gray-900 → text-white)  
-✅ Ready for incremental replacement of placeholder content with live data  
-✅ Maintains architectural parity with admin dashboard for cohesive dev + UX
-
----
-
-## 📝 **Next User Dashboard Steps:**
-
-1. Wire widgets to backend API once endpoints are defined
-2. Implement filtering/sorting/search logic in `UserTableWidget`
-3. Add sidebar tools specific to user management (e.g., Add User, Bulk Actions, Export Users)
-4. Scaffold `userDashboardStore.ts` (parallel to `dashboardStore.ts`) for dashboard-level state
-5. Integrate role-based filtering for user management tools
+- `UserTable.vue` → table in modal from `UserTableWidget`
+  - ✅ Debounced search
+  - ✅ Pagination (page, limit)
+  - ✅ Role styling
+  - ✅ Backend sync via `getUsers()`
 
 ---
 
-## 🛠 **Development & Build Setup**
+### ✅ Features Implemented
 
-* (Same as above → DevContainer, Vite config, deployment pipeline)
-
----
-
-✅ **Current frontend milestone achieved:**
-
-* Admin Dashboard → interaction system + widget system scaffolded ✅  
-* User Management Dashboard → view + widgets scaffolded, interaction pattern mirrored ✅  
-* Shared component, layout, and store patterns validated ✅
-
-Next milestone → incremental feature buildout + backend integration.
+- UserManagementView.vue scaffolded
+- Widget interaction patterns mirrored from admin system
+- Hover 🛠 icon opens AdminModal with responsive sizing
+- Modal size system (`size="lg"`, etc.) implemented
+- Shared store triggers reactive fetches
+- Clean API sync (pagination, filtering, search)
+- Improved role badge styles and table readability
+- Toasts, error handling, loading states added
 
 ---
 
-> *“We build not for today, but for tomorrow and beyond.”*
-````
+## 📝 **Next Steps**
+
+- Implement role-based action buttons (edit, suspend, etc.)
+- Connect audit log and settings modals to APIs
+- Add user-specific row dropdown with moderation controls
+- Wire metrics widget with real backend stats
+- Add bulk action modal + backend sync
 
 ---
+
+✅ **Current Frontend Milestone Achieved:**
+
+- Admin + User dashboards architecturally aligned  
+- Widget/modal/tool patterns standardized across dashboards  
+- User management system fully scaffolded and live-integrated with backend  
+- Role-based sidebar tool injection working  
+- User CRUD interaction (create, view/paginate) online
+
+---
+
+> *We build not for today, but for tomorrow and beyond.*

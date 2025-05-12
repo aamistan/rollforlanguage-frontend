@@ -220,7 +220,76 @@
 
 ```
 
----
+/**
+ * Admin User Service (API Integration)
+ * 
+ * Related Documentation:
+ * /docs/frontend/userService.md
+ * 
+ * Purpose:
+ * - Provides frontend API methods to manage users via /admin/users endpoints
+ * - Supports paginated search, filtered queries, and user creation
+ * - Includes input sanitization and type-safe payloads
+ * 
+ * Development Mantra:
+ * "We build not for today, but for tomorrow and beyond."
+ */
+
+# userService.ts Module
+
+## Overview
+> This module contains all user-related backend API functions for the admin dashboard.  
+> It ensures consistent communication with the backend `/admin/users` endpoints, with built-in query cleanup and type safety.
+
+## Location
+> `/src/features/admin/services/userService.ts`
+
+## Features
+- [x] `getUsers()` → fetch paginated, filtered user data
+- [x] `createUser()` → securely post a new user to the backend
+- [x] Query parameter sanitization (strips empty/undefined/null)
+- [x] Strong typing for inputs/outputs
+- [x] Compatible with future expansions (edit, delete, suspend)
+
+## Exports
+| Name | Type | Description |
+|:-----|:-----|:------------|
+| `getUsers()` | `(params?: UserQueryParams) => Promise<PaginatedUserResponse>` | Get paginated list of users |
+| `createUser()` | `(payload: CreateUserPayload) => Promise<{ message: string }>` | Create a new user |
+| `userService` | Object | Unified service export for tree-shaking and consistency |
+| `User` | Interface | Shape of user data returned from backend |
+| `CreateUserPayload` | Type | Required fields for user creation |
+| `UserQueryParams` | Interface | Accepted query parameters |
+| `PaginatedUserResponse` | Interface | Standard paginated API response format |
+
+## Example Usage
+```ts
+import { userService } from '@/features/admin/services/userService'
+
+const { data, pagination } = await userService.getUsers({
+  search: 'knight',
+  roles: ['student'],
+  page: 1,
+  limit: 25,
+})
+
+await userService.createUser({
+  email: 'test@example.com',
+  username: 'newstudent',
+  password: 'StrongPass!123',
+  role: 'student',
+})
+```
+
+## Dependencies
+- `axiosInstance` from `/src/services/axiosInstance.ts`
+- `Pinia` store → `userDashboardStore.ts` for reactive actions
+
+## Notes
+- Uses auto-cleaning of query params to avoid 400 errors
+- Works with any role authorized to call the API (`manage_users` permission)
+
+
 
 ✅ **All four documented with full consistency, matching the template!**
 
