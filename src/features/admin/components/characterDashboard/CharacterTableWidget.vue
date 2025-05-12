@@ -1,0 +1,36 @@
+<template>
+  <div class="relative group rounded-xl border bg-white p-4 shadow transition hover:shadow-md dark:border-neutral-700 dark:bg-neutral-900">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+        Character Table
+      </h2>
+      <button
+        class="opacity-0 group-hover:opacity-100 transition-opacity text-sm text-blue-600 hover:underline"
+        @click="openModal"
+      >
+        🛠 Manage
+      </button>
+    </div>
+    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+      View and manage all playable character classes and species.
+    </p>
+
+    <AdminModal :visible="modalOpen" @close="modalOpen = false" size="4xl" title="Character Management">
+      <!-- Placeholder: Replace with full table in future -->
+      <div class="space-y-4 text-gray-800 dark:text-gray-100">
+        <p>This modal will contain the searchable, paginated table of all character classes and species.</p>
+        <p>Coming soon: Create, Edit, Delete, and Filter functionality.</p>
+      </div>
+    </AdminModal>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
+
+const modalOpen = ref(false)
+const openModal = () => {
+  modalOpen.value = true
+}
+</script>
