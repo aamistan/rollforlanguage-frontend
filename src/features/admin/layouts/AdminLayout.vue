@@ -35,9 +35,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import CharacterDashboardSidebarTools from '@/features/admin/components/characterDashboard/CharacterDashboardSidebarTools.vue'
 import DashboardSidebarTools from '@/features/admin/components/dashboard/DashboardSidebarTools.vue'
 import UserDashboardSidebarTools from '@/features/admin/components/userDashboard/UserDashboardSidebarTools.vue'
-import CharacterDashboardSidebarTools from '@/features/admin/components/characterDashboard/CharacterDashboardSidebarTools.vue'
 import Sidebar from '../components/Sidebar.vue'
 import Topbar from '../components/Topbar.vue'
 

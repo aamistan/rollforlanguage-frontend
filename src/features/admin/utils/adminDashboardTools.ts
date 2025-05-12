@@ -1,12 +1,13 @@
 // /features/admin/utils/adminDashboardTools.ts
 
 export interface AdminDashboardTool {
-    name: string               // Display label
-    icon: string               // Icon name (Lucide, Heroicons, Iconify)
-    library?: 'lucide' | 'heroicons' | 'iconify'  // Optional icon library
-    action: string             // Identifier for handler function
-    roles?: ('admin' | 'superadmin')[]           // Optional: restrict by role
-  }
+  name: string
+  icon: string
+  library?: 'lucide' | 'heroicons' | 'iconify'
+  action?: string
+  roles?: ('admin' | 'superadmin')[]
+  children?: AdminDashboardTool[] // ✅ <-- add this line
+}
   
   export const adminDashboardTools: AdminDashboardTool[] = [
     {
