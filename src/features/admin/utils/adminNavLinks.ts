@@ -13,35 +13,42 @@ export const adminNavLinks: AdminNavLink[] = [
     name: 'Dashboard',
     routeName: AppRouteNames.AdminDashboard,
     path: AppRoutePaths.AdminDashboard,
-    icon: 'LayoutDashboard',   // Lucide icon name
+    icon: 'LayoutDashboard',
     library: 'lucide',
   },
   {
     name: 'Users',
     routeName: AppRouteNames.AdminUsers,
     path: AppRoutePaths.AdminUsers,
-    icon: 'Users',             // Lucide icon name
+    icon: 'Users',
     library: 'lucide',
   },
   {
     name: 'Campaigns',
     routeName: AppRouteNames.AdminCampaigns,
     path: AppRoutePaths.AdminCampaigns,
-    icon: 'mdi:sword-cross',   // Iconify fantasy icon
+    icon: 'mdi:sword-cross',
+    library: 'iconify',
+  },
+  {
+    name: 'Characters',
+    routeName: AppRouteNames.AdminCharacters,
+    path: AppRoutePaths.AdminCharacters,
+    icon: 'lucide:shield-plus',
     library: 'iconify',
   },
   {
     name: 'Content',
     routeName: AppRouteNames.AdminContent,
     path: AppRoutePaths.AdminContent,
-    icon: 'BookOpenIcon',      // Heroicons icon name
+    icon: 'BookOpenIcon',
     library: 'heroicons',
   },
   {
     name: 'System',
     routeName: AppRouteNames.AdminSystem,
     path: AppRoutePaths.AdminSystem,
-    icon: 'ServerCog',         // Lucide icon name
+    icon: 'ServerCog',
     library: 'lucide',
   },
 ]
