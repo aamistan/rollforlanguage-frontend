@@ -18,12 +18,3 @@ import CharacterTableWidget from '@/features/admin/components/characterDashboard
 import FeaturedTagsWidget from '@/features/admin/components/characterDashboard/FeaturedTagsWidget.vue'
 import DashboardWidgetGrid from '@/features/admin/components/dashboard/DashboardWidgetGrid.vue'
 </script>
-
-<route>
-{
-  meta: {
-    requiresAuth: true,
-    roles: ['admin', 'super-admin']
-  }
-}
-</route>

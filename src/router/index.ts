@@ -2,11 +2,13 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import LandingPage from '@/views/LandingPage.vue'
 
 import AdminLayout from '@/features/admin/layouts/AdminLayout.vue'
+import AdminCharacterView from '@/features/admin/views/AdminCharacterView.vue'
 import AdminDashboardView from '@/features/admin/views/AdminDashboardView.vue'
 import CampaignManagementView from '@/features/admin/views/CampaignManagementView.vue'
 import ContentManagementView from '@/features/admin/views/ContentManagementView.vue'
 import SystemMonitorView from '@/features/admin/views/SystemMonitorView.vue'
 import UserManagementView from '@/features/admin/views/UserManagementView.vue'
+
 import { useAuthStore } from '@/features/auth/stores/authStore'
 import ForgotPasswordView from '@/features/auth/views/ForgotPasswordView.vue'
 import LoginView from '@/features/auth/views/LoginView.vue'
@@ -66,12 +68,13 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true },
     beforeEnter: adminGuard,
     children: [
-      { path: '', redirect: { name: AppRouteNames.AdminDashboard } }, // Redirect /admin → /admin/dashboard
+      { path: '', redirect: { name: AppRouteNames.AdminDashboard } },
       { path: 'dashboard', name: AppRouteNames.AdminDashboard, component: AdminDashboardView },
       { path: 'users', name: AppRouteNames.AdminUsers, component: UserManagementView },
       { path: 'campaigns', name: AppRouteNames.AdminCampaigns, component: CampaignManagementView },
       { path: 'content', name: AppRouteNames.AdminContent, component: ContentManagementView },
       { path: 'system', name: AppRouteNames.AdminSystem, component: SystemMonitorView },
+      { path: 'characters', name: AppRouteNames.AdminCharacters, component: AdminCharacterView }, // ✅ NEW
     ],
   },
 
