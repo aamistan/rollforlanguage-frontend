@@ -34,6 +34,20 @@ export type CreateUserPayload = {
   role: string
 }
 
+/** 📊 Structure of /admin/users/metrics response */
+export interface UserMetricsResponse {
+  totalUsers: number
+  activeUsers: number
+  suspendedUsers: number
+  roles: {
+    student?: number
+    teacher?: number
+    admin?: number
+    superadmin?: number
+  }
+  newUsersPast7Days: number
+}
+
 /** 🧮 Structure of paginated user response */
 export interface PaginatedUserResponse {
   data: User[]
@@ -47,11 +61,8 @@ export interface PaginatedUserResponse {
 
 /** 🔗 GET /admin/users — Fetch users with query support */
 export async function getUsers(params: UserQueryParams = {}): Promise<PaginatedUserResponse> {
-  // Remove empty strings or undefined values from query
   const filteredParams = Object.fromEntries(
-    Object.entries(params).filter(([, value]) => {
-      return value !== '' && value !== undefined && value !== null
-    })
+    Object.entries(params).filter(([, value]) => value !== '' && value !== undefined && value !== null)
   )
 
   const response = await axiosInstance.get<PaginatedUserResponse>('/admin/users', {
@@ -60,10 +71,15 @@ export async function getUsers(params: UserQueryParams = {}): Promise<PaginatedU
   return response.data
 }
 
-
 /** 🧙 POST /admin/users — Create a new user */
 export async function createUser(payload: CreateUserPayload): Promise<{ message: string }> {
   const response = await axiosInstance.post('/admin/users', payload)
+  return response.data
+}
+
+/** 📊 GET /admin/users/metrics — Fetch dashboard-level user stats */
+export async function getUserMetrics(): Promise<UserMetricsResponse> {
+  const response = await axiosInstance.get<UserMetricsResponse>('/admin/users/metrics')
   return response.data
 }
 
@@ -71,4 +87,5 @@ export async function createUser(payload: CreateUserPayload): Promise<{ message:
 export const userService = {
   getUsers,
   createUser,
+  getUserMetrics,
 }

@@ -1,7 +1,12 @@
 // /features/admin/stores/userDashboardStore.ts
+
 import type { AxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import { userService, type CreateUserPayload } from '@/features/admin/services/userService'
+import {
+  userService,
+  type CreateUserPayload,
+  type UserMetricsResponse,
+} from '@/features/admin/services/userService'
 
 export const useUserDashboardStore = defineStore('userDashboard', {
   state: () => ({
@@ -20,10 +25,14 @@ export const useUserDashboardStore = defineStore('userDashboard', {
 
     // ⚠️ Error handling
     userCreationError: null as string | null,
+    userMetricsError: null as string | null,
+
+    // 📊 Live metrics for dashboard widget
+    userMetrics: null as UserMetricsResponse | null,
   }),
 
   actions: {
-    // ✅ Backend integration: create user
+    // ✅ Create user and refresh tables
     async createUser(payload: CreateUserPayload): Promise<void> {
       this.userCreationError = null
       try {
@@ -37,7 +46,21 @@ export const useUserDashboardStore = defineStore('userDashboard', {
       }
     },
 
-    // ✅ Table refresh trigger
+    // ✅ Fetch latest user metrics from backend
+    async fetchUserMetrics(): Promise<void> {
+      this.userMetricsError = null
+      try {
+        const metrics = await userService.getUserMetrics()
+        this.userMetrics = metrics
+      } catch (error: unknown) {
+        const axiosError = error as AxiosError<{ error: string }>
+        this.userMetricsError =
+          axiosError.response?.data?.error || 'Failed to fetch user metrics.'
+        this.userMetrics = null
+      }
+    },
+
+    // 🔄 Table refresh trigger
     refreshUserList() {
       this.lastUserListRefresh = Date.now()
     },

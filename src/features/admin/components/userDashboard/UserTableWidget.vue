@@ -11,49 +11,58 @@
 
     <!-- 📊 Snapshot Stats -->
     <h2 class="text-lg font-bold mb-2 text-gray-900">User Overview</h2>
-    <ul class="space-y-1 text-sm text-gray-800">
-      <li><strong>{{ totalUsers }}</strong> total users</li>
-      <li><strong>{{ roleCounts.admin }}</strong> Admins</li>
-      <li><strong>{{ roleCounts.teacher }}</strong> Teachers</li>
-      <li><strong>{{ roleCounts.student }}</strong> Students</li>
+
+    <p v-if="loading" class="text-sm text-gray-600">Loading...</p>
+
+    <ul v-else-if="metrics" class="space-y-1 text-sm text-gray-800">
+      <li><strong>{{ metrics.totalUsers }}</strong> total users</li>
+      <li><strong>{{ metrics.roles.admin || 0 }}</strong> Admins</li>
+      <li><strong>{{ metrics.roles.teacher || 0 }}</strong> Teachers</li>
+      <li><strong>{{ metrics.roles.student || 0 }}</strong> Students</li>
     </ul>
 
+    <p v-else class="text-sm text-red-600">Failed to load user metrics.</p>
 
     <!-- 🪟 Modal with user table -->
-  <AdminModal
-    :visible="isModalOpen"
-    @close="isModalOpen = false"
-    title="User Management"
-    size="4xl"
-  >
+    <AdminModal
+      :visible="isModalOpen"
+      @close="isModalOpen = false"
+      title="User Management"
+      size="4xl"
+    >
       <UserTable />
     </AdminModal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import UserTable from '@/features/admin/components/userDashboard/UserTable.vue'
+import { userService, type UserMetricsResponse } from '@/features/admin/services/userService'
 import { useUserDashboardStore } from '@/features/admin/stores/userDashboardStore'
+
 
 // Modal open/close state
 const isModalOpen = ref(false)
 
-// Simulated data (to be replaced with real API results)
-const totalUsers = ref(237)
-const roleCounts = ref({
-  admin: 12,
-  teacher: 50,
-  student: 175,
-})
+// Reactive state for metrics
+const loading = ref(true)
+const metrics = ref<UserMetricsResponse | null>(null)
 
-// React to refresh triggers
+// Dashboard store (for refresh events)
 const userDashboardStore = useUserDashboardStore()
-watchEffect(() => {
-  const refresh = userDashboardStore.lastUserListRefresh
-  console.log('🔄 User snapshot widget refreshed at:', refresh)
 
-  // TODO: Replace with actual data fetch when userService.getStats() exists
+// Fetch metrics when mounted or dashboard refresh triggered
+watchEffect(async () => {
+  loading.value = true
+  try {
+    await userDashboardStore.fetchUserMetrics()
+    metrics.value = userDashboardStore.userMetrics
+  } catch {
+    metrics.value = null
+  } finally {
+    loading.value = false
+  }
 })
 </script>

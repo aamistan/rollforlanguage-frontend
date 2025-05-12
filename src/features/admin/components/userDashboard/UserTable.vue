@@ -9,11 +9,12 @@
         class="input w-full max-w-xs"
       />
 
-      <select v-model="limit" class="input w-24">
+      <select v-model="limit" class="input w-28">
         <option v-for="opt in [10, 25, 50, 100]" :key="opt" :value="opt">
           {{ opt }} / page
         </option>
       </select>
+
     </div>
 
     <!-- 📋 User Table -->
