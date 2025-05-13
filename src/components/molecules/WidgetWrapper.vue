@@ -1,9 +1,8 @@
 <!-- /src/components/molecules/WidgetWrapper.vue -->
 <template>
-  <div :class="wrapperClasses">
-    <!-- Right-side accent bar -->
+  <div :class="wrapperClasses" class="relative group overflow-hidden">
+    <!-- Accent Edge Bar -->
     <div
-      v-if="accentColor"
       class="absolute right-0 top-0 h-full w-1 rounded-r-xl"
       :class="accentBarClass"
     />
@@ -15,6 +14,7 @@
         <h2 :class="['text-lg font-semibold', textColor]">{{ title }}</h2>
       </div>
 
+      <!-- Optional hover tool slot -->
       <div class="opacity-0 group-hover:opacity-100 transition-opacity">
         <slot name="hover-tools" />
       </div>
@@ -41,7 +41,7 @@ const props = defineProps<{
 const dashboardTheme = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
 
 const wrapperClasses = computed(() => [
-  'relative rounded-xl shadow p-4 transition-shadow hover:shadow-md group',
+  'rounded-xl shadow p-4 transition-shadow hover:shadow-md group',
   dashboardTheme?.value?.widgetColor || 'bg-white',
 ])
 
@@ -49,11 +49,7 @@ const textColor = computed(() =>
   dashboardTheme?.value?.widgetTextColor || 'text-black'
 )
 
-const accentColor = computed(() =>
-  dashboardTheme?.value?.accentColor || ''
-)
-
 const accentBarClass = computed(() =>
-  `bg-${accentColor.value}`
+  `bg-${dashboardTheme?.value?.accentColor || 'blue-500'}`
 )
 </script>
