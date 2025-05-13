@@ -1,26 +1,20 @@
 <!-- /src/components/molecules/WidgetWrapper.vue -->
 <template>
-  <div :class="wrapperClasses" class="relative group overflow-hidden">
-    <!-- Accent Edge Bar -->
-    <div
-      class="absolute right-0 top-0 h-full w-1 rounded-r-xl"
-      :class="accentBarClass"
-    />
-
-    <!-- Header -->
+  <div :class="wrapperClasses" :style="wrapperStyle">
+    <!-- Header with icon and title -->
     <div class="flex items-center justify-between mb-2">
       <div class="flex items-center gap-2">
         <AppIcon v-if="icon" :name="icon" class="text-xl" />
         <h2 :class="['text-lg font-semibold', textColor]">{{ title }}</h2>
       </div>
 
-      <!-- Optional hover tool slot -->
+      <!-- Hover tools slot (e.g. 🛠 Manage) -->
       <div class="opacity-0 group-hover:opacity-100 transition-opacity">
         <slot name="hover-tools" />
       </div>
     </div>
 
-    <!-- Main content -->
+    <!-- Widget body -->
     <div class="text-sm">
       <slot />
     </div>
@@ -28,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, computed } from 'vue'
+import { computed, inject } from 'vue'
 import type { ComputedRef } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
 import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
@@ -40,16 +34,34 @@ const props = defineProps<{
 
 const dashboardTheme = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
 
+// Background and layout
 const wrapperClasses = computed(() => [
-  'rounded-xl shadow p-4 transition-shadow hover:shadow-md group',
-  dashboardTheme?.value?.widgetColor || 'bg-white',
+  'relative group rounded-xl shadow p-4 transition-shadow hover:shadow-md overflow-hidden',
+  dashboardTheme?.value?.widgetColor || 'bg-white'
 ])
 
+// Debug Accent color bar (right edge)
+const wrapperStyle = computed(() => {
+  return {
+    borderRight: '4px solid #8b5cf6' // ← Tailwind's purple-500
+  }
+})
+
+// Accent color bar (right edge)
+// const wrapperStyle = computed(() => {
+//   const accent = dashboardTheme?.value?.accentColor || 'blue-500'
+//   return {
+//     '--accent': `theme('colors.${accent.replace('-', '.')}')`,
+//     borderRight: '4px solid var(--accent)'
+//   }
+// })
+
+// Text color
 const textColor = computed(() =>
   dashboardTheme?.value?.widgetTextColor || 'text-black'
 )
-
-const accentBarClass = computed(() =>
-  `bg-${dashboardTheme?.value?.accentColor || 'blue-500'}`
-)
 </script>
+
+<style scoped>
+/* Optional: fallback for accent edge in environments without Tailwind plugin support */
+</style>

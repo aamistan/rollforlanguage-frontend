@@ -1,3 +1,4 @@
+<!-- /src/features/admin/layouts/AdminLayout.vue -->
 <template>
   <div class="min-h-screen bg-cover bg-center" :style="backgroundStyle">
     <!-- Topbar -->

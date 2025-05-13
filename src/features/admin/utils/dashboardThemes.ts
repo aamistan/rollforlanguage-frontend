@@ -8,10 +8,10 @@ export interface DashboardTheme {
   widgetTextColor: string
   sidebarColor: string
   sidebarTextColor: string
-  accentColor: string          // e.g., 'blue-500'
-  accentRing: string           // Derived utility: hover:ring-blue-500
+  accentColor: string // tailwind-compatible string, e.g., 'purple-500'
 }
 
+// 🎨 Centralized Theme Config
 export const dashboardThemes: DashboardTheme[] = [
   {
     routeName: AppRouteNames.AdminDashboard,
@@ -20,7 +20,6 @@ export const dashboardThemes: DashboardTheme[] = [
     sidebarColor: 'bg-white dark:bg-neutral-900',
     sidebarTextColor: 'text-black dark:text-white',
     accentColor: 'blue-500',
-    accentRing: 'hover:ring-blue-500',
   },
   {
     routeName: AppRouteNames.AdminUsers,
@@ -29,7 +28,6 @@ export const dashboardThemes: DashboardTheme[] = [
     sidebarColor: 'bg-white dark:bg-black',
     sidebarTextColor: 'text-black dark:text-white',
     accentColor: 'rose-500',
-    accentRing: 'hover:ring-rose-500',
   },
   {
     routeName: AppRouteNames.AdminCharacters,
@@ -38,7 +36,25 @@ export const dashboardThemes: DashboardTheme[] = [
     sidebarColor: 'bg-white dark:bg-black',
     sidebarTextColor: 'text-black dark:text-white',
     accentColor: 'purple-500',
-    accentRing: 'hover:ring-purple-500',
   },
-  // Future: Content, Campaigns, System dashboards
+  // Future: content, campaigns, system...
 ]
+
+/* -------------------------
+🎯 Accent Utility Functions
+-------------------------- */
+
+// Tailwind-safe class for ring
+export function getRingClass(accent: string): string {
+  return `hover:ring-${accent} hover:ring-offset-2`
+}
+
+// Tailwind-safe class for widget border
+export function getBorderClass(accent: string): string {
+  return `border-${accent}`
+}
+
+// Tailwind-safe background for accent bar
+export function getAccentBarClass(accent: string): string {
+  return `bg-${accent}`
+}
