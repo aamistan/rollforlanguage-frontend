@@ -72,11 +72,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
-import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import CharacterClassModal from '@/features/admin/components/characterDashboard/CharacterClassModal.vue'
+import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
+import { useAdminCharacterStore } from '@/features/admin/stores/adminCharacterStore'
 import { adminCharacterDashboardTools } from '@/features/admin/utils/adminCharacterDashboardTools'
 import type { AdminDashboardTool } from '@/features/admin/utils/adminDashboardTools'
-import { useAdminCharacterStore } from '@/features/admin/stores/adminCharacterStore'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 
 const store = useAdminCharacterStore()
