@@ -1,5 +1,7 @@
+<!-- /src/features/admin/components/dashboard/UserMetricsWidget.vue -->
+
 <template>
-  <div class="relative bg-white rounded-lg shadow p-4 group">
+  <WidgetWrapper title="User Metrics" icon="Users">
     <!-- Hover tools overlay -->
     <button
       @click="isModalOpen = true"
@@ -9,17 +11,21 @@
       🛠
     </button>
 
-    <h2 class="text-lg font-semibold">User Metrics Widget (Placeholder)</h2>
+    <p>This is placeholder content for the User Metrics widget modal.</p>
 
-    <!-- Modal -->
-    <AdminModal :visible="isModalOpen" @close="isModalOpen = false" title="User Metrics Details">
+    <AdminModal
+      :visible="isModalOpen"
+      @close="isModalOpen = false"
+      title="User Metrics Details"
+    >
       <p>This is placeholder content for the User Metrics widget modal.</p>
     </AdminModal>
-  </div>
+  </WidgetWrapper>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import WidgetWrapper from '@/components/molecules/WidgetWrapper.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 
 const isModalOpen = ref(false)
