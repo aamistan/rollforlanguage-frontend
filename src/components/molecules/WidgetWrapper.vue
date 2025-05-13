@@ -40,21 +40,14 @@ const wrapperClasses = computed(() => [
   dashboardTheme?.value?.widgetColor || 'bg-white'
 ])
 
-// Debug Accent color bar (right edge)
+// Accent color bar (right edge)
 const wrapperStyle = computed(() => {
+  const accent = dashboardTheme?.value?.accentColor || 'blue-500'
   return {
-    borderRight: '4px solid #8b5cf6' // ← Tailwind's purple-500
+    '--accent': `theme('colors.${accent.replace('-', '.')}')`,
+    borderRight: '4px solid var(--accent)'
   }
 })
-
-// Accent color bar (right edge)
-// const wrapperStyle = computed(() => {
-//   const accent = dashboardTheme?.value?.accentColor || 'blue-500'
-//   return {
-//     '--accent': `theme('colors.${accent.replace('-', '.')}')`,
-//     borderRight: '4px solid var(--accent)'
-//   }
-// })
 
 // Text color
 const textColor = computed(() =>

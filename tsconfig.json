@@ -12,7 +12,8 @@
     "types": ["node", "vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@root/*": ["*"],
     },
     "jsx": "preserve",
     "resolveJsonModule": true
