@@ -39,4 +39,4 @@ To scaffold the structure, use:
 ```bash
 mkdir -p src/{assets,components/{atoms,molecules,organisms,layouts},features/{auth/{components,stores,services,views},dashboard/{components,stores,services,views},inventory/{components,stores,services,views},campaigns/{components,stores,services,views}},i18n,router,stores,services,utils,plugins,sockets,views}
 
-touch src/{App.vue,main.js,tailwind.config.js}
+touch src/{App.vue,main.js,tailwind.config.ts}
