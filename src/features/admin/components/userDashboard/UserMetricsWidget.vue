@@ -2,14 +2,14 @@
 
 <template>
   <WidgetWrapper title="User Metrics" icon="BarChart2">
-    <!-- Hover tools overlay -->
-    <button
-      @click="isModalOpen = true"
-      class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-600 hover:bg-gray-900 rounded p-1"
-      aria-label="Widget Tools"
-    >
-      🛠
-    </button>
+    <template #hover-tools>
+      <button
+        @click="isModalOpen = true"
+        class="text-sm text-blue-600 hover:underline"
+      >
+        🛠 Manage
+      </button>
+    </template>
 
     <p class="text-sm">Metrics like total users, active users, etc., will appear here.</p>
 

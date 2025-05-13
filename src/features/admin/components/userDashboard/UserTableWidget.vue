@@ -2,14 +2,14 @@
 
 <template>
   <WidgetWrapper title="User Overview" icon="Users">
-    <!-- 🛠 Hover tools overlay -->
-    <button
-      @click="isModalOpen = true"
-      class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-600 hover:bg-gray-900 text-white rounded p-1"
-      aria-label="Widget Tools"
-    >
-      🛠
-    </button>
+    <template #hover-tools>
+      <button
+        @click="isModalOpen = true"
+        class="text-sm text-blue-600 hover:underline"
+      >
+        🛠 Manage
+      </button>
+    </template>
 
     <!-- 📊 Snapshot Stats -->
     <p v-if="loading" class="text-sm">Loading...</p>
