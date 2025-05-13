@@ -13,7 +13,6 @@
 
     <p class="text-sm">A list of flagged users for review will appear here.</p>
 
-    <!-- Modal -->
     <AdminModal
       :visible="isModalOpen"
       @close="isModalOpen = false"

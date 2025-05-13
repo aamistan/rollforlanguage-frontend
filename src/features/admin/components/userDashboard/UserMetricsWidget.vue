@@ -13,7 +13,6 @@
 
     <p class="text-sm">Metrics like total users, active users, etc., will appear here.</p>
 
-    <!-- Modal -->
     <AdminModal
       :visible="isModalOpen"
       @close="isModalOpen = false"
