@@ -1,16 +1,16 @@
+<!-- /src/features/admin/components/characterDashboard/FeaturedTagsWidget.vue -->
+
 <template>
-  <div class="relative group rounded-xl border bg-white p-4 shadow transition hover:shadow-md dark:border-neutral-700 dark:bg-neutral-900">
-    <div class="flex items-center justify-between">
-      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-        Featured Tags
-      </h2>
+  <WidgetWrapper title="Featured Tags" icon="Tag">
+    <template #hover-tools>
       <button
-        class="opacity-0 group-hover:opacity-100 transition-opacity text-sm text-blue-600 hover:underline"
         @click="modalOpen = true"
+        class="text-sm text-blue-600 hover:underline"
       >
         🛠 Explore
       </button>
-    </div>
+    </template>
+
     <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
       Most frequently used tags in character design.
     </p>
@@ -27,7 +27,12 @@
     </div>
 
     <!-- Modal -->
-    <AdminModal :visible="modalOpen" @close="modalOpen = false" size="xl" title="Character Tag Overview">
+    <AdminModal
+      :visible="modalOpen"
+      @close="modalOpen = false"
+      size="xl"
+      title="Character Tag Overview"
+    >
       <div class="space-y-3 text-gray-800 dark:text-gray-100">
         <p>This modal will eventually include full tag frequency charts, definitions, and editing tools.</p>
         <ul class="list-disc pl-6">
@@ -37,11 +42,12 @@
         </ul>
       </div>
     </AdminModal>
-  </div>
+  </WidgetWrapper>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import WidgetWrapper from '@/components/molecules/WidgetWrapper.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 
 const modalOpen = ref(false)

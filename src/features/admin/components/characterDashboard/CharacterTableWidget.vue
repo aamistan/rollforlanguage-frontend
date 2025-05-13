@@ -1,16 +1,16 @@
+<!-- /src/features/admin/components/characterDashboard/CharacterTableWidget.vue -->
+
 <template>
-  <div class="relative group rounded-xl border bg-white p-4 shadow transition hover:shadow-md dark:border-neutral-700 dark:bg-neutral-900">
-    <div class="flex items-center justify-between">
-      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-        Character Table
-      </h2>
+  <WidgetWrapper title="Character Table" icon="Table">
+    <template #hover-tools>
       <button
-        class="opacity-0 group-hover:opacity-100 transition-opacity text-sm text-blue-600 hover:underline"
         @click="modalOpen = true"
+        class="text-sm text-blue-600 hover:underline"
       >
         🛠 Manage
       </button>
-    </div>
+    </template>
+
     <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
       View and manage all playable character classes.
     </p>
@@ -83,11 +83,12 @@
 
     <!-- Modal for Create/Edit -->
     <CharacterClassModal />
-  </div>
+  </WidgetWrapper>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
+import WidgetWrapper from '@/components/molecules/WidgetWrapper.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import { characterService } from '@/features/admin/services/characterService'
 import { useAdminCharacterStore } from '@/features/admin/stores/adminCharacterStore'
@@ -95,7 +96,6 @@ import type { CharacterClass } from '@/features/admin/types/characterTypes'
 import CharacterClassModal from './CharacterClassModal.vue'
 
 const store = useAdminCharacterStore()
-
 const modalOpen = ref(false)
 const classes = ref<CharacterClass[]>([])
 
@@ -109,6 +109,5 @@ function formatDate(dateStr: string) {
 }
 
 onMounted(fetchClasses)
-
 watch(() => store.lastClassRefresh, fetchClasses)
 </script>
