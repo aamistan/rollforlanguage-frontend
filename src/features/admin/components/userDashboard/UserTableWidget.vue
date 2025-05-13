@@ -1,5 +1,7 @@
+<!-- /src/features/admin/components/userDashboard/UserTableWidget.vue -->
+
 <template>
-  <div class="relative bg-white rounded-lg shadow p-4 group">
+  <WidgetWrapper title="User Overview" icon="Users">
     <!-- 🛠 Hover tools overlay -->
     <button
       @click="isModalOpen = true"
@@ -10,11 +12,9 @@
     </button>
 
     <!-- 📊 Snapshot Stats -->
-    <h2 class="text-lg font-bold mb-2 text-gray-900">User Overview</h2>
+    <p v-if="loading" class="text-sm">Loading...</p>
 
-    <p v-if="loading" class="text-sm text-gray-600">Loading...</p>
-
-    <ul v-else-if="metrics" class="space-y-1 text-sm text-gray-800">
+    <ul v-else-if="metrics" class="space-y-1 text-sm">
       <li><strong>{{ metrics.totalUsers }}</strong> total users</li>
       <li><strong>{{ metrics.roles.admin || 0 }}</strong> Admins</li>
       <li><strong>{{ metrics.roles.teacher || 0 }}</strong> Teachers</li>
@@ -32,16 +32,16 @@
     >
       <UserTable />
     </AdminModal>
-  </div>
+  </WidgetWrapper>
 </template>
 
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
+import WidgetWrapper from '@/components/molecules/WidgetWrapper.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import UserTable from '@/features/admin/components/userDashboard/UserTable.vue'
 import { userService, type UserMetricsResponse } from '@/features/admin/services/userService'
 import { useUserDashboardStore } from '@/features/admin/stores/userDashboardStore'
-
 
 // Modal open/close state
 const isModalOpen = ref(false)
