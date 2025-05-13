@@ -1,5 +1,7 @@
+<!-- /src/features/admin/components/userDashboard/FlaggedUsersWidget.vue -->
+
 <template>
-  <div class="relative bg-white rounded-lg shadow p-4 group">
+  <WidgetWrapper title="Flagged Users" icon="AlertTriangle">
     <!-- Hover tools overlay -->
     <button
       @click="isModalOpen = true"
@@ -9,18 +11,22 @@
       🛠
     </button>
 
-    <h2 class="text-lg font-semibold">Flagged Users Widget (Placeholder)</h2>
-    <p class="text-gray-500">A list of flagged users for review will appear here.</p>
+    <p class="text-sm">A list of flagged users for review will appear here.</p>
 
     <!-- Modal -->
-    <AdminModal :visible="isModalOpen" @close="isModalOpen = false" title="Flagged Users Details">
+    <AdminModal
+      :visible="isModalOpen"
+      @close="isModalOpen = false"
+      title="Flagged Users Details"
+    >
       <p>This is placeholder content for the Flagged Users widget modal.</p>
     </AdminModal>
-  </div>
+  </WidgetWrapper>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import WidgetWrapper from '@/components/molecules/WidgetWrapper.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 
 const isModalOpen = ref(false)
