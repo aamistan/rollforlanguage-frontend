@@ -1,9 +1,14 @@
+<!-- /src/features/admin/components/characterDashboard/CharacterDashboardSidebarTools.vue -->
 <template>
   <div class="flex flex-col gap-4">
     <div v-for="tool in tools" :key="tool.name">
       <!-- Top-level tool button -->
       <button
-        class="flex w-full items-center justify-between gap-2 rounded bg-white px-4 py-2 text-left text-black hover:bg-gray-300 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700"
+        :class="[
+          'flex w-full items-center justify-between gap-2 rounded px-4 py-2 text-left transition group',
+          'bg-white text-black dark:bg-black dark:text-white',
+          `hover:ring-2 hover:ring-${accentColor} hover:ring-offset-2`
+        ]"
         @click="toggleSubmenu(tool)"
       >
         <div class="flex items-center gap-2">
@@ -40,7 +45,9 @@
       @close="isBrowseClassesModalOpen = false"
       size="5xl"
     >
-      <p class="text-gray-700 dark:text-gray-200">Coming soon: fully featured class table.</p>
+      <p class="text-gray-700 dark:text-gray-200">
+        Coming soon: fully featured class table.
+      </p>
     </AdminModal>
 
     <AdminModal
@@ -48,7 +55,9 @@
       :visible="isManageStatsModalOpen"
       @close="isManageStatsModalOpen = false"
     >
-      <p class="text-gray-700 dark:text-gray-200">Placeholder for stat registry management.</p>
+      <p class="text-gray-700 dark:text-gray-200">
+        Placeholder for stat registry management.
+      </p>
     </AdminModal>
 
     <AdminModal
@@ -56,7 +65,9 @@
       :visible="isManagePassivesModalOpen"
       @close="isManagePassivesModalOpen = false"
     >
-      <p class="text-gray-700 dark:text-gray-200">Placeholder for passive ability glossary.</p>
+      <p class="text-gray-700 dark:text-gray-200">
+        Placeholder for passive ability glossary.
+      </p>
     </AdminModal>
 
     <AdminModal
@@ -64,25 +75,34 @@
       :visible="isManageTagsModalOpen"
       @close="isManageTagsModalOpen = false"
     >
-      <p class="text-gray-700 dark:text-gray-200">Placeholder for tag management interface.</p>
+      <p class="text-gray-700 dark:text-gray-200">
+        Placeholder for tag management interface.
+      </p>
     </AdminModal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
+import type { ComputedRef } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
 import CharacterClassModal from '@/features/admin/components/characterDashboard/CharacterClassModal.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import { useAdminCharacterStore } from '@/features/admin/stores/adminCharacterStore'
 import { adminCharacterDashboardTools } from '@/features/admin/utils/adminCharacterDashboardTools'
 import type { AdminDashboardTool } from '@/features/admin/utils/adminDashboardTools'
+import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
+
 
 const store = useAdminCharacterStore()
 
 const { user } = useAuth()
 const userRole = user.value?.roles?.[0] === 'superadmin' ? 'superadmin' : 'admin'
+
+// Theme-aware hover ring
+const dashboardTheme = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
+const accentColor = computed(() => dashboardTheme?.value?.accentColor || 'purple-500')
 
 const tools = computed(() =>
   adminCharacterDashboardTools.filter(
@@ -121,7 +141,7 @@ function handleAction(action?: string) {
       store.refreshClassList()
       break
     case 'exportClasses':
-      store.exportClassList?.() // optional chaining if not yet implemented
+      store.exportClassList?.()
       break
     case 'manageStats':
       isManageStatsModalOpen.value = true
