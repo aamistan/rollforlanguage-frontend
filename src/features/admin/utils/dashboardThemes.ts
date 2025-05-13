@@ -18,10 +18,10 @@ export const dashboardThemes: DashboardTheme[] = [
   },
   {
     routeName: AppRouteNames.AdminUsers,
-    widgetColor: 'bg-rose-50 dark:bg-rose-900',
-    widgetTextColor: 'text-rose-900 dark:text-rose-100',
-    sidebarColor: 'bg-rose-50 dark:bg-rose-900',
-    sidebarTextColor: 'text-rose-900 dark:text-rose-100',
+    widgetColor: 'bg-rose-50 dark:bg-neutral-800',
+    widgetTextColor: 'text-rose-600 dark:text-rose-200',
+    sidebarColor: 'bg-rose-50 dark:bg-neutral-800',
+    sidebarTextColor: 'text-rose-600 dark:text-rose-200',
   },
   {
     routeName: AppRouteNames.AdminCharacters,
