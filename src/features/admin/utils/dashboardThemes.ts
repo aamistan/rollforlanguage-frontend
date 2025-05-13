@@ -6,6 +6,7 @@ export interface DashboardTheme {
   widgetTextColor: string
   sidebarColor: string
   sidebarTextColor: string
+  accentColor: string // 💡 NEW: for hover outlines and widget edge bars
 }
 
 export const dashboardThemes: DashboardTheme[] = [
@@ -15,20 +16,23 @@ export const dashboardThemes: DashboardTheme[] = [
     widgetTextColor: 'text-black dark:text-white',
     sidebarColor: 'bg-white dark:bg-neutral-900',
     sidebarTextColor: 'text-black dark:text-white',
+    accentColor: 'blue-500', // ✅ Calm, tech-feel
   },
   {
     routeName: AppRouteNames.AdminUsers,
-    widgetColor: 'bg-rose-50 dark:bg-neutral-800',
-    widgetTextColor: 'text-rose-600 dark:text-rose-200',
-    sidebarColor: 'bg-rose-50 dark:bg-neutral-800',
-    sidebarTextColor: 'text-rose-600 dark:text-rose-200',
+    widgetColor: 'bg-white dark:bg-black',
+    widgetTextColor: 'text-black dark:text-white',
+    sidebarColor: 'bg-white dark:bg-black',
+    sidebarTextColor: 'text-black dark:text-white',
+    accentColor: 'rose-500', // ✅ Soft red, people-oriented
   },
   {
     routeName: AppRouteNames.AdminCharacters,
-    widgetColor: 'bg-neutral-900',
-    widgetTextColor: 'text-white',
-    sidebarColor: 'bg-neutral-900',
-    sidebarTextColor: 'text-white',
+    widgetColor: 'bg-white dark:bg-black',
+    widgetTextColor: 'text-black dark:text-white',
+    sidebarColor: 'bg-white dark:bg-black',
+    sidebarTextColor: 'text-black dark:text-white',
+    accentColor: 'purple-500', // ✅ Magical and fantasy-aligned
   },
   // You can add Content, Campaigns, System later
 ]
