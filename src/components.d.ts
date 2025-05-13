@@ -35,5 +35,6 @@ declare module 'vue' {
     ThreeColumnShell: typeof import('./components/layouts/ThreeColumnShell.vue')['default']
     Toast: typeof import('./components/molecules/Toast.vue')['default']
     WhyChooseUsCard: typeof import('./components/molecules/landing-page/WhyChooseUsCard.vue')['default']
+    WidgetWrapper: typeof import('./components/molecules/WidgetWrapper.vue')['default']
   }
 }

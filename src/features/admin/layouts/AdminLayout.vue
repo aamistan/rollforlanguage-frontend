@@ -33,21 +33,35 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, provide } from 'vue'
 import { useRoute } from 'vue-router'
+
 import CharacterDashboardSidebarTools from '@/features/admin/components/characterDashboard/CharacterDashboardSidebarTools.vue'
 import DashboardSidebarTools from '@/features/admin/components/dashboard/DashboardSidebarTools.vue'
 import UserDashboardSidebarTools from '@/features/admin/components/userDashboard/UserDashboardSidebarTools.vue'
+import { dashboardThemes } from '@/features/admin/utils/dashboardThemes'
+import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
 import Sidebar from '../components/Sidebar.vue'
 import Topbar from '../components/Topbar.vue'
 
-// Current route name → used to determine which tools to render
+
+
+// Get current route name
 const route = useRoute()
 const currentRouteName = computed(() => route.name)
 
-// Placeholder userRole → later pull from auth store
+// Determine theme for current route
+const currentTheme = computed<DashboardTheme | undefined>(() =>
+  dashboardThemes.find(t => t.routeName === currentRouteName.value)
+)
+
+// Make theme available to child components
+provide('dashboardTheme', currentTheme)
+
+// Placeholder user role (in future, pull from auth store)
 const userRole = 'superadmin'
 
+// Admin background
 const backgroundStyle = {
   backgroundImage: "url('/backgrounds/bg-admin.webp')"
 }
