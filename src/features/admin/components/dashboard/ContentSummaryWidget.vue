@@ -1,5 +1,7 @@
+<!-- /src/features/admin/components/dashboard/ContentSummaryWidget.vue -->
+
 <template>
-  <div class="relative bg-white rounded-lg shadow p-4 group">
+  <WidgetWrapper title="Content Summary" icon="BookOpenIcon">
     <!-- Hover tools overlay -->
     <button
       @click="isModalOpen = true"
@@ -9,17 +11,21 @@
       🛠
     </button>
 
-    <h2 class="text-lg font-semibold">Content Summary Widget (Placeholder)</h2>
+    <p>This is placeholder content for the Content Summary widget modal.</p>
 
-    <!-- Modal -->
-    <AdminModal :visible="isModalOpen" @close="isModalOpen = false" title="Content Summary Details">
+    <AdminModal
+      :visible="isModalOpen"
+      @close="isModalOpen = false"
+      title="Content Summary Details"
+    >
       <p>This is placeholder content for the Content Summary widget modal.</p>
     </AdminModal>
-  </div>
+  </WidgetWrapper>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import WidgetWrapper from '@/components/molecules/WidgetWrapper.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 
 const isModalOpen = ref(false)
