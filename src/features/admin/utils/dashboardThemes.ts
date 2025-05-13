@@ -1,7 +1,7 @@
 // /src/features/admin/utils/dashboardThemes.ts
 
-import tailwindConfig from 'tailwind.config.js'
 import resolveConfig from 'tailwindcss/resolveConfig'
+import tailwindConfig from '@root/tailwind.config'
 import { AppRouteNames } from '@/router/routes'
 
 export interface DashboardTheme {
@@ -23,9 +23,18 @@ const fullConfig = resolveConfig(tailwindConfig)
 // 🎨 Tailwind-safe helpers
 function getColorValue(twKey: string): string {
   const [base, shade] = twKey.split('-')
-  const colorGroup = fullConfig.theme?.colors?.[base]
-  const value = typeof colorGroup === 'object' ? colorGroup?.[shade] : colorGroup
-  return value || '#3b82f6'
+  const colorGroup = fullConfig.theme?.colors?.[base as keyof typeof fullConfig.theme.colors]
+
+  if (typeof colorGroup === 'object' && shade in colorGroup) {
+    return colorGroup[shade]
+  }
+
+  if (typeof colorGroup === 'string') {
+    return colorGroup
+  }
+
+  console.warn(`⚠️ Could not resolve Tailwind color for: ${twKey}`)
+  return '#3b82f6' // fallback
 }
 
 function getRingClass(accent: string): string {
