@@ -1,8 +1,8 @@
 // /src/features/admin/utils/dashboardThemes.ts
 
 import resolveConfig from 'tailwindcss/resolveConfig'
-import tailwindConfig from '@root/tailwind.config'
 import { AppRouteNames } from '@/router/routes'
+import tailwindConfig from '../../../../tailwind.config'
 
 export interface DashboardTheme {
   routeName: AppRouteNames
@@ -26,7 +26,7 @@ function getColorValue(twKey: string): string {
   const colorGroup = fullConfig.theme?.colors?.[base as keyof typeof fullConfig.theme.colors]
 
   if (typeof colorGroup === 'object' && shade in colorGroup) {
-    return colorGroup[shade]
+    return (colorGroup as Record<string, string>)[shade]
   }
 
   if (typeof colorGroup === 'string') {
@@ -37,15 +37,15 @@ function getColorValue(twKey: string): string {
   return '#3b82f6' // fallback
 }
 
-function getRingClass(accent: string): string {
+export function getRingClass(accent: string): string {
   return `hover:ring-${accent} hover:ring-offset-2`
 }
 
-function getAccentBarClass(accent: string): string {
+export function getAccentBarClass(accent: string): string {
   return `bg-${accent}`
 }
 
-function getBorderClass(accent: string): string {
+export function getBorderClass(accent: string): string {
   return `border-${accent}`
 }
 
