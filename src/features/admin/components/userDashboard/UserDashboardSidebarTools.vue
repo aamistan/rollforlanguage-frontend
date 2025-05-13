@@ -7,7 +7,7 @@
       :class="[
         'flex items-center gap-2 px-4 py-2 rounded text-left transition group',
         'bg-white text-black dark:bg-black dark:text-white',
-        `hover:ring-2 hover:ring-${accentColor} hover:ring-offset-2`
+        accentRingClass
       ]"
       @click="handleToolClick(tool.action!)"
     >
@@ -78,6 +78,7 @@ const userRole = user.value?.roles?.[0] === 'superadmin' ? 'superadmin' : 'admin
 
 const dashboardTheme = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
 const accentColor = computed(() => dashboardTheme?.value?.accentColor || 'blue-500')
+const accentRingClass = computed(() => `hover:ring-2 hover:ring-${accentColor.value} hover:ring-offset-2`)
 
 const filteredTools = computed(() =>
   adminUserDashboardTools.filter(tool =>
@@ -94,24 +95,33 @@ const isGlobalSettingsModalOpen = ref(false)
 const userDashboardStore = useUserDashboardStore()
 
 function handleToolClick(action: string) {
-  if (action === 'addUser') {
-    isAddUserModalOpen.value = true
-  } else if (action === 'manageRoles') {
-    isManageRolesModalOpen.value = true
-  } else if (action === 'viewAuditLogs') {
-    isAuditLogsModalOpen.value = true
-  } else if (action === 'mergeUsers') {
-    isMergeUsersModalOpen.value = true
-  } else if (action === 'globalUserSettings') {
-    isGlobalSettingsModalOpen.value = true
-  } else if (action === 'searchUsers') {
-    userDashboardStore.searchUsers()
-  } else if (action === 'exportUsers') {
-    userDashboardStore.exportUsers()
-  } else if (action === 'bulkActions') {
-    userDashboardStore.openBulkActionsModal()
-  } else {
-    console.log(`Tool clicked: ${action}`)
+  switch (action) {
+    case 'addUser':
+      isAddUserModalOpen.value = true
+      break
+    case 'manageRoles':
+      isManageRolesModalOpen.value = true
+      break
+    case 'viewAuditLogs':
+      isAuditLogsModalOpen.value = true
+      break
+    case 'mergeUsers':
+      isMergeUsersModalOpen.value = true
+      break
+    case 'globalUserSettings':
+      isGlobalSettingsModalOpen.value = true
+      break
+    case 'searchUsers':
+      userDashboardStore.searchUsers()
+      break
+    case 'exportUsers':
+      userDashboardStore.exportUsers()
+      break
+    case 'bulkActions':
+      userDashboardStore.openBulkActionsModal()
+      break
+    default:
+      console.log(`Tool clicked: ${action}`)
   }
 }
 

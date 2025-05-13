@@ -1,7 +1,7 @@
 <!-- /src/features/admin/components/Sidebar.vue -->
 <template>
   <aside :class="sidebarClasses">
-    <slot name="tools" />
+    <slot name="tools" :accent-ring="dashboardTheme?.accentRing" />
   </aside>
 </template>
 

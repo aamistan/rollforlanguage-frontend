@@ -7,7 +7,7 @@
       :class="[
         'flex items-center gap-2 px-4 py-2 text-left rounded transition group',
         'bg-white text-black dark:bg-black dark:text-white',
-        `hover:ring-2 hover:ring-${accentColor} hover:ring-offset-2`
+        accentRingClass
       ]"
       @click="handleToolClick(tool.action!)"
     >
@@ -42,8 +42,10 @@ const props = defineProps<{
 
 const dashboardStore = useDashboardStore()
 
+// Theme + ring highlight
 const dashboardTheme = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
 const accentColor = computed(() => dashboardTheme?.value?.accentColor || 'blue-500')
+const accentRingClass = computed(() => `hover:ring-2 hover:ring-${accentColor.value} hover:ring-offset-2`)
 
 const filteredTools = computed(() =>
   adminDashboardTools.filter(tool =>

@@ -1,3 +1,5 @@
+// /src/features/admin/utils/dashboardThemes.ts
+
 import { AppRouteNames } from '@/router/routes'
 
 export interface DashboardTheme {
@@ -6,7 +8,8 @@ export interface DashboardTheme {
   widgetTextColor: string
   sidebarColor: string
   sidebarTextColor: string
-  accentColor: string // 💡 NEW: for hover outlines and widget edge bars
+  accentColor: string          // e.g., 'blue-500'
+  accentRing: string           // Derived utility: hover:ring-blue-500
 }
 
 export const dashboardThemes: DashboardTheme[] = [
@@ -16,7 +19,8 @@ export const dashboardThemes: DashboardTheme[] = [
     widgetTextColor: 'text-black dark:text-white',
     sidebarColor: 'bg-white dark:bg-neutral-900',
     sidebarTextColor: 'text-black dark:text-white',
-    accentColor: 'blue-500', // ✅ Calm, tech-feel
+    accentColor: 'blue-500',
+    accentRing: 'hover:ring-blue-500',
   },
   {
     routeName: AppRouteNames.AdminUsers,
@@ -24,7 +28,8 @@ export const dashboardThemes: DashboardTheme[] = [
     widgetTextColor: 'text-black dark:text-white',
     sidebarColor: 'bg-white dark:bg-black',
     sidebarTextColor: 'text-black dark:text-white',
-    accentColor: 'rose-500', // ✅ Soft red, people-oriented
+    accentColor: 'rose-500',
+    accentRing: 'hover:ring-rose-500',
   },
   {
     routeName: AppRouteNames.AdminCharacters,
@@ -32,7 +37,8 @@ export const dashboardThemes: DashboardTheme[] = [
     widgetTextColor: 'text-black dark:text-white',
     sidebarColor: 'bg-white dark:bg-black',
     sidebarTextColor: 'text-black dark:text-white',
-    accentColor: 'purple-500', // ✅ Magical and fantasy-aligned
+    accentColor: 'purple-500',
+    accentRing: 'hover:ring-purple-500',
   },
-  // You can add Content, Campaigns, System later
+  // Future: Content, Campaigns, System dashboards
 ]
