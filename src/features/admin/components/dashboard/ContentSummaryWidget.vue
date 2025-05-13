@@ -1,7 +1,7 @@
 <!-- /src/features/admin/components/dashboard/ContentSummaryWidget.vue -->
 
 <template>
-  <WidgetWrapper title="Content Summary" icon="BookOpenIcon">
+  <WidgetWrapper title="Content Summary" icon="BookOpen">
     <template #hover-tools>
       <button
         @click="isModalOpen = true"
