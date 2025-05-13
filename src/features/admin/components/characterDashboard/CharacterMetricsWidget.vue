@@ -1,5 +1,4 @@
 <!-- /src/features/admin/components/characterDashboard/CharacterMetricsWidget.vue -->
-
 <template>
   <WidgetWrapper title="Character Metrics" icon="Activity">
     <template #hover-tools>

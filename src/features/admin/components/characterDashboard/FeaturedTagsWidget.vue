@@ -1,5 +1,4 @@
 <!-- /src/features/admin/components/characterDashboard/FeaturedTagsWidget.vue -->
-
 <template>
   <WidgetWrapper title="Featured Tags" icon="Tag">
     <template #hover-tools>

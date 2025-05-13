@@ -1,5 +1,4 @@
 <!-- /src/features/admin/components/characterDashboard/CharacterTableWidget.vue -->
-
 <template>
   <WidgetWrapper title="Character Table" icon="Table">
     <template #hover-tools>
