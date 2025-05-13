@@ -1,16 +1,24 @@
+<!-- /src/components/molecules/WidgetWrapper.vue -->
 <template>
-  <div :class="wrapperClasses">
-    <!-- Header (optional icon + title) -->
+  <div :class="wrapperClasses" class="relative">
+    <!-- Optional top-right hover tools slot -->
+    <div
+      class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+    >
+      <slot name="hover-tools" />
+    </div>
+
+    <!-- Header: icon + title -->
     <div class="flex items-center justify-between mb-2">
       <div class="flex items-center gap-2">
         <AppIcon v-if="icon" :name="icon" class="text-xl" />
         <h2 class="text-lg font-semibold">{{ title }}</h2>
       </div>
-      <!-- Future slot: header actions, buttons, dropdowns -->
+      <!-- Future: header actions -->
       <slot name="header-actions" />
     </div>
 
-    <!-- Main content slot -->
+    <!-- Main content -->
     <div class="text-sm">
       <slot />
     </div>
