@@ -42,9 +42,8 @@ const wrapperClasses = computed(() => [
 
 // Accent color bar (right edge)
 const wrapperStyle = computed(() => {
-  const accent = dashboardTheme?.value?.accentColor || 'blue-500'
   return {
-    '--accent': `theme('colors.${accent.replace('-', '.')}')`,
+    '--accent': dashboardTheme?.value?.accentValue || '#3b82f6',
     borderRight: '4px solid var(--accent)'
   }
 })
