@@ -15,12 +15,10 @@
 
           <UserDashboardSidebarTools
             v-else-if="currentRouteName === 'AdminUsers'"
-            :user-role="userRole"
           />
 
           <CharacterDashboardSidebarTools
             v-else-if="currentRouteName === 'AdminCharacters'"
-            :user-role="userRole"
           />
         </template>
       </Sidebar>
@@ -45,8 +43,6 @@ import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
 import Sidebar from '../components/Sidebar.vue'
 import Topbar from '../components/Topbar.vue'
 
-
-
 // Get current route name
 const route = useRoute()
 const currentRouteName = computed(() => route.name)
@@ -56,7 +52,7 @@ const currentTheme = computed<DashboardTheme | undefined>(() =>
   dashboardThemes.find(t => t.routeName === currentRouteName.value)
 )
 
-// Make theme available to child components
+// Make theme available to child components via inject()
 provide('dashboardTheme', currentTheme)
 
 // Placeholder user role (in future, pull from auth store)

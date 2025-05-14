@@ -7,8 +7,9 @@
         :class="[
           'flex w-full items-center justify-between gap-2 rounded px-4 py-2 text-left transition group',
           'bg-white text-black dark:bg-black dark:text-white',
-          accentRingClass
+          'border border-transparent hover:ring-4 hover:ring-offset-2 focus:outline-none'
         ]"
+        :style="{ '--tw-ring-color': accentValue }"
         @click="toggleSubmenu(tool)"
       >
         <div class="flex items-center gap-2">
@@ -76,7 +77,6 @@
 
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue'
-import type { ComputedRef } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
 import CharacterClassModal from '@/features/admin/components/characterDashboard/CharacterClassModal.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
@@ -86,17 +86,14 @@ import type { AdminDashboardTool } from '@/features/admin/utils/adminDashboardTo
 import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 
-const store = useAdminCharacterStore()
 
+// ✅ Inject the dashboard theme and pull out the accentValue for inline ring styling
+const dashboardThemeRef = inject<import('vue').ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
+const accentValue = dashboardThemeRef?.value?.accentValue ?? '#3b82f6'
+
+const store = useAdminCharacterStore()
 const { user } = useAuth()
 const userRole = user.value?.roles?.[0] === 'superadmin' ? 'superadmin' : 'admin'
-
-// Pull accent color class safely
-const dashboardTheme = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
-const accentColor = computed(() => dashboardTheme?.value?.accentColor || 'purple-500')
-
-// Pre-built ring class string (Tailwind-safe)
-const accentRingClass = computed(() => `hover:ring-2 hover:ring-${accentColor.value} hover:ring-offset-2`)
 
 const tools = computed(() =>
   adminCharacterDashboardTools.filter(tool =>

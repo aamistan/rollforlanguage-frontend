@@ -1,8 +1,8 @@
 <!-- /src/features/admin/components/Sidebar.vue -->
 <template>
   <aside :class="sidebarClasses">
-    <!-- Tools slot with accent ring class passed to consumers -->
-    <slot name="tools" :accent-ring="accentRing" />
+    <!-- Tools slot no longer passes accent ring classes -->
+    <slot name="tools" />
   </aside>
 </template>
 
@@ -10,7 +10,6 @@
 import { inject, computed } from 'vue'
 import type { ComputedRef } from 'vue'
 import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
-import { getRingClass } from '@/features/admin/utils/dashboardThemes'
 
 // Inject current dashboard theme
 const dashboardTheme = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
@@ -22,8 +21,6 @@ const sidebarClasses = computed(() => [
   dashboardTheme?.value?.sidebarTextColor || 'text-black',
 ])
 
-// Compute tailwind-safe accent ring class from current theme
-const accentRing = computed(() =>
-  getRingClass(dashboardTheme?.value?.accentColor || 'blue-500')
-)
+// 🔍 Optional debug log
+console.log('[Sidebar] dashboardTheme:', dashboardTheme?.value)
 </script>

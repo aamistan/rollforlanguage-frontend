@@ -7,8 +7,9 @@
       :class="[
         'flex items-center gap-2 px-4 py-2 rounded text-left transition group',
         'bg-white text-black dark:bg-black dark:text-white',
-        accentRingClass
+        'border border-transparent hover:ring-4 hover:ring-offset-2 focus:outline-none'
       ]"
+      :style="{ '--tw-ring-color': accentValue }"
       @click="handleToolClick(tool.action!)"
     >
       <AppIcon :name="tool.icon" :library="tool.library" />
@@ -64,7 +65,6 @@
 
 <script setup lang="ts">
 import { computed, ref, inject } from 'vue'
-import type { ComputedRef } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import AddUserForm from '@/features/admin/components/userDashboard/AddUserForm.vue'
@@ -73,12 +73,13 @@ import { adminUserDashboardTools } from '@/features/admin/utils/adminUserDashboa
 import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 
+
+// ✅ Dynamically pull accent color value from injected theme
+const dashboardThemeRef = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
+const accentValue = dashboardThemeRef?.value?.accentValue ?? '#3b82f6'
+
 const { user } = useAuth()
 const userRole = user.value?.roles?.[0] === 'superadmin' ? 'superadmin' : 'admin'
-
-const dashboardTheme = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
-const accentColor = computed(() => dashboardTheme?.value?.accentColor || 'blue-500')
-const accentRingClass = computed(() => `hover:ring-2 hover:ring-${accentColor.value} hover:ring-offset-2`)
 
 const filteredTools = computed(() =>
   adminUserDashboardTools.filter(tool =>
@@ -129,4 +130,7 @@ function handleAddUserSuccess() {
   isAddUserModalOpen.value = false
   userDashboardStore.refreshUserList()
 }
+
+// 🧪 Debug inline ring color value
+console.log('[UserSidebarTools.vue] accentValue for ring:', accentValue)
 </script>

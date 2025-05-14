@@ -11,7 +11,6 @@ export interface DashboardTheme {
   sidebarColor: string
   sidebarTextColor: string
   accentColor: string        // e.g. 'blue-500'
-  accentRing: string         // e.g. 'hover:ring-blue-500 hover:ring-offset-2'
   accentBar: string          // e.g. 'bg-blue-500'
   accentBorder: string       // e.g. 'border-blue-500'
   accentValue: string        // e.g. '#3b82f6' (raw hex) for inline border
@@ -37,10 +36,6 @@ function getColorValue(twKey: string): string {
   return '#3b82f6' // fallback
 }
 
-export function getRingClass(accent: string): string {
-  return `hover:ring-${accent} hover:ring-offset-2`
-}
-
 export function getAccentBarClass(accent: string): string {
   return `bg-${accent}`
 }
@@ -58,7 +53,6 @@ export const dashboardThemes: DashboardTheme[] = [
     sidebarColor: 'bg-white dark:bg-neutral-900',
     sidebarTextColor: 'text-black dark:text-white',
     accentColor: 'blue-500',
-    accentRing: getRingClass('blue-500'),
     accentBar: getAccentBarClass('blue-500'),
     accentBorder: getBorderClass('blue-500'),
     accentValue: getColorValue('blue-500'),
@@ -70,7 +64,6 @@ export const dashboardThemes: DashboardTheme[] = [
     sidebarColor: 'bg-white dark:bg-black',
     sidebarTextColor: 'text-black dark:text-white',
     accentColor: 'rose-500',
-    accentRing: getRingClass('rose-500'),
     accentBar: getAccentBarClass('rose-500'),
     accentBorder: getBorderClass('rose-500'),
     accentValue: getColorValue('rose-500'),
@@ -82,7 +75,6 @@ export const dashboardThemes: DashboardTheme[] = [
     sidebarColor: 'bg-white dark:bg-black',
     sidebarTextColor: 'text-black dark:text-white',
     accentColor: 'purple-500',
-    accentRing: getRingClass('purple-500'),
     accentBar: getAccentBarClass('purple-500'),
     accentBorder: getBorderClass('purple-500'),
     accentValue: getColorValue('purple-500'),

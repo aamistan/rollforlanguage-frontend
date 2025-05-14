@@ -7,8 +7,9 @@
       :class="[
         'flex items-center gap-2 px-4 py-2 text-left rounded transition group',
         'bg-white text-black dark:bg-black dark:text-white',
-        accentRingClass
+        'border border-transparent hover:ring-4 hover:ring-offset-2 focus:outline-none'
       ]"
+      :style="{ '--tw-ring-color': accentValue }"
       @click="handleToolClick(tool.action!)"
     >
       <AppIcon :name="tool.icon" :library="tool.library" />
@@ -27,9 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ComputedRef } from 'vue'
-import { computed, ref, inject } from 'vue'
-import { defineProps } from 'vue'
+import { ref, computed, inject } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import { useDashboardStore } from '@/features/admin/stores/dashboardStore'
@@ -42,10 +41,9 @@ const props = defineProps<{
 
 const dashboardStore = useDashboardStore()
 
-// Theme + ring highlight
-const dashboardTheme = inject<ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
-const accentColor = computed(() => dashboardTheme?.value?.accentColor || 'blue-500')
-const accentRingClass = computed(() => `hover:ring-2 hover:ring-${accentColor.value} hover:ring-offset-2`)
+// ✅ Inject theme and access the resolved accent color hex value
+const dashboardThemeRef = inject<import('vue').ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
+const accentValue = dashboardThemeRef?.value?.accentValue ?? '#3b82f6'
 
 const filteredTools = computed(() =>
   adminDashboardTools.filter(tool =>
