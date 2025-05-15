@@ -36,8 +36,10 @@
       </div>
     </div>
 
-    <!-- Character Class Modal -->
+    <!-- Functional modals -->
     <CharacterClassModal />
+    <ManageTagsModal :visible="isManageTagsModalOpen" @close="isManageTagsModalOpen = false" />
+    <ManageStatsModal :visible="isManageStatsModalOpen" @close="isManageStatsModalOpen = false" />
 
     <!-- Placeholder modals -->
     <AdminModal
@@ -50,27 +52,11 @@
     </AdminModal>
 
     <AdminModal
-      title="Manage Stat Names"
-      :visible="isManageStatsModalOpen"
-      @close="isManageStatsModalOpen = false"
-    >
-      <p class="text-gray-700 dark:text-gray-200">Placeholder for stat registry management.</p>
-    </AdminModal>
-
-    <AdminModal
       title="Manage Passives"
       :visible="isManagePassivesModalOpen"
       @close="isManagePassivesModalOpen = false"
     >
       <p class="text-gray-700 dark:text-gray-200">Placeholder for passive ability glossary.</p>
-    </AdminModal>
-
-    <AdminModal
-      title="Manage Tags"
-      :visible="isManageTagsModalOpen"
-      @close="isManageTagsModalOpen = false"
-    >
-      <p class="text-gray-700 dark:text-gray-200">Placeholder for tag management interface.</p>
     </AdminModal>
   </div>
 </template>
@@ -79,6 +65,8 @@
 import { ref, computed, inject } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
 import CharacterClassModal from '@/features/admin/components/characterDashboard/CharacterClassModal.vue'
+import ManageStatsModal from '@/features/admin/components/characterDashboard/ManageStatsModal.vue'
+import ManageTagsModal from '@/features/admin/components/characterDashboard/ManageTagsModal.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import { useAdminCharacterStore } from '@/features/admin/stores/adminCharacterStore'
 import { adminCharacterDashboardTools } from '@/features/admin/utils/adminCharacterDashboardTools'
@@ -86,15 +74,16 @@ import type { AdminDashboardTool } from '@/features/admin/utils/adminDashboardTo
 import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 
-
-// ✅ Inject the dashboard theme and pull out the accentValue for inline ring styling
+// 🎨 Theme injection
 const dashboardThemeRef = inject<import('vue').ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
 const accentValue = dashboardThemeRef?.value?.accentValue ?? '#3b82f6'
 
+// 🧠 Auth logic
 const store = useAdminCharacterStore()
 const { user } = useAuth()
 const userRole = user.value?.roles?.[0] === 'superadmin' ? 'superadmin' : 'admin'
 
+// 📜 Filtered sidebar tools
 const tools = computed(() =>
   adminCharacterDashboardTools.filter(tool =>
     !tool.roles || tool.roles.includes(userRole)
@@ -102,7 +91,6 @@ const tools = computed(() =>
 )
 
 const openSubmenu = ref<string | null>(null)
-
 function toggleSubmenu(tool: AdminDashboardTool) {
   if (!tool.children) {
     handleAction(tool.action)
@@ -111,12 +99,13 @@ function toggleSubmenu(tool: AdminDashboardTool) {
   openSubmenu.value = openSubmenu.value === tool.name ? null : tool.name
 }
 
-// Modal state
+// 📦 Modal states
 const isBrowseClassesModalOpen = ref(false)
 const isManageStatsModalOpen = ref(false)
 const isManagePassivesModalOpen = ref(false)
 const isManageTagsModalOpen = ref(false)
 
+// 🚦 Action dispatcher
 function handleAction(action?: string) {
   if (!action) return
   switch (action) {
@@ -129,9 +118,9 @@ function handleAction(action?: string) {
     case 'refreshClasses':
       store.refreshClassList()
       break
-    case 'exportClasses':
-      store.exportClassList?.()
-      break
+    // case 'exportClasses':
+    //   store.exportClassList?.()
+    //   break
     case 'manageStats':
       isManageStatsModalOpen.value = true
       break
