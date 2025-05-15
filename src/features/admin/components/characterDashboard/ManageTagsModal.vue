@@ -10,17 +10,9 @@
 
       <!-- Create New Tag -->
       <div class="flex items-center gap-2">
-        <input
-          v-model="newTagName"
-          placeholder="New tag name"
-          class="input w-1/3"
-        />
-        <input
-          v-model="newTagDescription"
-          placeholder="Description (optional)"
-          class="input w-1/2"
-        />
-        <button class="btn btn-primary" disabled>Add Tag</button>
+        <input v-model="newTagName" placeholder="New tag name" class="input w-1/3" />
+        <input v-model="newTagDescription" placeholder="Description (optional)" class="input w-1/2" />
+        <button class="btn btn-primary" @click="handleCreateTag" :disabled="!newTagName">Add Tag</button>
       </div>
 
       <!-- Inactive Toggle -->
@@ -29,23 +21,35 @@
         Show inactive tags
       </label>
 
+      <!-- Loading/Error -->
+      <div v-if="isLoading" class="text-sm text-gray-500">Loading tags...</div>
+      <div v-if="error" class="text-sm text-red-500">{{ error }}</div>
+
       <!-- Tag List -->
-      <ul class="divide-y divide-gray-300 dark:divide-gray-700">
+      <ul v-if="!isLoading && !error" class="divide-y divide-gray-300 dark:divide-gray-700">
         <li
           v-for="tag in visibleTags"
           :key="tag.id"
           class="flex items-center justify-between py-2"
         >
-          <div>
-            <div class="font-medium" :class="{ 'text-gray-400': !tag.isActive }">{{ tag.name }}</div>
-            <div class="text-xs text-gray-500" v-if="tag.description">{{ tag.description }}</div>
+          <div class="flex-1">
+            <div v-if="editingTagId === tag.id" class="flex gap-2">
+              <input v-model="editName" class="input w-1/3" />
+              <input v-model="editDescription" class="input w-1/2" />
+              <button class="btn btn-success" @click="saveEdit(tag.id)">Save</button>
+              <button class="btn btn-secondary" @click="cancelEdit">Cancel</button>
+            </div>
+            <div v-else>
+              <div class="font-medium" :class="{ 'text-gray-400': !tag.isActive }">{{ tag.name }}</div>
+              <div class="text-xs text-gray-500" v-if="tag.description">{{ tag.description }}</div>
+            </div>
           </div>
           <div class="flex items-center gap-2">
-            <button class="btn btn-secondary" disabled>Edit</button>
+            <button class="btn btn-secondary" @click="startEdit(tag)" v-if="editingTagId !== tag.id">Edit</button>
             <button
               class="btn"
               :class="tag.isActive ? 'btn-danger' : 'btn-success'"
-              disabled
+              @click="toggleActive(tag)"
             >
               {{ tag.isActive ? 'Delete' : 'Restore' }}
             </button>
@@ -58,31 +62,102 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
+import {
+  getCharacterTags,
+  createCharacterTag,
+  updateCharacterTag,
+  toggleCharacterTagActive,
+  type CharacterTag
+} from '@/features/admin/services/characterTagService'
 
-const props = defineProps<{
-  visible: boolean
-}>()
+const props = defineProps<{ visible: boolean }>()
+const emit = defineEmits<{ (e: 'close'): void }>()
 
-const emit = defineEmits<{
-  (e: 'close'): void
-}>()
-
-// Temporary static tag data
-const tags = ref([
-  { id: '1', name: 'Tank', description: 'High HP, front-line defense', isActive: true },
-  { id: '2', name: 'Mage', description: 'Spellcaster class', isActive: true },
-  { id: '3', name: 'Stealth', description: 'Infiltration / scouting', isActive: false }
-])
+const tags = ref<CharacterTag[]>([])
+const isLoading = ref(false)
+const error = ref<string | null>(null)
+const showInactive = ref(false)
 
 const newTagName = ref('')
 const newTagDescription = ref('')
-const showInactive = ref(false)
+
+const editingTagId = ref<string | null>(null)
+const editName = ref('')
+const editDescription = ref('')
+
+async function fetchTags() {
+  isLoading.value = true
+  error.value = null
+  try {
+    tags.value = await getCharacterTags(true)
+  } catch (err) {
+    console.error(err)
+    error.value = 'Failed to load tags'
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(fetchTags)
 
 const visibleTags = computed(() =>
   tags.value.filter(tag => showInactive.value || tag.isActive)
 )
+
+async function handleCreateTag() {
+  try {
+    const newTag = await createCharacterTag({
+      name: newTagName.value,
+      description: newTagDescription.value || undefined
+    })
+    tags.value.push(newTag)
+    newTagName.value = ''
+    newTagDescription.value = ''
+  } catch (err) {
+    console.error(err)
+    error.value = 'Failed to create tag'
+  }
+}
+
+function startEdit(tag: CharacterTag) {
+  editingTagId.value = tag.id
+  editName.value = tag.name
+  editDescription.value = tag.description || ''
+}
+
+function cancelEdit() {
+  editingTagId.value = null
+  editName.value = ''
+  editDescription.value = ''
+}
+
+async function saveEdit(id: string) {
+  try {
+    const updated = await updateCharacterTag(id, {
+      name: editName.value,
+      description: editDescription.value || undefined
+    })
+    const index = tags.value.findIndex(t => t.id === id)
+    if (index !== -1) tags.value[index] = updated
+    cancelEdit()
+  } catch (err) {
+    console.error(err)
+    error.value = 'Failed to update tag'
+  }
+}
+
+async function toggleActive(tag: CharacterTag) {
+  try {
+    const updated = await toggleCharacterTagActive(tag.id, !tag.isActive)
+    const index = tags.value.findIndex(t => t.id === tag.id)
+    if (index !== -1) tags.value[index] = updated
+  } catch (err) {
+    console.error(err)
+    error.value = `Failed to ${tag.isActive ? 'delete' : 'restore'} tag`
+  }
+}
 </script>
 
 <style scoped>
