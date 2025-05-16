@@ -92,15 +92,15 @@
 
 <script setup lang="ts">
 import { reactive, computed, watch } from 'vue'
-import { characterService } from '@/features/admin/services/characterService'
-import { useAdminCharacterStore } from '@/features/admin/stores/adminCharacterStore'
+import { playableClassService } from '@/features/admin/services/playableClassService'
+import { useAdminPlayableStore } from '@/features/admin/stores/adminPlayableStore'
 import TagSelector from './form/TagSelector.vue'
 import StatEditor from './form/StatEditor.vue'
 import PassiveListEditor from './form/PassiveListEditor.vue'
 import IconUpload from './form/IconUpload.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 
-const store = useAdminCharacterStore()
+const store = useAdminPlayableStore()
 
 // Local form state
 const form = reactive({
@@ -114,9 +114,9 @@ const form = reactive({
   passiveAbilities: [] as string[],
 })
 
-// Sync store.selectedCharacter → form
+// Sync store.selectedPlayable → form
 watch(
-  () => store.selectedCharacter,
+  () => store.selectedPlayable,
   (char) => {
     if (char) {
       Object.assign(form, {
@@ -152,7 +152,7 @@ const modalTitle = computed(() =>
 function closeModal() {
   store.showCreateModal = false
   store.showEditModal = false
-  store.selectedCharacter = null
+  store.selectedPlayable = null
   store.submitError = null
 }
 
@@ -160,10 +160,10 @@ async function handleSubmit() {
   store.isSubmitting = true
   store.submitError = null
   try {
-    if (store.showEditModal && store.selectedCharacter?.id) {
-      await characterService.updateCharacterClass(store.selectedCharacter.id, { ...form })
+    if (store.showEditModal && store.selectedPlayable?.id) {
+      await playableClassService.updatePlayableClass(store.selectedPlayable.id, { ...form })
     } else {
-      await characterService.createCharacterClass({ ...form })
+      await playableClassService.createPlayableClass({ ...form })
     }
 
     closeModal()

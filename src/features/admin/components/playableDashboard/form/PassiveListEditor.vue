@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
-import { characterService } from '@/features/admin/services/characterService'
+import { playableClassService } from '@/features/admin/services/playableClassService'
 
 const props = defineProps<{
   modelValue: string[]
@@ -65,7 +65,7 @@ const newPassive = ref('')
 
 // Load backend passives for autocomplete
 onMounted(async () => {
-  const result = await characterService.getPassives()
+  const result = await playableClassService.getPassives()
   passiveSuggestions.value = result.map((p: any) => p.name)
 })
 

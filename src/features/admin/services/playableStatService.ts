@@ -1,4 +1,4 @@
-// /src/features/admin/services/characterStatService.ts
+// /src/features/admin/services/playableStatService.ts
 
 import { axiosInstance } from '@/services/axiosInstance'
 

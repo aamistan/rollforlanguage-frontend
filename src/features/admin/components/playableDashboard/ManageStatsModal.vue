@@ -1,4 +1,3 @@
-<!-- /src/features/admin/components/characterDashboard/ManageStatsModal.vue -->
 <template>
   <AdminModal
     title="Manage Stats"
@@ -87,17 +86,17 @@
 import { ref, computed, onMounted } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import {
-  getCharacterStats,
-  createCharacterStat,
-  updateCharacterStat,
-  toggleCharacterStatActive,
-  type CharacterStat
-} from '@/features/admin/services/characterStatService'
+  getPlayableStats,
+  createPlayableStat,
+  updatePlayableStat,
+  togglePlayableStatActive,
+  type PlayableStat
+} from '@/features/admin/services/playableStatService'
 
 const props = defineProps<{ visible: boolean }>()
 const emit = defineEmits<{ (e: 'close'): void }>()
 
-const stats = ref<CharacterStat[]>([])
+const stats = ref<PlayableStat[]>([])
 const isLoading = ref(false)
 const error = ref<string | null>(null)
 const showInactive = ref(false)
@@ -115,7 +114,7 @@ async function fetchStats() {
   isLoading.value = true
   error.value = null
   try {
-    stats.value = await getCharacterStats(true)
+    stats.value = await getPlayableStats(true)
   } catch (err) {
     console.error(err)
     error.value = 'Failed to load stat definitions.'
@@ -132,7 +131,7 @@ const visibleStats = computed(() =>
 
 async function handleCreate() {
   try {
-    const created = await createCharacterStat({
+    const created = await createPlayableStat({
       name: newName.value,
       displayName: newDisplayName.value,
       description: newDescription.value || undefined,
@@ -147,7 +146,7 @@ async function handleCreate() {
   }
 }
 
-function startEdit(stat: CharacterStat) {
+function startEdit(stat: PlayableStat) {
   editingStatId.value = stat.id
   editName.value = stat.name
   editDisplayName.value = stat.displayName
@@ -163,7 +162,7 @@ function cancelEdit() {
 
 async function saveEdit(id: string) {
   try {
-    const updated = await updateCharacterStat(id, {
+    const updated = await updatePlayableStat(id, {
       name: editName.value,
       displayName: editDisplayName.value,
       description: editDescription.value || undefined
@@ -177,9 +176,9 @@ async function saveEdit(id: string) {
   }
 }
 
-async function toggleActive(stat: CharacterStat) {
+async function toggleActive(stat: PlayableStat) {
   try {
-    const updated = await toggleCharacterStatActive(stat.id, !stat.isActive)
+    const updated = await togglePlayableStatActive(stat.id, !stat.isActive)
     const index = stats.value.findIndex(s => s.id === stat.id)
     if (index !== -1) stats.value[index] = updated
   } catch (err) {

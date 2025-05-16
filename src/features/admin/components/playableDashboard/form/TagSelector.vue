@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/vue'
 import { onMounted, ref, watch, computed } from 'vue'
-import { characterService } from '@/features/admin/services/characterService'
+import { playableClassService } from '@/features/admin/services/playableClassService'
 
 // Props
 const props = defineProps<{
@@ -67,7 +67,7 @@ const query = ref('')
 const allTags = ref<string[]>([])
 
 onMounted(async () => {
-  const result = await characterService.getTags()
+  const result = await playableClassService.getTags()
   allTags.value = result.map((tag: { name: string }) => tag.name)
 })
 

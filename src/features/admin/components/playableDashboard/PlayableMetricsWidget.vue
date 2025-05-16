@@ -1,6 +1,6 @@
-<!-- /src/features/admin/components/characterDashboard/CharacterMetricsWidget.vue -->
+<!-- /src/features/admin/components/playableDashboard/PlayableMetricsWidget.vue -->
 <template>
-  <WidgetWrapper title="Character Metrics" icon="Activity">
+  <WidgetWrapper title="Playable Metrics" icon="Activity">
     <template #hover-tools>
       <button
         @click="modalOpen = true"
@@ -18,7 +18,7 @@
       :visible="modalOpen"
       @close="modalOpen = false"
       size="2xl"
-      title="Character Metrics"
+      title="Playable Metrics"
     >
       <div class="space-y-4 text-gray-800 dark:text-gray-100">
         <p><strong>Total Classes:</strong> Coming soon</p>

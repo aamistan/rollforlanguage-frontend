@@ -1,4 +1,3 @@
-<!-- /src/features/admin/components/characterDashboard/ManageTagsModal.vue -->
 <template>
   <AdminModal
     title="Manage Tags"
@@ -65,17 +64,17 @@
 import { ref, computed, onMounted } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import {
-  getCharacterTags,
-  createCharacterTag,
-  updateCharacterTag,
-  toggleCharacterTagActive,
-  type CharacterTag
-} from '@/features/admin/services/characterTagService'
+  getPlayableTags,
+  createPlayableTag,
+  updatePlayableTag,
+  togglePlayableTagActive,
+  type PlayableTag
+} from '@/features/admin/services/playableTagService'
 
 const props = defineProps<{ visible: boolean }>()
 const emit = defineEmits<{ (e: 'close'): void }>()
 
-const tags = ref<CharacterTag[]>([])
+const tags = ref<PlayableTag[]>([])
 const isLoading = ref(false)
 const error = ref<string | null>(null)
 const showInactive = ref(false)
@@ -91,7 +90,7 @@ async function fetchTags() {
   isLoading.value = true
   error.value = null
   try {
-    tags.value = await getCharacterTags(true)
+    tags.value = await getPlayableTags(true)
   } catch (err) {
     console.error(err)
     error.value = 'Failed to load tags'
@@ -108,11 +107,18 @@ const visibleTags = computed(() =>
 
 async function handleCreateTag() {
   try {
-    const newTag = await createCharacterTag({
+    const newTag = await createPlayableTag({
       name: newTagName.value,
       description: newTagDescription.value || undefined
     })
+
+    // Ensure tag appears immediately
+    if (!newTag.isActive) {
+      newTag.isActive = true
+    }
+
     tags.value.push(newTag)
+
     newTagName.value = ''
     newTagDescription.value = ''
   } catch (err) {
@@ -121,7 +127,7 @@ async function handleCreateTag() {
   }
 }
 
-function startEdit(tag: CharacterTag) {
+function startEdit(tag: PlayableTag) {
   editingTagId.value = tag.id
   editName.value = tag.name
   editDescription.value = tag.description || ''
@@ -135,7 +141,7 @@ function cancelEdit() {
 
 async function saveEdit(id: string) {
   try {
-    const updated = await updateCharacterTag(id, {
+    const updated = await updatePlayableTag(id, {
       name: editName.value,
       description: editDescription.value || undefined
     })
@@ -148,9 +154,9 @@ async function saveEdit(id: string) {
   }
 }
 
-async function toggleActive(tag: CharacterTag) {
+async function toggleActive(tag: PlayableTag) {
   try {
-    const updated = await toggleCharacterTagActive(tag.id, !tag.isActive)
+    const updated = await togglePlayableTagActive(tag.id, !tag.isActive)
     const index = tags.value.findIndex(t => t.id === tag.id)
     if (index !== -1) tags.value[index] = updated
   } catch (err) {

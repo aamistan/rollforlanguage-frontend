@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import LandingPage from '@/views/LandingPage.vue'
 
 import AdminLayout from '@/features/admin/layouts/AdminLayout.vue'
-import AdminCharacterView from '@/features/admin/views/AdminCharacterView.vue'
+import AdminPlayableView from '@/features/admin/views/AdminPlayableView.vue'
 import AdminDashboardView from '@/features/admin/views/AdminDashboardView.vue'
 import CampaignManagementView from '@/features/admin/views/CampaignManagementView.vue'
 import ContentManagementView from '@/features/admin/views/ContentManagementView.vue'
@@ -74,7 +74,7 @@ const routes: Array<RouteRecordRaw> = [
       { path: 'campaigns', name: AppRouteNames.AdminCampaigns, component: CampaignManagementView },
       { path: 'content', name: AppRouteNames.AdminContent, component: ContentManagementView },
       { path: 'system', name: AppRouteNames.AdminSystem, component: SystemMonitorView },
-      { path: 'characters', name: AppRouteNames.AdminCharacters, component: AdminCharacterView }, // ✅ NEW
+      { path: 'playables', name: AppRouteNames.AdminPlayables, component: AdminPlayableView }, // ✅ NEW
     ],
   },
 

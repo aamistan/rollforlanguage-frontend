@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/services/axiosInstance'
 
-export const characterService = {
+export const playableClassService = {
   // Character Classes
   async getCharacterClasses(query: Record<string, any>) {
     const res = await axiosInstance.get('/admin/characters/classes', { params: query })

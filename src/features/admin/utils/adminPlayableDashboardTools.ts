@@ -1,6 +1,6 @@
 import type { AdminDashboardTool } from './adminDashboardTools'
 
-export const adminCharacterDashboardTools: AdminDashboardTool[] = [
+export const adminPlayableDashboardTools: AdminDashboardTool[] = [
   {
     name: 'Create',
     icon: 'lucide:plus-square',

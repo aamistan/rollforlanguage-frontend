@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { CharacterClass } from '@/features/admin/types/characterTypes'
+import type { CharacterClass } from '@/features/admin/types/playableTypes'
 
-export const useAdminCharacterStore = defineStore('adminCharacterStore', () => {
+export const useAdminCharacterStore = defineStore('adminPlayableStore', () => {
   // 🔄 Widget refresh key
   const lastClassRefresh = ref(Date.now())
 

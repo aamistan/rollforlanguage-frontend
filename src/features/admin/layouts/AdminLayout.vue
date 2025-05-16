@@ -17,7 +17,7 @@
             v-else-if="currentRouteName === 'AdminUsers'"
           />
 
-          <CharacterDashboardSidebarTools
+          <PlayableDashboardSidebarTools
             v-else-if="currentRouteName === 'AdminCharacters'"
           />
         </template>
@@ -35,7 +35,7 @@
 import { computed, provide } from 'vue'
 import { useRoute } from 'vue-router'
 
-import CharacterDashboardSidebarTools from '@/features/admin/components/characterDashboard/CharacterDashboardSidebarTools.vue'
+import PlayableDashboardSidebarTools from '@/features/admin/components/playableDashboard/PlayableDashboardSidebarTools.vue'
 import DashboardSidebarTools from '@/features/admin/components/dashboard/DashboardSidebarTools.vue'
 import UserDashboardSidebarTools from '@/features/admin/components/userDashboard/UserDashboardSidebarTools.vue'
 import { dashboardThemes } from '@/features/admin/utils/dashboardThemes'

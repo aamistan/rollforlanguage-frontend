@@ -12,7 +12,7 @@ export enum AppRouteNames {
   AdminCampaigns = 'AdminCampaigns',
   AdminContent = 'AdminContent',
   AdminSystem = 'AdminSystem',
-  AdminCharacters = 'AdminCharacters', // ✅ NEW: Character management route
+  AdminPlayables = 'AdminPlayables', // ✅ NEW: Character management route
 }
 
 export enum AppRoutePaths {
@@ -29,5 +29,5 @@ export enum AppRoutePaths {
   AdminCampaigns = '/admin/campaigns',
   AdminContent = '/admin/content',
   AdminSystem = '/admin/system',
-  AdminCharacters = '/admin/characters', // ✅ NEW: Character management path
+  AdminPlayables = '/admin/playables', // ✅ NEW: Character management path
 }

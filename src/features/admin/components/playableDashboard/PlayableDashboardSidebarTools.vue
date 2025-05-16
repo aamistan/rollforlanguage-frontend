@@ -1,4 +1,4 @@
-<!-- /src/features/admin/components/characterDashboard/CharacterDashboardSidebarTools.vue -->
+<!-- /src/features/admin/components/playableDashboard/PlayableDashboardSidebarTools.vue -->
 <template>
   <div class="flex flex-col gap-4">
     <div v-for="tool in tools" :key="tool.name">
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Functional modals -->
-    <CharacterClassModal />
+    <PlayableClassModal />
     <ManageTagsModal :visible="isManageTagsModalOpen" @close="isManageTagsModalOpen = false" />
     <ManageStatsModal :visible="isManageStatsModalOpen" @close="isManageStatsModalOpen = false" />
 
@@ -64,12 +64,12 @@
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
-import CharacterClassModal from '@/features/admin/components/characterDashboard/CharacterClassModal.vue'
-import ManageStatsModal from '@/features/admin/components/characterDashboard/ManageStatsModal.vue'
-import ManageTagsModal from '@/features/admin/components/characterDashboard/ManageTagsModal.vue'
+import PlayableClassModal from '@/features/admin/components/playableDashboard/PlayableClassModal.vue'
+import ManageStatsModal from '@/features/admin/components/playableDashboard/ManageStatsModal.vue'
+import ManageTagsModal from '@/features/admin/components/playableDashboard/ManageTagsModal.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
-import { useAdminCharacterStore } from '@/features/admin/stores/adminCharacterStore'
-import { adminCharacterDashboardTools } from '@/features/admin/utils/adminCharacterDashboardTools'
+import { useAdminPlayableStore } from '@/features/admin/stores/adminPlayableStore'
+import { adminPlayableDashboardTools } from '@/features/admin/utils/adminPlayableDashboardTools'
 import type { AdminDashboardTool } from '@/features/admin/utils/adminDashboardTools'
 import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
@@ -79,13 +79,13 @@ const dashboardThemeRef = inject<import('vue').ComputedRef<DashboardTheme | unde
 const accentValue = dashboardThemeRef?.value?.accentValue ?? '#3b82f6'
 
 // 🧠 Auth logic
-const store = useAdminCharacterStore()
+const store = useAdminPlayableStore()
 const { user } = useAuth()
 const userRole = user.value?.roles?.[0] === 'superadmin' ? 'superadmin' : 'admin'
 
 // 📜 Filtered sidebar tools
 const tools = computed(() =>
-  adminCharacterDashboardTools.filter(tool =>
+  adminPlayableDashboardTools.filter(tool =>
     !tool.roles || tool.roles.includes(userRole)
   )
 )

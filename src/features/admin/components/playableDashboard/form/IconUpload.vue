@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { characterService } from '@/features/admin/services/characterService'
+import { playableClassService } from '@/features/admin/services/playableClassService'
 
 const props = defineProps<{
   modelValue: string
@@ -53,7 +53,7 @@ async function handleFileChange(event: Event) {
 
   uploading.value = true
   try {
-    const { url } = await characterService.uploadIcon(file)
+    const { url } = await playableClassService.uploadIcon(file)
     emit('update:modelValue', url)
   } catch (err) {
     console.error('Upload failed:', err)

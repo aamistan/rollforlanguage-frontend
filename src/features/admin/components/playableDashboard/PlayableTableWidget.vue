@@ -1,6 +1,6 @@
-<!-- /src/features/admin/components/characterDashboard/CharacterTableWidget.vue -->
+<!-- /src/features/admin/components/playableDashboard/PlayableTableWidget.vue -->
 <template>
-  <WidgetWrapper title="Character Table" icon="Table">
+  <WidgetWrapper title="Playable Class Table" icon="Table">
     <template #hover-tools>
       <button
         @click="modalOpen = true"
@@ -18,7 +18,7 @@
       :visible="modalOpen"
       @close="modalOpen = false"
       size="6xl"
-      title="Manage Character Classes"
+      title="Manage Playable Classes"
     >
       <div class="space-y-4 text-gray-800 dark:text-gray-100">
         <!-- Create Button -->
@@ -81,7 +81,7 @@
     </AdminModal>
 
     <!-- Modal for Create/Edit -->
-    <CharacterClassModal />
+    <PlayableClassModal />
   </WidgetWrapper>
 </template>
 
@@ -89,17 +89,17 @@
 import { ref, onMounted, watch } from 'vue'
 import WidgetWrapper from '@/components/molecules/WidgetWrapper.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
-import { characterService } from '@/features/admin/services/characterService'
-import { useAdminCharacterStore } from '@/features/admin/stores/adminCharacterStore'
-import type { CharacterClass } from '@/features/admin/types/characterTypes'
-import CharacterClassModal from './CharacterClassModal.vue'
+import { playableClassService } from '@/features/admin/services/playableClassService'
+import { useAdminPlayableStore } from '@/features/admin/stores/adminPlayableStore'
+import type { PlayableClass } from '@/features/admin/types/playableTypes'
+import PlayableClassModal from './PlayableClassModal.vue'
 
-const store = useAdminCharacterStore()
+const store = useAdminPlayableStore()
 const modalOpen = ref(false)
-const classes = ref<CharacterClass[]>([])
+const classes = ref<PlayableClass[]>([])
 
 async function fetchClasses() {
-  const res = await characterService.getCharacterClasses({ page: 1, limit: 50 })
+  const res = await playableClassService.getPlayableClasses({ page: 1, limit: 50 })
   classes.value = res.data
 }
 

@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
-import { characterService } from '@/features/admin/services/characterService'
+import { playableClassService } from '@/features/admin/services/playableClassService'
 
 const props = defineProps<{
   modelValue: Record<string, number>
@@ -75,7 +75,7 @@ const localStats = ref<StatRow[]>([])
 
 // Load available stat names
 onMounted(async () => {
-  const result = await characterService.getStats()
+  const result = await playableClassService.getStats()
   statOptions.value = result.map((s: any) => ({
     name: s.name,
     displayName: s.displayName || s.name,
