@@ -31,9 +31,9 @@ export const adminNavLinks: AdminNavLink[] = [
     library: 'iconify',
   },
   {
-    name: 'Characters',
-    routeName: AppRouteNames.AdminCharacters,
-    path: AppRoutePaths.AdminCharacters,
+    name: 'Playables',
+    routeName: AppRouteNames.AdminPlayables,
+    path: AppRoutePaths.AdminPlayables,
     icon: 'lucide:shield-plus',
     library: 'iconify',
   },

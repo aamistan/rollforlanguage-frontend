@@ -2,7 +2,7 @@
 
 import { axiosInstance } from '@/services/axiosInstance'
 
-export interface CharacterTag {
+export interface PlayableTag {
   id: string
   name: string
   description?: string
@@ -13,7 +13,7 @@ export interface CharacterTag {
 }
 
 // 🔍 GET all tags (optionally include inactive)
-export async function getCharacterTags(includeInactive = false): Promise<CharacterTag[]> {
+export async function getPlayableTags(includeInactive = false): Promise<PlayableTag[]> {
   const response = await axiosInstance.get('/admin/characters/tags', {
     params: includeInactive ? { includeInactive: true } : {},
   })
@@ -21,38 +21,38 @@ export async function getCharacterTags(includeInactive = false): Promise<Charact
 }
 
 // ➕ POST: create a new tag
-export async function createCharacterTag(payload: {
+export async function createPlayableTag(payload: {
   name: string
   description?: string
-}): Promise<CharacterTag> {
+}): Promise<PlayableTag> {
   const response = await axiosInstance.post('/admin/characters/tags', payload)
   return response.data
 }
 
 // 📝 PATCH: update tag name/description/sortOrder
-export async function updateCharacterTag(id: string, payload: {
+export async function updatePlayableTag(id: string, payload: {
   name?: string
   description?: string
   sortOrder?: number
-}): Promise<CharacterTag> {
+}): Promise<PlayableTag> {
   const response = await axiosInstance.patch(`/admin/characters/tags/${id}`, payload)
   return response.data
 }
 
 // 🗑 DELETE: soft-delete a tag (only works if unused)
-export async function deleteCharacterTag(id: string): Promise<void> {
+export async function deletePlayableTag(id: string): Promise<void> {
   await axiosInstance.delete(`/admin/characters/tags/${id}`)
 }
 
 // ♻️ PATCH: restore soft-deleted tag
-export async function restoreCharacterTag(id: string): Promise<void> {
+export async function restorePlayableTag(id: string): Promise<void> {
   await axiosInstance.patch(`/admin/characters/tags/${id}/active`, {
     isActive: true
   })
 }
 
 // 🔁 PATCH: toggle isActive to enable/disable tag
-export async function toggleCharacterTagActive(id: string, isActive: boolean): Promise<CharacterTag> {
+export async function togglePlayableTagActive(id: string, isActive: boolean): Promise<PlayableTag> {
   const response = await axiosInstance.patch(`/admin/characters/tags/${id}/active`, { isActive })
   return response.data  // ✅ Fix: return the updated tag
 }

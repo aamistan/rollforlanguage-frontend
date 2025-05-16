@@ -18,7 +18,7 @@
           />
 
           <PlayableDashboardSidebarTools
-            v-else-if="currentRouteName === 'AdminCharacters'"
+            v-else-if="currentRouteName === 'AdminPlayables'"
           />
         </template>
       </Sidebar>

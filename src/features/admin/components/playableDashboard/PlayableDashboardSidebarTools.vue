@@ -116,7 +116,7 @@ function handleAction(action?: string) {
       isBrowseClassesModalOpen.value = true
       break
     case 'refreshClasses':
-      store.refreshClassList()
+      store.refreshPlayableList()
       break
     // case 'exportClasses':
     //   store.exportClassList?.()

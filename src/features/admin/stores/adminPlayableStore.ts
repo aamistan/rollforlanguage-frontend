@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { CharacterClass } from '@/features/admin/types/playableTypes'
+import type { PlayableClass } from '@/features/admin/types/playableTypes'
 
-export const useAdminCharacterStore = defineStore('adminPlayableStore', () => {
+export const useAdminPlayableStore = defineStore('adminPlayableStore', () => {
   // 🔄 Widget refresh key
-  const lastClassRefresh = ref(Date.now())
+  const lastPlayableRefresh = ref(Date.now())
 
-  // 📦 Selected character (for edit mode)
-  const selectedCharacter = ref<CharacterClass | null>(null)
+  // 📦 Selected playable class (for edit mode)
+  const selectedPlayable = ref<PlayableClass | null>(null)
 
   // 🔘 Modal visibility
   const showCreateModal = ref(false)
@@ -18,33 +18,33 @@ export const useAdminCharacterStore = defineStore('adminPlayableStore', () => {
   const submitError = ref<string | null>(null)
 
   // 🔁 Trigger class list reload
-  function refreshClassList() {
-    lastClassRefresh.value = Date.now()
+  function refreshPlayableList() {
+    lastPlayableRefresh.value = Date.now()
   }
 
   // 🆕 Open modal to create new class
   function openCreateModal() {
-    selectedCharacter.value = null
+    selectedPlayable.value = null
     showCreateModal.value = true
   }
 
   // ✏️ Open modal to edit existing class
-  function openEditModal(character: CharacterClass) {
-    selectedCharacter.value = character
+  function openEditModal(playable: PlayableClass) {
+    selectedPlayable.value = playable
     showEditModal.value = true
   }
 
   return {
     // State
-    lastClassRefresh,
-    selectedCharacter,
+    lastPlayableRefresh,
+    selectedPlayable,
     showCreateModal,
     showEditModal,
     isSubmitting,
     submitError,
 
     // Actions
-    refreshClassList,
+    refreshPlayableList,
     openCreateModal,
     openEditModal,
   }

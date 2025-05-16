@@ -1,4 +1,4 @@
-export interface CharacterClass {
+export interface PlayableClass {
   id: string
   name: string
   description?: string

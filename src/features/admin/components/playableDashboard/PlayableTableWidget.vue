@@ -108,5 +108,5 @@ function formatDate(dateStr: string) {
 }
 
 onMounted(fetchClasses)
-watch(() => store.lastClassRefresh, fetchClasses)
+watch(() => store.lastPlayableRefresh, fetchClasses)
 </script>

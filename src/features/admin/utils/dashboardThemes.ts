@@ -69,7 +69,7 @@ export const dashboardThemes: DashboardTheme[] = [
     accentValue: getColorValue('rose-500'),
   },
   {
-    routeName: AppRouteNames.AdminCharacters,
+    routeName: AppRouteNames.AdminPlayables,
     widgetColor: 'bg-white dark:bg-black',
     widgetTextColor: 'text-black dark:text-white',
     sidebarColor: 'bg-white dark:bg-black',

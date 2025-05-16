@@ -167,7 +167,7 @@ async function handleSubmit() {
     }
 
     closeModal()
-    store.refreshClassList()
+    store.refreshPlayableList()
   } catch (err: any) {
     console.error(err)
     store.submitError = err.response?.data?.message || 'Something went wrong.'

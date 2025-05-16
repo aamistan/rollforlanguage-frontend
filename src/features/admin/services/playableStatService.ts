@@ -2,7 +2,7 @@
 
 import { axiosInstance } from '@/services/axiosInstance'
 
-export interface CharacterStat {
+export interface PlayableStat {
   id: string
   name: string            // e.g., "strength" (machine-safe)
   displayName: string     // e.g., "Strength" (human-readable)
@@ -14,7 +14,7 @@ export interface CharacterStat {
 }
 
 // 🔍 GET: Fetch all stat definitions
-export async function getCharacterStats(includeInactive = false): Promise<CharacterStat[]> {
+export async function getPlayableStats(includeInactive = false): Promise<PlayableStat[]> {
   const response = await axiosInstance.get('/admin/characters/stats', {
     params: includeInactive ? { includeInactive: true } : {},
   })
@@ -22,40 +22,40 @@ export async function getCharacterStats(includeInactive = false): Promise<Charac
 }
 
 // ➕ POST: Create a new stat
-export async function createCharacterStat(payload: {
+export async function createPlayableStat(payload: {
   name: string
   displayName: string
   description?: string
-}): Promise<CharacterStat> {
+}): Promise<PlayableStat> {
   const response = await axiosInstance.post('/admin/characters/stats', payload)
   return response.data
 }
 
 // 📝 PATCH: Update stat (partial updates allowed)
-export async function updateCharacterStat(id: string, payload: {
+export async function updatePlayableStat(id: string, payload: {
   name?: string
   displayName?: string
   description?: string
   sortOrder?: number
-}): Promise<CharacterStat> {
+}): Promise<PlayableStat> {
   const response = await axiosInstance.patch(`/admin/characters/stats/${id}`, payload)
   return response.data
 }
 
 // 🧼 DELETE: Soft-delete stat
-export async function deleteCharacterStat(id: string): Promise<void> {
+export async function deletePlayableStat(id: string): Promise<void> {
   await axiosInstance.delete(`/admin/characters/stats/${id}`)
 }
 
 // ♻️ PATCH: Restore stat
-export async function restoreCharacterStat(id: string): Promise<void> {
+export async function restorePlayableStat(id: string): Promise<void> {
   await axiosInstance.patch(`/admin/characters/stats/${id}/active`, {
     isActive: true,
   })
 }
 
 // ✅ TOGGLE: Unified toggle for soft-delete / restore
-export async function toggleCharacterStatActive(id: string, makeActive: boolean): Promise<CharacterStat> {
+export async function togglePlayableStatActive(id: string, makeActive: boolean): Promise<PlayableStat> {
   const response = await axiosInstance.patch(`/admin/characters/stats/${id}/active`, {
     isActive: makeActive,
   })
