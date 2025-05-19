@@ -146,7 +146,7 @@ watch(
 )
 
 const modalTitle = computed(() =>
-  store.showEditModal ? 'Edit Character Class' : 'Create New Character Class'
+  store.showEditModal ? 'Edit Playable Class' : 'Create New Playable Class'
 )
 
 function closeModal() {

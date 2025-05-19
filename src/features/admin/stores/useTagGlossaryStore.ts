@@ -33,7 +33,7 @@ export const useTagGlossaryStore = defineStore('tagGlossary', {
       } catch (error: unknown) {
         const axiosError = error as AxiosError<{ error: string }>
         this.tagError =
-          axiosError.response?.data?.error || 'Failed to load character tags.'
+          axiosError.response?.data?.error || 'Failed to load playable tags.'
       }
     },
 

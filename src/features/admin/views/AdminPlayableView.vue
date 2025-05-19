@@ -1,9 +1,9 @@
 <template>
   <DashboardWidgetGrid>
-    <!-- Character Table Widget -->
+    <!-- Playable Table Widget -->
     <PlayableTableWidget />
 
-    <!-- Character Metrics Widget -->
+    <!-- Playable Metrics Widget -->
     <PlayableMetricsWidget />
 
     <!-- Featured Tags Widget -->
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-// Admin dashboard widgets for managing character classes & species
+// Admin dashboard widgets for managing playable classes character classes & species species
 import PlayableMetricsWidget from '@/features/admin/components/playableDashboard/PlayableMetricsWidget.vue'
 import PlayableTableWidget from '@/features/admin/components/playableDashboard/PlayableTableWidget.vue'
 import FeaturedTagsWidget from '@/features/admin/components/playableDashboard/FeaturedTagsWidget.vue'

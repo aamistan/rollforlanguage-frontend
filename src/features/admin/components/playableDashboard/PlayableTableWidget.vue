@@ -11,7 +11,7 @@
     </template>
 
     <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
-      View and manage all playable character classes.
+      View and manage all playable classes.
     </p>
 
     <AdminModal

@@ -11,7 +11,7 @@
     </template>
 
     <p class="mt-2 text-sm">
-      Summary of playable character data.
+      Summary of playable playable class data.
     </p>
 
     <AdminModal

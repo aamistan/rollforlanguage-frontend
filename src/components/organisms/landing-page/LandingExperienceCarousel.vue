@@ -31,7 +31,7 @@
   // Onboarding Steps
   const steps = [
     {
-      title: 'Create Your Character',
+      title: 'Create Your Playable Character',
       description: 'Build your avatar with class, species, and backstory.',
     },
     {
