@@ -6,11 +6,11 @@
     size="3xl"
   >
     <div class="space-y-4">
-
       <!-- Create New Tag -->
       <div class="flex items-center gap-2">
         <input v-model="newTagName" placeholder="New tag name" class="input w-1/3" />
         <input v-model="newTagDescription" placeholder="Description (optional)" class="input w-1/2" />
+        <input type="color" v-model="newTagColor" class="h-10 w-10 rounded border" title="Choose tag color" />
         <button class="btn btn-primary" @click="handleCreateTag" :disabled="!newTagName">Add Tag</button>
       </div>
 
@@ -25,7 +25,6 @@
         <label for="showInactive" class="text-sm text-white">Show inactive tags</label>
       </div>
 
-
       <!-- Loading/Error -->
       <div v-if="isLoading" class="text-sm text-gray-500">Loading tags...</div>
       <div v-if="error" class="text-sm text-red-500">{{ error }}</div>
@@ -38,9 +37,15 @@
           class="flex items-center justify-between py-2"
         >
           <div class="flex-1">
-            <div v-if="editingTagId === tag.id" class="flex gap-2">
+            <div v-if="editingTagId === tag.id" class="flex gap-2 items-center">
               <input v-model="editName" class="input w-1/3" />
               <input v-model="editDescription" class="input w-1/2" />
+              <input
+                type="color"
+                v-model="editColor"
+                class="h-10 w-10 rounded border"
+                title="Edit tag color"
+              />
               <button class="btn btn-success" @click="saveEdit(tag.id)">Save</button>
               <button class="btn btn-secondary" @click="cancelEdit">Cancel</button>
             </div>
@@ -53,15 +58,18 @@
             <button class="btn btn-secondary" @click="startEdit(tag)" v-if="editingTagId !== tag.id">Edit</button>
             <button
               class="btn"
-              :class="tag.isActive ? 'btn-danger' : 'btn-success'"
-              @click="toggleActive(tag)"
+              :class="editingTagId === tag.id
+                ? 'btn-danger'
+                : (tag.isActive ? 'btn-warning' : 'btn-success')"
+              @click="editingTagId === tag.id ? deleteTag(tag.id) : toggleActive(tag)"
             >
-              {{ tag.isActive ? 'Delete' : 'Restore' }}
+              {{ editingTagId === tag.id
+                ? 'Delete'
+                : (tag.isActive ? 'Archive' : 'Restore') }}
             </button>
           </div>
         </li>
       </ul>
-
     </div>
   </AdminModal>
 </template>
@@ -95,6 +103,9 @@ const editingTagId = ref<string | null>(null)
 const editName = ref('')
 const editDescription = ref('')
 
+const newTagColor = ref('#888888') // default neutral gray
+const editColor = ref('#888888')
+
 async function fetchTags() {
   isLoading.value = true
   error.value = null
@@ -108,7 +119,6 @@ async function fetchTags() {
   }
 }
 
-// 👀 Reactive fetch when modal opens
 watch(() => props.visible, (isVisible) => {
   if (isVisible) {
     fetchTags()
@@ -124,6 +134,7 @@ async function handleCreateTag() {
     const newTag = await createPlayableTag({
       name: newTagName.value,
       description: newTagDescription.value || undefined,
+      colorHex: newTagColor.value || '#888888',
     })
 
     if (!newTag.isActive) {
@@ -133,21 +144,24 @@ async function handleCreateTag() {
     tags.value.push(newTag)
     newTagName.value = ''
     newTagDescription.value = ''
+    newTagColor.value = '#888888'
 
     console.log('🔁 Emitting refresh from modal')
     emit('refresh')
-
   } catch (err) {
     console.error(err)
     error.value = 'Failed to create tag'
   }
 }
 
+
 function startEdit(tag: PlayableTag) {
   editingTagId.value = tag.id
   editName.value = tag.name
   editDescription.value = tag.description || ''
+  editColor.value = tag.colorHex || '#888888'
 }
+
 
 function cancelEdit() {
   editingTagId.value = null
@@ -184,9 +198,23 @@ async function toggleActive(tag: PlayableTag) {
     emit('refresh')
   } catch (err) {
     console.error(err)
-    error.value = `Failed to ${tag.isActive ? 'delete' : 'restore'} tag`
+    error.value = `Failed to ${tag.isActive ? 'archive' : 'restore'} tag`
   }
 }
+
+async function deleteTag(id: string) {
+  try {
+    // Replace with hard-delete call when implemented
+    await togglePlayableTagActive(id, false)
+    tags.value = tags.value.filter(t => t.id !== id)
+    cancelEdit()
+    emit('refresh')
+  } catch (err) {
+    console.error(err)
+    error.value = 'Failed to delete tag permanently'
+  }
+}
+
 </script>
 
 <style scoped>
@@ -202,11 +230,15 @@ async function toggleActive(tag: PlayableTag) {
 .btn-secondary {
   @apply bg-gray-200 dark:bg-neutral-700 hover:bg-gray-300 dark:hover:bg-neutral-600;
 }
-.btn-danger {
-  @apply bg-red-500 text-white hover:bg-red-600;
-}
 .btn-success {
   @apply bg-green-500 text-white hover:bg-green-600;
 }
-</style>
+.btn-warning {
+  @apply bg-yellow-500 text-black hover:bg-yellow-600;
+}
 
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700;
+}
+
+</style>

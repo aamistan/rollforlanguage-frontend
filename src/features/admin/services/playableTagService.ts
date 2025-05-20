@@ -8,6 +8,7 @@ export interface PlayableTag {
   description?: string
   isActive: boolean
   sortOrder: number
+  colorHex?: string
   createdAt: string
   updatedAt: string
 }
@@ -24,6 +25,7 @@ export async function getPlayableTags(includeInactive = false): Promise<Playable
 export async function createPlayableTag(payload: {
   name: string
   description?: string
+  colorHex?: string
 }): Promise<PlayableTag> {
   const response = await axiosInstance.post('/admin/playable/tags', payload)
   return response.data
@@ -34,6 +36,7 @@ export async function updatePlayableTag(id: string, payload: {
   name?: string
   description?: string
   sortOrder?: number
+  colorHex?: string
 }): Promise<PlayableTag> {
   const response = await axiosInstance.patch(`/admin/playable/tags/${id}`, payload)
   return response.data

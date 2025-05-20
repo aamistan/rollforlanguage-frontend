@@ -9,11 +9,16 @@
       <span v-if="isLoading" class="text-xs text-gray-500">Loading tags...</span>
       <span v-else-if="error" class="text-xs text-red-500">{{ error }}</span>
       <span v-else-if="tags.length === 0" class="text-xs text-gray-400">No tags found.</span>
+
       <span
         v-else
         v-for="tag in tags"
         :key="tag.id"
-        class="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-100"
+        class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium"
+        :style="{
+          backgroundColor: tag.colorHex || '#888888',
+          color: getTextColor(tag.colorHex || '#888888')
+        }"
       >
         {{ tag.name }}
       </span>
@@ -34,7 +39,7 @@ async function loadTags() {
   isLoading.value = true
   error.value = null
   try {
-    const result = await getPlayableTags(false) // only active tags
+    const result = await getPlayableTags(false)
     tags.value = result.sort((a, b) => a.sortOrder - b.sortOrder)
   } catch (err) {
     console.error(err)
@@ -44,8 +49,15 @@ async function loadTags() {
   }
 }
 
-onMounted(loadTags)
+// ⚙️ Light vs dark text heuristic (based on hex brightness)
+function getTextColor(hex: string): string {
+  const r = parseInt(hex.slice(1, 3), 16)
+  const g = parseInt(hex.slice(3, 5), 16)
+  const b = parseInt(hex.slice(5, 7), 16)
+  const brightness = (r * 299 + g * 587 + b * 114) / 1000
+  return brightness > 128 ? '#111827' : '#ffffff'
+}
 
-// Expose for external refresh (e.g. from @refresh event)
+onMounted(loadTags)
 defineExpose({ refetch: loadTags })
 </script>
