@@ -15,10 +15,16 @@
       </div>
 
       <!-- Inactive Toggle -->
-      <label class="flex items-center gap-2 text-sm">
-        <input type="checkbox" v-model="showInactive" />
-        Show inactive tags
-      </label>
+      <div class="mt-2 flex items-center gap-2">
+        <input
+          id="showInactive"
+          type="checkbox"
+          v-model="showInactive"
+          class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+        />
+        <label for="showInactive" class="text-sm text-white">Show inactive tags</label>
+      </div>
+
 
       <!-- Loading/Error -->
       <div v-if="isLoading" class="text-sm text-gray-500">Loading tags...</div>
@@ -61,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import {
   getPlayableTags,
@@ -72,7 +78,10 @@ import {
 } from '@/features/admin/services/playableTagService'
 
 const props = defineProps<{ visible: boolean }>()
-const emit = defineEmits<{ (e: 'close'): void }>()
+const emit = defineEmits<{
+  (e: 'close'): void
+  (e: 'refresh'): void
+}>()
 
 const tags = ref<PlayableTag[]>([])
 const isLoading = ref(false)
@@ -99,7 +108,12 @@ async function fetchTags() {
   }
 }
 
-onMounted(fetchTags)
+// 👀 Reactive fetch when modal opens
+watch(() => props.visible, (isVisible) => {
+  if (isVisible) {
+    fetchTags()
+  }
+})
 
 const visibleTags = computed(() =>
   tags.value.filter(tag => showInactive.value || tag.isActive)
@@ -109,18 +123,20 @@ async function handleCreateTag() {
   try {
     const newTag = await createPlayableTag({
       name: newTagName.value,
-      description: newTagDescription.value || undefined
+      description: newTagDescription.value || undefined,
     })
 
-    // Ensure tag appears immediately
     if (!newTag.isActive) {
       newTag.isActive = true
     }
 
     tags.value.push(newTag)
-
     newTagName.value = ''
     newTagDescription.value = ''
+
+    console.log('🔁 Emitting refresh from modal')
+    emit('refresh')
+
   } catch (err) {
     console.error(err)
     error.value = 'Failed to create tag'
@@ -145,9 +161,14 @@ async function saveEdit(id: string) {
       name: editName.value,
       description: editDescription.value || undefined
     })
+
     const index = tags.value.findIndex(t => t.id === id)
     if (index !== -1) tags.value[index] = updated
+
     cancelEdit()
+    console.log('🔁 Emitting refresh from modal')
+    emit('refresh')
+
   } catch (err) {
     console.error(err)
     error.value = 'Failed to update tag'
@@ -159,6 +180,8 @@ async function toggleActive(tag: PlayableTag) {
     const updated = await togglePlayableTagActive(tag.id, !tag.isActive)
     const index = tags.value.findIndex(t => t.id === tag.id)
     if (index !== -1) tags.value[index] = updated
+
+    emit('refresh')
   } catch (err) {
     console.error(err)
     error.value = `Failed to ${tag.isActive ? 'delete' : 'restore'} tag`
@@ -168,7 +191,7 @@ async function toggleActive(tag: PlayableTag) {
 
 <style scoped>
 .input {
-  @apply border px-2 py-1 rounded w-full;
+  @apply border px-2 py-1 rounded w-full text-black dark:text-white;
 }
 .btn {
   @apply px-3 py-1 rounded text-sm transition;
@@ -186,3 +209,4 @@ async function toggleActive(tag: PlayableTag) {
   @apply bg-green-500 text-white hover:bg-green-600;
 }
 </style>
+

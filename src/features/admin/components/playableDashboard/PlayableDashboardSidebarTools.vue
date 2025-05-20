@@ -1,4 +1,3 @@
-<!-- /src/features/admin/components/playableDashboard/PlayableDashboardSidebarTools.vue -->
 <template>
   <div class="flex flex-col gap-4">
     <div v-for="tool in tools" :key="tool.name">
@@ -38,7 +37,6 @@
 
     <!-- Functional modals -->
     <PlayableClassModal />
-    <ManageTagsModal :visible="isManageTagsModalOpen" @close="isManageTagsModalOpen = false" />
     <ManageStatsModal :visible="isManageStatsModalOpen" @close="isManageStatsModalOpen = false" />
 
     <!-- Placeholder modals -->
@@ -64,15 +62,18 @@
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue'
 import AppIcon from '@/components/atoms/AppIcon.vue'
-import PlayableClassModal from '@/features/admin/components/playableDashboard/PlayableClassModal.vue'
 import ManageStatsModal from '@/features/admin/components/playableDashboard/ManageStatsModal.vue'
-import ManageTagsModal from '@/features/admin/components/playableDashboard/ManageTagsModal.vue'
+import PlayableClassModal from '@/features/admin/components/playableDashboard/PlayableClassModal.vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import { useAdminPlayableStore } from '@/features/admin/stores/adminPlayableStore'
-import { adminPlayableDashboardTools } from '@/features/admin/utils/adminPlayableDashboardTools'
 import type { AdminDashboardTool } from '@/features/admin/utils/adminDashboardTools'
+import { adminPlayableDashboardTools } from '@/features/admin/utils/adminPlayableDashboardTools'
 import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
+
+const emit = defineEmits<{
+  (e: 'openTagsModal'): void
+}>()
 
 // 🎨 Theme injection
 const dashboardThemeRef = inject<import('vue').ComputedRef<DashboardTheme | undefined>>('dashboardTheme')
@@ -103,7 +104,6 @@ function toggleSubmenu(tool: AdminDashboardTool) {
 const isBrowseClassesModalOpen = ref(false)
 const isManageStatsModalOpen = ref(false)
 const isManagePassivesModalOpen = ref(false)
-const isManageTagsModalOpen = ref(false)
 
 // 🚦 Action dispatcher
 function handleAction(action?: string) {
@@ -118,9 +118,6 @@ function handleAction(action?: string) {
     case 'refreshClasses':
       store.refreshPlayableList()
       break
-    // case 'exportClasses':
-    //   store.exportClassList?.()
-    //   break
     case 'manageStats':
       isManageStatsModalOpen.value = true
       break
@@ -128,7 +125,7 @@ function handleAction(action?: string) {
       isManagePassivesModalOpen.value = true
       break
     case 'manageClassTags':
-      isManageTagsModalOpen.value = true
+      emit('openTagsModal') // 🎯 trigger parent-controlled modal
       break
     default:
       console.log(`Unhandled action: ${action}`)

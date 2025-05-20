@@ -19,29 +19,35 @@
 
           <PlayableDashboardSidebarTools
             v-else-if="currentRouteName === 'AdminPlayables'"
+            @openTagsModal="showTagsModal = true"
           />
         </template>
       </Sidebar>
 
       <!-- Main content -->
       <main class="flex-1 p-6 overflow-y-auto">
-        <router-view />
+        <router-view
+          :show-tags-modal="showTagsModal"
+          @update:show-tags-modal="showTagsModal = $event"
+        />
       </main>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, provide } from 'vue'
+import { computed, provide, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import PlayableDashboardSidebarTools from '@/features/admin/components/playableDashboard/PlayableDashboardSidebarTools.vue'
 import DashboardSidebarTools from '@/features/admin/components/dashboard/DashboardSidebarTools.vue'
+import PlayableDashboardSidebarTools from '@/features/admin/components/playableDashboard/PlayableDashboardSidebarTools.vue'
 import UserDashboardSidebarTools from '@/features/admin/components/userDashboard/UserDashboardSidebarTools.vue'
 import { dashboardThemes } from '@/features/admin/utils/dashboardThemes'
 import type { DashboardTheme } from '@/features/admin/utils/dashboardThemes'
 import Sidebar from '../components/Sidebar.vue'
 import Topbar from '../components/Topbar.vue'
+
+const showTagsModal = ref(false)
 
 // Get current route name
 const route = useRoute()
