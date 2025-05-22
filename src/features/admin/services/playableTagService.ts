@@ -60,3 +60,36 @@ export async function togglePlayableTagActive(id: string, isActive: boolean): Pr
   return response.data  // ✅ Fix: return the updated tag
 }
 
+// 📎 GET: all categories linked to a given tag
+export interface TagCategoryLink {
+  id: string
+  name: string
+  displayName?: string
+  colorHex: string
+  isPrimary: boolean
+}
+
+export async function getTagCategories(tagId: string): Promise<TagCategoryLink[]> {
+  const response = await axiosInstance.get(`/admin/playable-tags/${tagId}/categories`)
+  return response.data
+}
+
+// 🛠 PATCH: update isPrimary for a category link
+export async function setPrimaryCategory(tagId: string, categoryId: string): Promise<void> {
+  await axiosInstance.patch(`/admin/playable-tags/${tagId}/categories/${categoryId}`, {
+    isPrimary: true
+  })
+}
+
+// ➕ Link a category to a tag
+export async function linkCategoryToTag(tagId: string, categoryId: string, isPrimary = false): Promise<void> {
+  await axiosInstance.post(`/admin/playable-tags/${tagId}/categories`, {
+    categoryId,
+    isPrimary
+  })
+}
+
+// ❌ Unlink a category from a tag
+export async function unlinkCategoryFromTag(tagId: string, categoryId: string): Promise<void> {
+  await axiosInstance.delete(`/admin/playable-tags/${tagId}/categories/${categoryId}`)
+}

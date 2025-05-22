@@ -37,23 +37,75 @@
           class="flex items-center justify-between py-2"
         >
           <div class="flex-1">
-            <div v-if="editingTagId === tag.id" class="flex gap-2 items-center">
-              <input v-model="editName" class="input w-1/3" />
-              <input v-model="editDescription" class="input w-1/2" />
-              <input
-                type="color"
-                v-model="editColor"
-                class="h-10 w-10 rounded border"
-                title="Edit tag color"
-              />
-              <button class="btn btn-success" @click="saveEdit(tag.id)">Save</button>
-              <button class="btn btn-secondary" @click="cancelEdit">Cancel</button>
+            <!-- Editing Mode -->
+            <div v-if="editingTagId === tag.id" class="flex flex-col gap-2">
+              <div class="flex gap-2 items-center">
+                <input v-model="editName" class="input w-1/3" />
+                <input v-model="editDescription" class="input w-1/2" />
+                <input
+                  type="color"
+                  v-model="editColor"
+                  class="h-10 w-10 rounded border"
+                  title="Edit tag color"
+                />
+                <button class="btn btn-success" @click="saveEdit(tag.id)">Save</button>
+                <button class="btn btn-secondary" @click="cancelEdit">Cancel</button>
+              </div>
+
+              <!-- Linked Categories -->
+              <div class="w-full">
+                <h4 class="text-xs font-semibold text-gray-400">Linked Categories</h4>
+                <div v-if="isLoadingCategories" class="text-xs text-gray-500">Loading categories...</div>
+                <ul v-else class="flex flex-wrap gap-2 mt-1">
+                  <li
+                    v-for="cat in tagCategories"
+                    :key="cat.id"
+                    class="flex items-center gap-1 text-xs px-2 py-1 rounded-full border"
+                    :style="{ borderColor: cat.colorHex, color: cat.colorHex }"
+                  >
+                    <span class="inline-block w-2 h-2 rounded-full" :style="{ backgroundColor: cat.colorHex }"></span>
+                    {{ cat.displayName || cat.name }}
+                    <span v-if="cat.isPrimary" class="ml-1 text-yellow-500 font-semibold">(Primary)</span>
+                    <button v-else @click="handleSetPrimary(cat.id)" class="ml-2 text-xs text-blue-500 hover:underline">
+                      Set Primary
+                    </button>
+                    <button @click="handleUnlinkCategory(cat.id)" class="ml-2 text-xs text-red-500 hover:underline">
+                      Unlink
+                    </button>
+                  </li>
+                </ul>
+
+                <!-- Add New Category -->
+                <div class="mt-2 flex gap-2 items-center">
+                  <select v-model="selectedCategoryToAdd" class="input w-1/2">
+                    <option disabled value="">Select category to add</option>
+                    <option
+                      v-for="cat in availableCategoriesToAdd"
+                      :key="cat.id"
+                      :value="cat.id"
+                    >
+                      {{ cat.displayName || cat.name }}
+                    </option>
+                  </select>
+                  <button
+                    class="btn btn-primary"
+                    :disabled="!selectedCategoryToAdd"
+                    @click="handleAddCategory(selectedCategoryToAdd)"
+                  >
+                    Add Category
+                  </button>
+                </div>
+              </div>
             </div>
+
+            <!-- View Mode -->
             <div v-else>
               <div class="font-medium" :class="{ 'text-gray-400': !tag.isActive }">{{ tag.name }}</div>
               <div class="text-xs text-gray-500" v-if="tag.description">{{ tag.description }}</div>
             </div>
           </div>
+
+          <!-- Action Buttons -->
           <div class="flex items-center gap-2">
             <button class="btn btn-secondary" @click="startEdit(tag)" v-if="editingTagId !== tag.id">Edit</button>
             <button
@@ -78,11 +130,20 @@
 import { ref, computed, watch } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import {
+  getAllTagCategories,
+  type TagCategory
+} from '@/features/admin/services/playableTagCategoryService'
+import {
   getPlayableTags,
   createPlayableTag,
   updatePlayableTag,
   togglePlayableTagActive,
-  type PlayableTag
+  type PlayableTag,
+  getTagCategories,
+  type TagCategoryLink,
+  setPrimaryCategory,
+  linkCategoryToTag,
+  unlinkCategoryFromTag,
 } from '@/features/admin/services/playableTagService'
 
 const props = defineProps<{ visible: boolean }>()
@@ -98,13 +159,52 @@ const showInactive = ref(false)
 
 const newTagName = ref('')
 const newTagDescription = ref('')
+const newTagColor = ref('#888888')
 
 const editingTagId = ref<string | null>(null)
 const editName = ref('')
 const editDescription = ref('')
-
-const newTagColor = ref('#888888') // default neutral gray
 const editColor = ref('#888888')
+
+const tagCategories = ref<TagCategoryLink[]>([])
+const allCategories = ref<TagCategory[]>([])
+const selectedCategoryToAdd = ref('')
+const isLoadingCategories = ref(false)
+
+const visibleTags = computed(() =>
+  tags.value.filter(tag => showInactive.value || tag.isActive)
+)
+
+const availableCategoriesToAdd = computed(() =>
+  allCategories.value.filter(cat => !tagCategories.value.some(linked => linked.id === cat.id))
+)
+
+watch(() => props.visible, async (isVisible) => {
+  if (isVisible) {
+    fetchTags()
+    try {
+      allCategories.value = await getAllTagCategories()
+    } catch (err) {
+      console.error('Failed to fetch category list', err)
+    }
+  }
+})
+
+watch(editingTagId, async (tagId) => {
+  if (!tagId) {
+    tagCategories.value = []
+    return
+  }
+
+  isLoadingCategories.value = true
+  try {
+    tagCategories.value = await getTagCategories(tagId)
+  } catch (err) {
+    console.error('Failed to load tag categories:', err)
+  } finally {
+    isLoadingCategories.value = false
+  }
+})
 
 async function fetchTags() {
   isLoading.value = true
@@ -119,15 +219,38 @@ async function fetchTags() {
   }
 }
 
-watch(() => props.visible, (isVisible) => {
-  if (isVisible) {
-    fetchTags()
-  }
-})
+function startEdit(tag: PlayableTag) {
+  editingTagId.value = tag.id
+  editName.value = tag.name
+  editDescription.value = tag.description || ''
+  editColor.value = tag.colorHex || '#888888'
+}
 
-const visibleTags = computed(() =>
-  tags.value.filter(tag => showInactive.value || tag.isActive)
-)
+function cancelEdit() {
+  editingTagId.value = null
+  editName.value = ''
+  editDescription.value = ''
+  selectedCategoryToAdd.value = ''
+}
+
+async function saveEdit(id: string) {
+  try {
+    const updated = await updatePlayableTag(id, {
+      name: editName.value,
+      description: editDescription.value || undefined,
+      colorHex: editColor.value || undefined,
+    })
+
+    const index = tags.value.findIndex(t => t.id === id)
+    if (index !== -1) tags.value[index] = updated
+
+    cancelEdit()
+    emit('refresh')
+  } catch (err) {
+    console.error(err)
+    error.value = 'Failed to update tag'
+  }
+}
 
 async function handleCreateTag() {
   try {
@@ -137,16 +260,11 @@ async function handleCreateTag() {
       colorHex: newTagColor.value || '#888888',
     })
 
-    if (!newTag.isActive) {
-      newTag.isActive = true
-    }
-
-    tags.value.push(newTag)
     newTagName.value = ''
     newTagDescription.value = ''
     newTagColor.value = '#888888'
 
-    console.log('🔁 Emitting refresh from modal')
+    tags.value.push(newTag)
     emit('refresh')
   } catch (err) {
     console.error(err)
@@ -154,57 +272,8 @@ async function handleCreateTag() {
   }
 }
 
-
-function startEdit(tag: PlayableTag) {
-  editingTagId.value = tag.id
-  editName.value = tag.name
-  editDescription.value = tag.description || ''
-  editColor.value = tag.colorHex || '#888888'
-}
-
-
-function cancelEdit() {
-  editingTagId.value = null
-  editName.value = ''
-  editDescription.value = ''
-}
-
-async function saveEdit(id: string) {
-  try {
-    const updated = await updatePlayableTag(id, {
-      name: editName.value,
-      description: editDescription.value || undefined
-    })
-
-    const index = tags.value.findIndex(t => t.id === id)
-    if (index !== -1) tags.value[index] = updated
-
-    cancelEdit()
-    console.log('🔁 Emitting refresh from modal')
-    emit('refresh')
-
-  } catch (err) {
-    console.error(err)
-    error.value = 'Failed to update tag'
-  }
-}
-
-async function toggleActive(tag: PlayableTag) {
-  try {
-    const updated = await togglePlayableTagActive(tag.id, !tag.isActive)
-    const index = tags.value.findIndex(t => t.id === tag.id)
-    if (index !== -1) tags.value[index] = updated
-
-    emit('refresh')
-  } catch (err) {
-    console.error(err)
-    error.value = `Failed to ${tag.isActive ? 'archive' : 'restore'} tag`
-  }
-}
-
 async function deleteTag(id: string) {
   try {
-    // Replace with hard-delete call when implemented
     await togglePlayableTagActive(id, false)
     tags.value = tags.value.filter(t => t.id !== id)
     cancelEdit()
@@ -215,6 +284,51 @@ async function deleteTag(id: string) {
   }
 }
 
+async function toggleActive(tag: PlayableTag) {
+  try {
+    const updated = await togglePlayableTagActive(tag.id, !tag.isActive)
+    const index = tags.value.findIndex(t => t.id === tag.id)
+    if (index !== -1) tags.value[index] = updated
+    emit('refresh')
+  } catch (err) {
+    console.error(err)
+    error.value = `Failed to ${tag.isActive ? 'archive' : 'restore'} tag`
+  }
+}
+
+async function handleSetPrimary(categoryId: string) {
+  if (!editingTagId.value) return
+  try {
+    await setPrimaryCategory(editingTagId.value, categoryId)
+    tagCategories.value = await getTagCategories(editingTagId.value)
+  } catch (err) {
+    console.error('Failed to set primary category:', err)
+    error.value = 'Could not set category as primary'
+  }
+}
+
+async function handleUnlinkCategory(categoryId: string) {
+  if (!editingTagId.value) return
+  try {
+    await unlinkCategoryFromTag(editingTagId.value, categoryId)
+    tagCategories.value = await getTagCategories(editingTagId.value)
+  } catch (err) {
+    console.error('Failed to unlink category:', err)
+    error.value = 'Could not remove category from tag'
+  }
+}
+
+async function handleAddCategory(categoryId: string) {
+  if (!editingTagId.value) return
+  try {
+    await linkCategoryToTag(editingTagId.value, categoryId)
+    tagCategories.value = await getTagCategories(editingTagId.value)
+    selectedCategoryToAdd.value = ''
+  } catch (err) {
+    console.error('Failed to add category:', err)
+    error.value = 'Could not add category to tag'
+  }
+}
 </script>
 
 <style scoped>
@@ -236,9 +350,7 @@ async function deleteTag(id: string) {
 .btn-warning {
   @apply bg-yellow-500 text-black hover:bg-yellow-600;
 }
-
 .btn-danger {
   @apply bg-red-600 text-white hover:bg-red-700;
 }
-
 </style>
