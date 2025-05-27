@@ -59,9 +59,9 @@ export const dashboardThemes: DashboardTheme[] = [
   },
   {
     routeName: AppRouteNames.AdminUsers,
-    widgetColor: 'bg-white dark:bg-black',
+    widgetColor: 'bg-white dark:bg-neutral-900',
     widgetTextColor: 'text-black dark:text-white',
-    sidebarColor: 'bg-white dark:bg-black',
+    sidebarColor: 'bg-white dark:bg-neutral-900',
     sidebarTextColor: 'text-black dark:text-white',
     accentColor: 'rose-500',
     accentBar: getAccentBarClass('rose-500'),
@@ -70,9 +70,9 @@ export const dashboardThemes: DashboardTheme[] = [
   },
   {
     routeName: AppRouteNames.AdminPlayables,
-    widgetColor: 'bg-white dark:bg-black',
+    widgetColor: 'bg-white dark:bg-neutral-900',
     widgetTextColor: 'text-black dark:text-white',
-    sidebarColor: 'bg-white dark:bg-black',
+    sidebarColor: 'bg-white dark:bg-neutral-900',
     sidebarTextColor: 'text-black dark:text-white',
     accentColor: 'purple-500',
     accentBar: getAccentBarClass('purple-500'),
