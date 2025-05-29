@@ -14,15 +14,22 @@
         <button class="btn btn-primary" @click="handleCreateTag" :disabled="!newTagName">Add Tag</button>
       </div>
 
-      <!-- Inactive Toggle -->
-      <div class="mt-2 flex items-center gap-2">
-        <input
-          id="showInactive"
-          type="checkbox"
-          v-model="showInactive"
-          class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-        />
-        <label for="showInactive" class="text-sm text-white">Show inactive tags</label>
+      <!-- Toggle inactive tags switch -->
+      <div class="mt-2 flex items-center gap-3">
+        <label for="toggleInactive" class="text-sm text-white whitespace-nowrap">
+          {{ hideInactive ? 'Show all tags' : 'Hide inactive tags' }}
+        </label>
+        <button
+          id="toggleInactive"
+          @click="hideInactive = !hideInactive"
+          class="relative w-10 h-6 rounded-full transition-colors duration-300 focus:outline-none"
+          :class="hideInactive ? 'bg-blue-600' : 'bg-gray-300'"
+        >
+          <span
+            class="absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-300"
+            :class="hideInactive ? 'translate-x-4' : 'translate-x-0'"
+          />
+        </button>
       </div>
 
       <!-- Loading/Error -->
@@ -155,7 +162,7 @@ const emit = defineEmits<{
 const tags = ref<PlayableTag[]>([])
 const isLoading = ref(false)
 const error = ref<string | null>(null)
-const showInactive = ref(false)
+const hideInactive = ref(false)
 
 const newTagName = ref('')
 const newTagDescription = ref('')
@@ -172,8 +179,11 @@ const selectedCategoryToAdd = ref('')
 const isLoadingCategories = ref(false)
 
 const visibleTags = computed(() =>
-  tags.value.filter(tag => showInactive.value || tag.isActive)
+  hideInactive.value
+    ? tags.value.filter(tag => tag.isActive)
+    : tags.value
 )
+
 
 const availableCategoriesToAdd = computed(() =>
   allCategories.value.filter(cat => !tagCategories.value.some(linked => linked.id === cat.id))
