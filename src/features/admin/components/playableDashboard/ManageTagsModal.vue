@@ -18,9 +18,19 @@
           :class="hideInactive ? 'bg-blue-600' : 'bg-gray-300'"
         >
           <span
-            class="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-300"
-            :class="hideInactive ? 'right-0.5' : 'left-0.5'"
+            class="absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-300"
+            :class="hideInactive ? 'translate-x-4' : 'translate-x-0'"
           />
+        </button>
+      </div>
+
+      <!-- Section label -->
+      <h3 class="text-center text-lg font-semibold text-white mt-4">Class Tags</h3>
+
+      <!-- Create New Tag Button -->
+      <div class="flex justify-center">
+        <button class="btn btn-primary mt-2" @click="emit('create')">
+          + Create New Tag
         </button>
       </div>
 
@@ -36,69 +46,8 @@
           class="flex items-center justify-between py-2"
         >
           <div class="flex-1">
-            <!-- Editing Mode -->
-            <div v-if="editingTagId === tag.id" class="flex flex-col gap-2">
-              <div class="flex gap-2 items-center">
-                <input v-model="editName" class="input w-1/3" />
-                <input v-model="editDescription" class="input w-1/2" />
-                <input
-                  type="color"
-                  v-model="editColor"
-                  class="h-10 w-10 rounded border"
-                  title="Edit tag color"
-                />
-                <button class="btn btn-success" @click="saveEdit(tag.id)">Save</button>
-                <button class="btn btn-secondary" @click="cancelEdit">Cancel</button>
-              </div>
-
-              <!-- Linked Categories -->
-              <div class="w-full">
-                <h4 class="text-xs font-semibold text-gray-400">Linked Categories</h4>
-                <div v-if="isLoadingCategories" class="text-xs text-gray-500">Loading categories...</div>
-                <ul v-else class="flex flex-wrap gap-2 mt-1">
-                  <li
-                    v-for="cat in tagCategories"
-                    :key="cat.id"
-                    class="flex items-center gap-1 text-xs px-2 py-1 rounded-full border"
-                    :style="{ borderColor: cat.colorHex, color: cat.colorHex }"
-                  >
-                    <span class="inline-block w-2 h-2 rounded-full" :style="{ backgroundColor: cat.colorHex }"></span>
-                    {{ cat.displayName || cat.name }}
-                    <span v-if="cat.isPrimary" class="ml-1 text-yellow-500 font-semibold">(Primary)</span>
-                    <button v-else @click="handleSetPrimary(cat.id)" class="ml-2 text-xs text-blue-500 hover:underline">
-                      Set Primary
-                    </button>
-                    <button @click="handleUnlinkCategory(cat.id)" class="ml-2 text-xs text-red-500 hover:underline">
-                      Unlink
-                    </button>
-                  </li>
-                </ul>
-
-                <!-- Add New Category -->
-                <div class="mt-2 flex gap-2 items-center">
-                  <select v-model="selectedCategoryToAdd" class="input w-1/2">
-                    <option disabled value="">Select category to add</option>
-                    <option
-                      v-for="cat in availableCategoriesToAdd"
-                      :key="cat.id"
-                      :value="cat.id"
-                    >
-                      {{ cat.displayName || cat.name }}
-                    </option>
-                  </select>
-                  <button
-                    class="btn btn-primary"
-                    :disabled="!selectedCategoryToAdd"
-                    @click="handleAddCategory(selectedCategoryToAdd)"
-                  >
-                    Add Category
-                  </button>
-                </div>
-              </div>
-            </div>
-
             <!-- View Mode -->
-            <div v-else>
+            <div>
               <div class="font-medium" :class="{ 'text-gray-400': !tag.isActive }">{{ tag.name }}</div>
               <div class="text-xs text-gray-500" v-if="tag.description">{{ tag.description }}</div>
             </div>
@@ -106,17 +55,13 @@
 
           <!-- Action Buttons -->
           <div class="flex items-center gap-2">
-            <button class="btn btn-secondary" @click="startEdit(tag)" v-if="editingTagId !== tag.id">Edit</button>
+            <button class="btn btn-secondary" @click="startEdit(tag)">Edit</button>
             <button
               class="btn"
-              :class="editingTagId === tag.id
-                ? 'btn-danger'
-                : (tag.isActive ? 'btn-warning' : 'btn-success')"
-              @click="editingTagId === tag.id ? deleteTag(tag.id) : toggleActive(tag)"
+              :class="tag.isActive ? 'btn-warning' : 'btn-success'"
+              @click="toggleActive(tag)"
             >
-              {{ editingTagId === tag.id
-                ? 'Delete'
-                : (tag.isActive ? 'Archive' : 'Restore') }}
+              {{ tag.isActive ? 'Archive' : 'Restore' }}
             </button>
           </div>
         </li>
@@ -124,6 +69,7 @@
     </div>
   </AdminModal>
 </template>
+
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
@@ -145,7 +91,12 @@ import {
 } from '@/features/admin/services/playableTagService'
 
 const props = defineProps<{ visible: boolean }>()
-const emit = defineEmits<{ (e: 'close'): void; (e: 'refresh'): void }>()
+const emit = defineEmits<{
+  (e: 'close'): void
+  (e: 'refresh'): void
+  (e: 'create'): void
+}>()
+
 
 const tags = ref<PlayableTag[]>([])
 const isLoading = ref(false)
