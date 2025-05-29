@@ -6,14 +6,6 @@
     size="3xl"
   >
     <div class="space-y-4">
-      <!-- Create New Tag -->
-      <div class="flex items-center gap-2">
-        <input v-model="newTagName" placeholder="New tag name" class="input w-1/3" />
-        <input v-model="newTagDescription" placeholder="Description (optional)" class="input w-1/2" />
-        <input type="color" v-model="newTagColor" class="h-10 w-10 rounded border" title="Choose tag color" />
-        <button class="btn btn-primary" @click="handleCreateTag" :disabled="!newTagName">Add Tag</button>
-      </div>
-
       <!-- Toggle inactive tags switch -->
       <div class="mt-2 flex items-center gap-3">
         <label for="toggleInactive" class="text-sm text-white whitespace-nowrap">
@@ -26,8 +18,8 @@
           :class="hideInactive ? 'bg-blue-600' : 'bg-gray-300'"
         >
           <span
-            class="absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-300"
-            :class="hideInactive ? 'translate-x-4' : 'translate-x-0'"
+            class="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-300"
+            :class="hideInactive ? 'right-0.5' : 'left-0.5'"
           />
         </button>
       </div>
@@ -142,7 +134,6 @@ import {
 } from '@/features/admin/services/playableTagCategoryService'
 import {
   getPlayableTags,
-  createPlayableTag,
   updatePlayableTag,
   togglePlayableTagActive,
   type PlayableTag,
@@ -154,19 +145,12 @@ import {
 } from '@/features/admin/services/playableTagService'
 
 const props = defineProps<{ visible: boolean }>()
-const emit = defineEmits<{
-  (e: 'close'): void
-  (e: 'refresh'): void
-}>()
+const emit = defineEmits<{ (e: 'close'): void; (e: 'refresh'): void }>()
 
 const tags = ref<PlayableTag[]>([])
 const isLoading = ref(false)
 const error = ref<string | null>(null)
 const hideInactive = ref(false)
-
-const newTagName = ref('')
-const newTagDescription = ref('')
-const newTagColor = ref('#888888')
 
 const editingTagId = ref<string | null>(null)
 const editName = ref('')
@@ -179,11 +163,8 @@ const selectedCategoryToAdd = ref('')
 const isLoadingCategories = ref(false)
 
 const visibleTags = computed(() =>
-  hideInactive.value
-    ? tags.value.filter(tag => tag.isActive)
-    : tags.value
+  hideInactive.value ? tags.value.filter(tag => tag.isActive) : tags.value
 )
-
 
 const availableCategoriesToAdd = computed(() =>
   allCategories.value.filter(cat => !tagCategories.value.some(linked => linked.id === cat.id))
@@ -259,26 +240,6 @@ async function saveEdit(id: string) {
   } catch (err) {
     console.error(err)
     error.value = 'Failed to update tag'
-  }
-}
-
-async function handleCreateTag() {
-  try {
-    const newTag = await createPlayableTag({
-      name: newTagName.value,
-      description: newTagDescription.value || undefined,
-      colorHex: newTagColor.value || '#888888',
-    })
-
-    newTagName.value = ''
-    newTagDescription.value = ''
-    newTagColor.value = '#888888'
-
-    tags.value.push(newTag)
-    emit('refresh')
-  } catch (err) {
-    console.error(err)
-    error.value = 'Failed to create tag'
   }
 }
 
