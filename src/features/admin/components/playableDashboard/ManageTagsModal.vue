@@ -54,7 +54,7 @@
 
           <!-- Action Buttons -->
           <div class="flex items-center gap-2">
-            <button class="btn btn-secondary" @click="openEditModal(tag)">Edit</button>
+            <button class="btn btn-secondary" @click="startEdit(tag)">Edit</button>
             <button
               class="btn"
               :class="tag.isActive ? 'btn-warning' : 'btn-success'"
@@ -70,9 +70,10 @@
     <!-- Mini Modal for Create/Edit -->
     <TagMiniModal
       :visible="isMiniModalOpen"
-      :tag-id="editingTagInMiniModal"
+      :mode="miniModalMode"
+      :existingTag="miniModalMode === 'edit' ? editingTagInMiniModal ?? undefined : undefined"
       @close="closeMiniModal"
-      @refresh="() => { fetchTags(); emit('refresh') }"
+      @saved="handleMiniModalSave"
     />
   </AdminModal>
 </template>
@@ -80,10 +81,13 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
+import TagMiniModal from './TagMiniModal.vue'
+
 import {
   getAllTagCategories,
-  type TagCategory
+  type TagCategory,
 } from '@/features/admin/services/playableTagCategoryService'
+
 import {
   getPlayableTags,
   togglePlayableTagActive,
@@ -94,45 +98,27 @@ import {
   linkCategoryToTag,
   unlinkCategoryFromTag,
 } from '@/features/admin/services/playableTagService'
-import TagMiniModal from './TagMiniModal.vue'
-
 
 const props = defineProps<{ visible: boolean }>()
 const emit = defineEmits<{
   (e: 'close'): void
   (e: 'refresh'): void
+  (e: 'create'): void
 }>()
 
+// 📦 Data
 const tags = ref<PlayableTag[]>([])
 const isLoading = ref(false)
 const error = ref<string | null>(null)
 const hideInactive = ref(false)
 
-const editingTagId = ref<string | null>(null)
-const tagCategories = ref<TagCategoryLink[]>([])
+// 🔁 Categories
 const allCategories = ref<TagCategory[]>([])
+const tagCategories = ref<TagCategoryLink[]>([])
 const selectedCategoryToAdd = ref('')
 const isLoadingCategories = ref(false)
 
-// 🔁 Mini Modal logic
-const isMiniModalOpen = ref(false)
-const editingTagInMiniModal = ref<string | null>(null)
-
-function openCreateModal() {
-  editingTagInMiniModal.value = null
-  isMiniModalOpen.value = true
-}
-
-function openEditModal(tag: PlayableTag) {
-  editingTagInMiniModal.value = tag.id
-  isMiniModalOpen.value = true
-}
-
-function closeMiniModal() {
-  isMiniModalOpen.value = false
-  editingTagInMiniModal.value = null
-}
-
+// 🔍 Filtering
 const visibleTags = computed(() =>
   hideInactive.value ? tags.value.filter(tag => tag.isActive) : tags.value
 )
@@ -141,6 +127,35 @@ const availableCategoriesToAdd = computed(() =>
   allCategories.value.filter(cat => !tagCategories.value.some(linked => linked.id === cat.id))
 )
 
+// 🧩 Mini-Modal
+const isMiniModalOpen = ref(false)
+const miniModalMode = ref<'create' | 'edit'>('create')
+const editingTagInMiniModal = ref<PlayableTag | null>(null)
+
+function openCreateModal() {
+  miniModalMode.value = 'create'
+  editingTagInMiniModal.value = null
+  isMiniModalOpen.value = true
+}
+
+function startEdit(tag: PlayableTag) {
+  miniModalMode.value = 'edit'
+  editingTagInMiniModal.value = tag
+  isMiniModalOpen.value = true
+}
+
+function closeMiniModal() {
+  isMiniModalOpen.value = false
+  editingTagInMiniModal.value = null
+}
+
+function handleMiniModalSave() {
+  closeMiniModal()
+  fetchTags()
+  emit('refresh')
+}
+
+// 📡 Watchers
 watch(() => props.visible, async (isVisible) => {
   if (isVisible) {
     fetchTags()
@@ -152,22 +167,7 @@ watch(() => props.visible, async (isVisible) => {
   }
 })
 
-watch(editingTagId, async (tagId) => {
-  if (!tagId) {
-    tagCategories.value = []
-    return
-  }
-
-  isLoadingCategories.value = true
-  try {
-    tagCategories.value = await getTagCategories(tagId)
-  } catch (err) {
-    console.error('Failed to load tag categories:', err)
-  } finally {
-    isLoadingCategories.value = false
-  }
-})
-
+// 🔄 Tag Operations
 async function fetchTags() {
   isLoading.value = true
   error.value = null
@@ -192,7 +192,43 @@ async function toggleActive(tag: PlayableTag) {
     error.value = `Failed to ${tag.isActive ? 'archive' : 'restore'} tag`
   }
 }
+
+// 🔧 (Optional) Category operations — only relevant if needed in future
+async function handleSetPrimary(categoryId: string) {
+  if (!editingTagInMiniModal.value) return
+  try {
+    await setPrimaryCategory(editingTagInMiniModal.value.id, categoryId)
+    tagCategories.value = await getTagCategories(editingTagInMiniModal.value.id)
+  } catch (err) {
+    console.error('Failed to set primary category:', err)
+    error.value = 'Could not set category as primary'
+  }
+}
+
+async function handleUnlinkCategory(categoryId: string) {
+  if (!editingTagInMiniModal.value) return
+  try {
+    await unlinkCategoryFromTag(editingTagInMiniModal.value.id, categoryId)
+    tagCategories.value = await getTagCategories(editingTagInMiniModal.value.id)
+  } catch (err) {
+    console.error('Failed to unlink category:', err)
+    error.value = 'Could not remove category from tag'
+  }
+}
+
+async function handleAddCategory(categoryId: string) {
+  if (!editingTagInMiniModal.value) return
+  try {
+    await linkCategoryToTag(editingTagInMiniModal.value.id, categoryId)
+    tagCategories.value = await getTagCategories(editingTagInMiniModal.value.id)
+    selectedCategoryToAdd.value = ''
+  } catch (err) {
+    console.error('Failed to add category:', err)
+    error.value = 'Could not add category to tag'
+  }
+}
 </script>
+
 
 <style scoped>
 .input {
