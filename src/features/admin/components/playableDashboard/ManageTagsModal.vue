@@ -71,7 +71,7 @@
     <TagMiniModal
       :visible="isMiniModalOpen"
       :mode="miniModalMode"
-      :existingTag="miniModalMode === 'edit' && editingTagInMiniModal ? editingTagInMiniModal : undefined"
+      :existingTag="miniModalMode === 'edit' ? editingTagInMiniModal ?? undefined : undefined"
       @close="closeMiniModal"
       @saved="handleMiniModalSave"
     />
@@ -82,30 +82,17 @@
 import { ref, computed, watch } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 
-
-import {
-  getAllTagCategories,
-  type TagCategory,
-} from '@/features/admin/services/playableTagCategoryService'
-
 import {
   getPlayableTags,
   togglePlayableTagActive,
   type PlayableTag,
-  getTagCategories,
-  type TagCategoryLink,
-  setPrimaryCategory,
-  linkCategoryToTag,
-  unlinkCategoryFromTag,
 } from '@/features/admin/services/playableTagService'
 
 import TagMiniModal from './TagMiniModal.vue'
-
 const props = defineProps<{ visible: boolean }>()
 const emit = defineEmits<{
   (e: 'close'): void
   (e: 'refresh'): void
-  (e: 'create'): void
 }>()
 
 // 📦 Data
@@ -114,19 +101,9 @@ const isLoading = ref(false)
 const error = ref<string | null>(null)
 const hideInactive = ref(false)
 
-// 🔁 Categories
-const allCategories = ref<TagCategory[]>([])
-const tagCategories = ref<TagCategoryLink[]>([])
-const selectedCategoryToAdd = ref('')
-const isLoadingCategories = ref(false)
-
 // 🔍 Filtering
 const visibleTags = computed(() =>
   hideInactive.value ? tags.value.filter(tag => tag.isActive) : tags.value
-)
-
-const availableCategoriesToAdd = computed(() =>
-  allCategories.value.filter(cat => !tagCategories.value.some(linked => linked.id === cat.id))
 )
 
 // 🧩 Mini-Modal
@@ -157,19 +134,12 @@ function handleMiniModalSave() {
   emit('refresh')
 }
 
-// 📡 Watchers
-watch(() => props.visible, async (isVisible) => {
-  if (isVisible) {
-    fetchTags()
-    try {
-      allCategories.value = await getAllTagCategories()
-    } catch (err) {
-      console.error('Failed to fetch category list', err)
-    }
-  }
+// 📡 Watcher
+watch(() => props.visible, (isVisible) => {
+  if (isVisible) fetchTags()
 })
 
-// 🔄 Tag Operations
+// 🔄 Fetch Tags
 async function fetchTags() {
   isLoading.value = true
   error.value = null
@@ -183,6 +153,7 @@ async function fetchTags() {
   }
 }
 
+// ✅ Toggle Archive/Restore
 async function toggleActive(tag: PlayableTag) {
   try {
     const updated = await togglePlayableTagActive(tag.id, !tag.isActive)
@@ -194,43 +165,7 @@ async function toggleActive(tag: PlayableTag) {
     error.value = `Failed to ${tag.isActive ? 'archive' : 'restore'} tag`
   }
 }
-
-// 🔧 (Optional) Category operations — only relevant if needed in future
-async function handleSetPrimary(categoryId: string) {
-  if (!editingTagInMiniModal.value) return
-  try {
-    await setPrimaryCategory(editingTagInMiniModal.value.id, categoryId)
-    tagCategories.value = await getTagCategories(editingTagInMiniModal.value.id)
-  } catch (err) {
-    console.error('Failed to set primary category:', err)
-    error.value = 'Could not set category as primary'
-  }
-}
-
-async function handleUnlinkCategory(categoryId: string) {
-  if (!editingTagInMiniModal.value) return
-  try {
-    await unlinkCategoryFromTag(editingTagInMiniModal.value.id, categoryId)
-    tagCategories.value = await getTagCategories(editingTagInMiniModal.value.id)
-  } catch (err) {
-    console.error('Failed to unlink category:', err)
-    error.value = 'Could not remove category from tag'
-  }
-}
-
-async function handleAddCategory(categoryId: string) {
-  if (!editingTagInMiniModal.value) return
-  try {
-    await linkCategoryToTag(editingTagInMiniModal.value.id, categoryId)
-    tagCategories.value = await getTagCategories(editingTagInMiniModal.value.id)
-    selectedCategoryToAdd.value = ''
-  } catch (err) {
-    console.error('Failed to add category:', err)
-    error.value = 'Could not add category to tag'
-  }
-}
 </script>
-
 
 <style scoped>
 .input {
@@ -250,8 +185,5 @@ async function handleAddCategory(categoryId: string) {
 }
 .btn-warning {
   @apply bg-yellow-500 text-black hover:bg-yellow-600;
-}
-.btn-danger {
-  @apply bg-red-600 text-white hover:bg-red-700;
 }
 </style>

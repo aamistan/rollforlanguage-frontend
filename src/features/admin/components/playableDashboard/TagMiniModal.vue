@@ -26,10 +26,16 @@
 
       <div class="flex justify-end gap-2 mt-4">
         <button class="btn btn-secondary" @click="emit('close')">Cancel</button>
-        <button class="btn btn-primary" @click="handleSave" :disabled="!tagName">
-          {{ mode === 'edit' ? 'Save Changes' : 'Create Tag' }}
+        <button
+          class="btn btn-primary"
+          @click="handleSave"
+          :disabled="!tagName || isSubmitting"
+        >
+          {{ isSubmitting ? 'Saving...' : (mode === 'edit' ? 'Save Changes' : 'Create Tag') }}
         </button>
       </div>
+
+      <p v-if="error" class="text-sm text-red-500">{{ error }}</p>
     </div>
   </AdminModal>
 </template>
@@ -38,6 +44,10 @@
 import { ref, watch, computed } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import type { PlayableTag } from '@/features/admin/services/playableTagService'
+import {
+  createPlayableTag,
+  updatePlayableTag
+} from '@/features/admin/services/playableTagService'
 
 const props = defineProps<{
   visible: boolean
@@ -50,12 +60,19 @@ const emit = defineEmits<{
   (e: 'saved'): void
 }>()
 
+// Form state
 const tagName = ref('')
 const tagDescription = ref('')
 const tagColor = ref('#888888')
+const isSubmitting = ref(false)
+const error = ref('')
 
+// Prefill logic
 watch(() => props.visible, (isOpen) => {
   if (!isOpen) return
+
+  error.value = ''
+  isSubmitting.value = false
 
   if (props.mode === 'edit' && props.existingTag) {
     tagName.value = props.existingTag.name
@@ -68,13 +85,36 @@ watch(() => props.visible, (isOpen) => {
   }
 })
 
+// Modal title
 const modalTitle = computed(() =>
   props.mode === 'edit' ? 'Edit Tag' : 'Create New Tag'
 )
 
-function handleSave() {
-  // placeholder – full logic next step
-  emit('saved')
+// Save logic
+async function handleSave() {
+  isSubmitting.value = true
+  error.value = ''
+
+  const payload = {
+    name: tagName.value.trim(),
+    description: tagDescription.value.trim(),
+    colorHex: tagColor.value,
+  }
+
+  try {
+    if (props.mode === 'edit' && props.existingTag) {
+      await updatePlayableTag(props.existingTag.id, payload)
+    } else {
+      await createPlayableTag(payload)
+    }
+
+    emit('saved')
+  } catch (err: any) {
+    console.error(err)
+    error.value = 'Failed to save tag. Please try again.'
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
