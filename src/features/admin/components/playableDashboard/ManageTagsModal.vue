@@ -71,7 +71,7 @@
     <TagMiniModal
       :visible="isMiniModalOpen"
       :mode="miniModalMode"
-      :existingTag="miniModalMode === 'edit' ? editingTagInMiniModal ?? undefined : undefined"
+      :existingTag="miniModalMode === 'edit' && editingTagInMiniModal ? editingTagInMiniModal : undefined"
       @close="closeMiniModal"
       @saved="handleMiniModalSave"
     />
@@ -81,7 +81,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
-import TagMiniModal from './TagMiniModal.vue'
+
 
 import {
   getAllTagCategories,
@@ -98,6 +98,8 @@ import {
   linkCategoryToTag,
   unlinkCategoryFromTag,
 } from '@/features/admin/services/playableTagService'
+
+import TagMiniModal from './TagMiniModal.vue'
 
 const props = defineProps<{ visible: boolean }>()
 const emit = defineEmits<{
