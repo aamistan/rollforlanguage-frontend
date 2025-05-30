@@ -29,7 +29,7 @@
 
       <!-- Create New Tag Button -->
       <div class="flex justify-center">
-        <button class="btn btn-primary mt-2" @click="emit('create')">
+        <button class="btn btn-primary mt-2" @click="openCreateModal">
           + Create New Tag
         </button>
       </div>
@@ -46,7 +46,6 @@
           class="flex items-center justify-between py-2"
         >
           <div class="flex-1">
-            <!-- View Mode -->
             <div>
               <div class="font-medium" :class="{ 'text-gray-400': !tag.isActive }">{{ tag.name }}</div>
               <div class="text-xs text-gray-500" v-if="tag.description">{{ tag.description }}</div>
@@ -55,7 +54,7 @@
 
           <!-- Action Buttons -->
           <div class="flex items-center gap-2">
-            <button class="btn btn-secondary" @click="startEdit(tag)">Edit</button>
+            <button class="btn btn-secondary" @click="openEditModal(tag)">Edit</button>
             <button
               class="btn"
               :class="tag.isActive ? 'btn-warning' : 'btn-success'"
@@ -67,9 +66,16 @@
         </li>
       </ul>
     </div>
+
+    <!-- Mini Modal for Create/Edit -->
+    <TagMiniModal
+      :visible="isMiniModalOpen"
+      :tag-id="editingTagInMiniModal"
+      @close="closeMiniModal"
+      @refresh="() => { fetchTags(); emit('refresh') }"
+    />
   </AdminModal>
 </template>
-
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
@@ -80,7 +86,6 @@ import {
 } from '@/features/admin/services/playableTagCategoryService'
 import {
   getPlayableTags,
-  updatePlayableTag,
   togglePlayableTagActive,
   type PlayableTag,
   getTagCategories,
@@ -89,14 +94,14 @@ import {
   linkCategoryToTag,
   unlinkCategoryFromTag,
 } from '@/features/admin/services/playableTagService'
+import TagMiniModal from './TagMiniModal.vue'
+
 
 const props = defineProps<{ visible: boolean }>()
 const emit = defineEmits<{
   (e: 'close'): void
   (e: 'refresh'): void
-  (e: 'create'): void
 }>()
-
 
 const tags = ref<PlayableTag[]>([])
 const isLoading = ref(false)
@@ -104,14 +109,29 @@ const error = ref<string | null>(null)
 const hideInactive = ref(false)
 
 const editingTagId = ref<string | null>(null)
-const editName = ref('')
-const editDescription = ref('')
-const editColor = ref('#888888')
-
 const tagCategories = ref<TagCategoryLink[]>([])
 const allCategories = ref<TagCategory[]>([])
 const selectedCategoryToAdd = ref('')
 const isLoadingCategories = ref(false)
+
+// 🔁 Mini Modal logic
+const isMiniModalOpen = ref(false)
+const editingTagInMiniModal = ref<string | null>(null)
+
+function openCreateModal() {
+  editingTagInMiniModal.value = null
+  isMiniModalOpen.value = true
+}
+
+function openEditModal(tag: PlayableTag) {
+  editingTagInMiniModal.value = tag.id
+  isMiniModalOpen.value = true
+}
+
+function closeMiniModal() {
+  isMiniModalOpen.value = false
+  editingTagInMiniModal.value = null
+}
 
 const visibleTags = computed(() =>
   hideInactive.value ? tags.value.filter(tag => tag.isActive) : tags.value
@@ -161,51 +181,6 @@ async function fetchTags() {
   }
 }
 
-function startEdit(tag: PlayableTag) {
-  editingTagId.value = tag.id
-  editName.value = tag.name
-  editDescription.value = tag.description || ''
-  editColor.value = tag.colorHex || '#888888'
-}
-
-function cancelEdit() {
-  editingTagId.value = null
-  editName.value = ''
-  editDescription.value = ''
-  selectedCategoryToAdd.value = ''
-}
-
-async function saveEdit(id: string) {
-  try {
-    const updated = await updatePlayableTag(id, {
-      name: editName.value,
-      description: editDescription.value || undefined,
-      colorHex: editColor.value || undefined,
-    })
-
-    const index = tags.value.findIndex(t => t.id === id)
-    if (index !== -1) tags.value[index] = updated
-
-    cancelEdit()
-    emit('refresh')
-  } catch (err) {
-    console.error(err)
-    error.value = 'Failed to update tag'
-  }
-}
-
-async function deleteTag(id: string) {
-  try {
-    await togglePlayableTagActive(id, false)
-    tags.value = tags.value.filter(t => t.id !== id)
-    cancelEdit()
-    emit('refresh')
-  } catch (err) {
-    console.error(err)
-    error.value = 'Failed to delete tag permanently'
-  }
-}
-
 async function toggleActive(tag: PlayableTag) {
   try {
     const updated = await togglePlayableTagActive(tag.id, !tag.isActive)
@@ -215,40 +190,6 @@ async function toggleActive(tag: PlayableTag) {
   } catch (err) {
     console.error(err)
     error.value = `Failed to ${tag.isActive ? 'archive' : 'restore'} tag`
-  }
-}
-
-async function handleSetPrimary(categoryId: string) {
-  if (!editingTagId.value) return
-  try {
-    await setPrimaryCategory(editingTagId.value, categoryId)
-    tagCategories.value = await getTagCategories(editingTagId.value)
-  } catch (err) {
-    console.error('Failed to set primary category:', err)
-    error.value = 'Could not set category as primary'
-  }
-}
-
-async function handleUnlinkCategory(categoryId: string) {
-  if (!editingTagId.value) return
-  try {
-    await unlinkCategoryFromTag(editingTagId.value, categoryId)
-    tagCategories.value = await getTagCategories(editingTagId.value)
-  } catch (err) {
-    console.error('Failed to unlink category:', err)
-    error.value = 'Could not remove category from tag'
-  }
-}
-
-async function handleAddCategory(categoryId: string) {
-  if (!editingTagId.value) return
-  try {
-    await linkCategoryToTag(editingTagId.value, categoryId)
-    tagCategories.value = await getTagCategories(editingTagId.value)
-    selectedCategoryToAdd.value = ''
-  } catch (err) {
-    console.error('Failed to add category:', err)
-    error.value = 'Could not add category to tag'
   }
 }
 </script>
