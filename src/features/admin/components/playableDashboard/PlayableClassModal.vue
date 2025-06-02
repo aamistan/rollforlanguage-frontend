@@ -92,13 +92,14 @@
 
 <script setup lang="ts">
 import { reactive, computed, watch } from 'vue'
+import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
 import { playableClassService } from '@/features/admin/services/playableClassService'
 import { useAdminPlayableStore } from '@/features/admin/stores/adminPlayableStore'
-import TagSelector from './form/TagSelector.vue'
-import StatEditor from './form/StatEditor.vue'
-import PassiveListEditor from './form/PassiveListEditor.vue'
 import IconUpload from './form/IconUpload.vue'
-import AdminModal from '@/features/admin/components/shared/AdminModal.vue'
+import PassiveListEditor from './form/PassiveListEditor.vue'
+import StatEditor from './form/StatEditor.vue'
+import TagSelector from './form/TagSelector.vue'
+
 
 const store = useAdminPlayableStore()
 
