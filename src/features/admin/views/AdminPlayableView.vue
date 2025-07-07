@@ -12,6 +12,7 @@
     <!-- Central Tag Management Modal (sidebar-triggered) -->
     <ManageTagsModal
       :visible="props.showTagsModal"
+      :default-category="props.defaultCategory"
       @close="emit('update:showTagsModal', false)"
       @refresh="handleTagRefresh"
     />
@@ -31,6 +32,7 @@ import PlayableTableWidget from '@/features/admin/components/playableDashboard/P
 // Props passed from AdminLayout
 const props = defineProps<{
   showTagsModal: boolean
+  defaultCategory?: 'class' | 'species' // ✅ New optional prop
 }>()
 
 const emit = defineEmits<{

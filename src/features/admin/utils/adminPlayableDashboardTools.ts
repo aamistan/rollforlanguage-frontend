@@ -42,20 +42,8 @@ export const adminPlayableDashboardTools: AdminDashboardTool[] = [
   {
     name: 'Manage Tags',
     icon: 'lucide:tag',
-    children: [
-      {
-        name: 'Class Tags',
-        icon: 'mdi:tag-text',
-        library: 'iconify',
-        action: 'manageClassTags',
-      },
-      {
-        name: 'Species Tags',
-        icon: 'mdi:tag-multiple',
-        library: 'iconify',
-        action: 'manageSpeciesTags',
-      },
-    ],
+    library: 'iconify',
+    action: 'manageTags', // ✅ Simplified to a single action
   },
   {
     name: 'Manage Stats',

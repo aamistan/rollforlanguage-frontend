@@ -9,15 +9,21 @@ export interface PlayableTag {
   isActive: boolean
   sortOrder: number
   colorHex?: string
+  category?: 'class' | 'species' // ✅ Add category field
   createdAt: string
   updatedAt: string
 }
 
-// 🔍 GET all tags (optionally include inactive)
-export async function getPlayableTags(includeInactive = false): Promise<PlayableTag[]> {
-  const response = await axiosInstance.get('/admin/playable/tags', {
-    params: includeInactive ? { includeInactive: true } : {},
-  })
+// 🔍 GET all tags (optionally include inactive + filter by category)
+export async function getPlayableTags(
+  includeInactive = false,
+  category?: 'class' | 'species'
+): Promise<PlayableTag[]> {
+  const params: Record<string, string | boolean> = {}
+  if (includeInactive) params.includeInactive = true
+  if (category) params.category = category
+
+  const response = await axiosInstance.get('/admin/playable/tags', { params })
   return response.data
 }
 
@@ -26,6 +32,7 @@ export async function createPlayableTag(payload: {
   name: string
   description?: string
   colorHex?: string
+  category: 'class' | 'species' // ✅ Enforce category at creation
 }): Promise<PlayableTag> {
   const response = await axiosInstance.post('/admin/playable/tags', payload)
   return response.data
@@ -37,6 +44,7 @@ export async function updatePlayableTag(id: string, payload: {
   description?: string
   sortOrder?: number
   colorHex?: string
+  category?: 'class' | 'species' // ✅ Allow changing category
 }): Promise<PlayableTag> {
   const response = await axiosInstance.patch(`/admin/playable/tags/${id}`, payload)
   return response.data
@@ -57,7 +65,7 @@ export async function restorePlayableTag(id: string): Promise<void> {
 // 🔁 PATCH: toggle isActive to enable/disable tag
 export async function togglePlayableTagActive(id: string, isActive: boolean): Promise<PlayableTag> {
   const response = await axiosInstance.patch(`/admin/playable/tags/${id}/active`, { isActive })
-  return response.data  // ✅ Fix: return the updated tag
+  return response.data
 }
 
 // 📎 GET: all categories linked to a given tag

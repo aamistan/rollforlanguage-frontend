@@ -124,11 +124,12 @@ function handleAction(action?: string) {
     case 'managePassives':
       isManagePassivesModalOpen.value = true
       break
-    case 'manageClassTags':
-      emit('openTagsModal') // 🎯 trigger parent-controlled modal
+    case 'manageTags': // ✅ Unified tag management
+      emit('openTagsModal')
       break
     default:
       console.log(`Unhandled action: ${action}`)
   }
 }
 </script>
+

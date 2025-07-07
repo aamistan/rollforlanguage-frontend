@@ -6,6 +6,21 @@
     size="3xl"
   >
     <div class="space-y-4">
+      <!-- Category Toggle -->
+      <div class="flex justify-center gap-4 text-white">
+        <button
+          v-for="cat in categories"
+          :key="cat"
+          @click="activeCategory = cat"
+          :class="[
+            'px-4 py-1 rounded',
+            activeCategory === cat ? 'bg-blue-600' : 'bg-gray-600 hover:bg-gray-700'
+          ]"
+        >
+          {{ cat === 'class' ? 'Class Tags' : 'Species Tags' }}
+        </button>
+      </div>
+
       <!-- Toggle inactive tags switch -->
       <div class="mt-2 flex items-center gap-3">
         <label for="toggleInactive" class="text-sm text-white whitespace-nowrap">
@@ -23,9 +38,6 @@
           />
         </button>
       </div>
-
-      <!-- Section label -->
-      <h3 class="text-center text-lg font-semibold text-white mt-4">Class Tags</h3>
 
       <!-- Create New Tag Button -->
       <div class="flex justify-center">
@@ -89,11 +101,20 @@ import {
 } from '@/features/admin/services/playableTagService'
 
 import TagMiniModal from './TagMiniModal.vue'
-const props = defineProps<{ visible: boolean }>()
+
+const props = defineProps<{
+  visible: boolean
+  defaultCategory?: 'class' | 'species'
+}>()
+
 const emit = defineEmits<{
   (e: 'close'): void
   (e: 'refresh'): void
 }>()
+
+// 🔀 Categories
+const categories: ('class' | 'species')[] = ['class', 'species']
+const activeCategory = ref<'class' | 'species'>(props.defaultCategory ?? 'class')
 
 // 📦 Data
 const tags = ref<PlayableTag[]>([])
@@ -103,7 +124,9 @@ const hideInactive = ref(false)
 
 // 🔍 Filtering
 const visibleTags = computed(() =>
-  hideInactive.value ? tags.value.filter(tag => tag.isActive) : tags.value
+  tags.value
+    .filter(tag => tag.category === activeCategory.value)
+    .filter(tag => (hideInactive.value ? tag.isActive : true))
 )
 
 // 🧩 Mini-Modal
@@ -134,17 +157,12 @@ function handleMiniModalSave() {
   emit('refresh')
 }
 
-// 📡 Watcher
-watch(() => props.visible, (isVisible) => {
-  if (isVisible) fetchTags()
-})
-
 // 🔄 Fetch Tags
 async function fetchTags() {
   isLoading.value = true
   error.value = null
   try {
-    tags.value = await getPlayableTags(true)
+    tags.value = await getPlayableTags(true, activeCategory.value)
   } catch (err) {
     console.error(err)
     error.value = 'Failed to load tags'
@@ -152,6 +170,15 @@ async function fetchTags() {
     isLoading.value = false
   }
 }
+
+// 📡 Watchers
+watch(() => props.visible, (isVisible) => {
+  if (isVisible) fetchTags()
+})
+
+watch(activeCategory, () => {
+  fetchTags()
+})
 
 // ✅ Toggle Archive/Restore
 async function toggleActive(tag: PlayableTag) {
